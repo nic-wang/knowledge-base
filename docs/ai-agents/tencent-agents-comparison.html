@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五款 AI Agent 全景对比 v4 · 糯米鸡侦查报告</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #ffffff; color: #1f2328;
+    line-height: 1.6; font-size: 14px;
+    padding: 32px 24px; max-width: 1280px; margin: 0 auto;
+  }
+  h1 {
+    font-size: 24px; font-weight: 600;
+    padding-bottom: 12px; border-bottom: 1px solid #d1d9e0;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 18px; font-weight: 600;
+    margin-top: 32px; margin-bottom: 12px;
+    padding-bottom: 6px; border-bottom: 1px solid #d1d9e0;
+  }
+  h3 { font-size: 15px; font-weight: 600; margin-top: 18px; margin-bottom: 8px; }
+  .subtitle { color: #59636e; font-size: 13px; margin-bottom: 24px; }
+  .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .label {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 11px; font-weight: 500;
+    border: 1px solid #d1d9e0; background: #f6f8fa; color: #1f2328;
+  }
+  .label-blue { background: #ddf4ff; border-color: #54aeff66; color: #0969da; }
+  .label-green { background: #dafbe1; border-color: #6fd78766; color: #1a7f37; }
+  .label-purple { background: #fbefff; border-color: #c297ff66; color: #8250df; }
+  .label-orange { background: #fff1e5; border-color: #ffb77c66; color: #bc4c00; }
+  .label-red { background: #ffebe9; border-color: #ff818266; color: #cf222e; }
+  .label-gray { background: #f6f8fa; border-color: #d1d9e0; color: #59636e; }
+
+  table {
+    width: 100%; border-collapse: collapse;
+    border: 1px solid #d1d9e0;
+    margin: 12px 0 20px; font-size: 13px;
+  }
+  th, td {
+    text-align: left; padding: 8px 12px;
+    border: 1px solid #d1d9e0; vertical-align: top;
+  }
+  th { background: #f6f8fa; font-weight: 600; }
+  td.col-head { background: #f6f8fa; font-weight: 500; width: 160px; }
+  .yes { color: #1a7f37; font-weight: 500; }
+  .no { color: #cf222e; font-weight: 500; }
+  .partial { color: #bc4c00; font-weight: 500; }
+  .strong { color: #1a7f37; font-weight: 600; }
+  .weak { color: #cf222e; font-weight: 600; }
+  .mid { color: #bc4c00; font-weight: 500; }
+
+  /* 卡片速览 */
+  .card-grid-5 {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 10px; margin: 16px 0 24px;
+  }
+  .card {
+    border: 1px solid #d1d9e0; border-radius: 6px;
+    padding: 14px; background: #ffffff;
+  }
+  .card-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .card-sub { font-size: 11px; color: #59636e; margin-bottom: 10px; }
+  .card ul { padding-left: 16px; font-size: 12px; }
+  .card li { margin-bottom: 3px; }
+
+  /* TL;DR 决策条 */
+  .tldr-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin: 12px 0 20px;
+  }
+  .tldr-item {
+    border: 1px solid #d1d9e0; border-radius: 6px;
+    padding: 14px; background: #f6f8fa;
+  }
+  .tldr-item .t-q { font-size: 12px; color: #59636e; margin-bottom: 4px; }
+  .tldr-item .t-a { font-size: 14px; font-weight: 600; color: #0969da; }
+
+  /* 优缺点雷达（打分矩阵） */
+  .score-table th { background: #f6f8fa; }
+  .score-cell {
+    text-align: center; font-weight: 600;
+    font-size: 16px; line-height: 1;
+  }
+  .s-5 { color: #1a7f37; }   /* 极强 */
+  .s-4 { color: #2da44e; }   /* 强 */
+  .s-3 { color: #bc4c00; }   /* 中 */
+  .s-2 { color: #d1242f; }   /* 弱 */
+  .s-1 { color: #82071e; }   /* 极弱 */
+  .s-na { color: #8c959f; }
+
+  /* 强弱矩阵 */
+  .strength-table td { font-size: 13px; }
+  .product-col {
+    font-weight: 600; font-size: 13px;
+    text-align: center; width: 14%;
+  }
+
+  /* 场景路由 */
+  .scenarios { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .scenario {
+    border: 1px solid #d1d9e0; border-radius: 6px;
+    padding: 12px 16px; font-size: 13px; background: #ffffff;
+  }
+  .scenario .title { font-weight: 600; margin-bottom: 4px; }
+  .scenario .pick { font-size: 12px; color: #0969da; margin-top: 6px; font-weight: 500; }
+
+  /* Callout */
+  .callout {
+    border-left: 3px solid #0969da; background: #ddf4ff;
+    padding: 10px 14px; border-radius: 0 6px 6px 0;
+    font-size: 13px; margin: 12px 0;
+  }
+  .callout-warn { border-left-color: #bc4c00; background: #fff1e5; }
+  .callout-green { border-left-color: #1a7f37; background: #dafbe1; }
+  .callout-gray { border-left-color: #59636e; background: #f6f8fa; }
+  .callout-red { border-left-color: #cf222e; background: #ffebe9; }
+
+  /* 技术栈小节 */
+  .stack-section {
+    border: 1px solid #d1d9e0; border-radius: 6px;
+    margin-bottom: 12px; overflow: hidden;
+  }
+  .stack-header {
+    background: #f6f8fa; padding: 8px 12px;
+    font-weight: 600; font-size: 13px;
+    border-bottom: 1px solid #d1d9e0;
+  }
+  .stack-body table { margin: 0; border: none; }
+  .stack-body th, .stack-body td { border-left: none; border-right: none; }
+  .stack-body tr:first-child th { border-top: none; }
+
+  /* Appendix 样式 */
+  .appendix-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px dashed #d1d9e0;
+    opacity: 0.95;
+  }
+  .appendix-section h2 {
+    font-size: 16px; color: #59636e;
+  }
+  .source-box {
+    border: 1px solid #d1d9e0; border-radius: 6px;
+    padding: 10px 14px; margin: 10px 0;
+    background: #f6f8fa; font-size: 12px;
+  }
+  .source-box .src-title { font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+  .source-box a { color: #0969da; text-decoration: none; }
+  .source-box a:hover { text-decoration: underline; }
+
+  code {
+    background: #eff1f3; padding: 1px 6px; border-radius: 4px;
+    font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12px;
+  }
+
+  .footer {
+    margin-top: 32px; padding-top: 16px;
+    border-top: 1px solid #d1d9e0;
+    color: #59636e; font-size: 12px;
+  }
+
+  .legend {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 12px; color: #59636e; margin: 8px 0 16px;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 4px; }
+
+  @media (max-width: 1100px) {
+    .card-grid-5 { grid-template-columns: repeat(2, 1fr); }
+    .tldr-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .card-grid-5 { grid-template-columns: 1fr; }
+    .scenarios { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🦜 糯米鸡侦查报告 v4 · 五款 AI Agent 全景对比</h1>
+<p class="subtitle">OpenClaw · WorkBuddy · CodeBuddy · Hermes Agent · Claude Code CLI</p>
+<div class="meta">
+  <span class="label label-blue">For: 牛牛</span>
+  <span class="label">2026-04-30 v4</span>
+  <span class="label label-green">联网校准</span>
+  <span class="label label-purple">矩阵化重构</span>
+</div>
+
+<!-- ================= 1. TL;DR ================= -->
+<h2>🎯 TL;DR · 一句话决策</h2>
+<div class="tldr-grid">
+  <div class="tldr-item">
+    <div class="t-q">做什么事？</div>
+    <div class="t-a">按任务域路由 ↓</div>
+  </div>
+  <div class="tldr-item">
+    <div class="t-q">数据在哪？</div>
+    <div class="t-a">按数据归属决定 ↓</div>
+  </div>
+  <div class="tldr-item">
+    <div class="t-q">谁买单？</div>
+    <div class="t-a">按商业模式选版本 ↓</div>
+  </div>
+</div>
+<div class="callout callout-green">
+  <b>最短路径：</b>
+  内部数据用 <b>腾讯 OpenClaw 内网版</b> · 对外办公用 <b>WorkBuddy</b> · 写代码用 <b>CodeBuddy</b> · 极限长任务用 <b>Claude Code</b> · 腾讯云数据库用 <b>Hermes Agent</b>。
+  <br>下面的表格让你看清为什么。
+</div>
+
+<!-- ================= 2. 五款产品卡片速览 ================= -->
+<h2>📇 产品速览</h2>
+<div class="card-grid-5">
+  <div class="card">
+    <div class="card-title">🦞 OpenClaw</div>
+    <div class="card-sub">开源 Agent 框架</div>
+    <ul>
+      <li>奥地利 Peter Steinberger</li>
+      <li>MIT / TypeScript</li>
+      <li>本地优先 / 可内网化</li>
+      <li>Skills 生态源头</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title">💼 WorkBuddy</div>
+    <div class="card-sub">腾讯通用办公 Agent</div>
+    <ul>
+      <li>桌面 + 微信小程序</li>
+      <li>兼容 OpenClaw Skills</li>
+      <li>混元/DS/GLM/Kimi/MiniMax</li>
+      <li>新用户 5000 Credits</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title">💻 CodeBuddy</div>
+    <div class="card-sub">腾讯云代码助手</div>
+    <ul>
+      <li>IDE + AIDE + CLI</li>
+      <li>混元 + DeepSeek V3</li>
+      <li>200+ 语言 / 数十款 IDE</li>
+      <li>腾讯内部 85% 覆盖</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title">🗄️ Hermes Agent</div>
+    <div class="card-sub">自进化 Agent 框架</div>
+    <ul>
+      <li>闭环学习 + 三层记忆</li>
+      <li>DB 场景：100+ 指标 / 10+ SOP</li>
+      <li>技能自动生成</li>
+      <li>首 3 月免费</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title">🟣 Claude Code</div>
+    <div class="card-sub">Anthropic 官方 CLI</div>
+    <ul>
+      <li>Sonnet 4.5 / Opus 4.6</li>
+      <li>1M token 上下文</li>
+      <li>Checkpoint v2.0</li>
+      <li>$20-$200 / 月</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================= 3. 强弱能力矩阵（重点重构）================= -->
+<h2>💪 能力强弱矩阵（替代优缺点列表）</h2>
+<div class="callout">
+  <b>看懂这张表：</b>
+  <span class="s-5">●●●●●</span> = 领域最强 ·
+  <span class="s-4">●●●●</span> = 强 ·
+  <span class="s-3">●●●</span> = 中 ·
+  <span class="s-2">●●</span> = 弱 ·
+  <span class="s-1">●</span> = 极弱 ·
+  <span class="s-na">—</span> = 非其设计目标
+</div>
+
+<table class="score-table">
+  <thead>
+    <tr>
+      <th style="width: 200px;">能力维度</th>
+      <th class="product-col">🦞 OpenClaw</th>
+      <th class="product-col">💼 WorkBuddy</th>
+      <th class="product-col">💻 CodeBuddy</th>
+      <th class="product-col">🗄️ Hermes</th>
+      <th class="product-col">🟣 Claude Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><b>通用办公产出</b>（报告/PPT/数据）</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-2">●●</td>
+      <td class="score-cell s-na">—</td>
+      <td class="score-cell s-3">●●●</td></tr>
+    <tr><td><b>编码能力</b>（生成/重构/补全）</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-na">—</td>
+      <td class="score-cell s-5">●●●●●</td></tr>
+    <tr><td><b>长任务 / 上下文深度</b></td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-4">●●●●</td>
+      <td class="score-cell s-4">●●●●</td>
+      <td class="score-cell s-5">●●●●●</td></tr>
+    <tr><td><b>数据库运维</b>（DBA 场景）</td>
+      <td class="score-cell s-2">●●</td>
+      <td class="score-cell s-2">●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-3">●●●</td></tr>
+    <tr><td><b>本地文件 / 自动化操作</b></td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-4">●●●●</td>
+      <td class="score-cell s-1">●</td>
+      <td class="score-cell s-5">●●●●●</td></tr>
+    <tr><td><b>腾讯内部生态打通</b></td>
+      <td class="score-cell s-na">—</td>
+      <td class="score-cell s-2">●●</td>
+      <td class="score-cell s-2">●●</td>
+      <td class="score-cell s-4">●●●● (云内)</td>
+      <td class="score-cell s-na">—</td></tr>
+    <tr><td><b>移动 / IM 可用性</b></td>
+      <td class="score-cell s-1">●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-1">●</td>
+      <td class="score-cell s-2">●●</td></tr>
+    <tr><td><b>模型池广度</b></td>
+      <td class="score-cell s-5">●●●●● (任选)</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-4">●●●●</td>
+      <td class="score-cell s-1">● (仅 Claude)</td></tr>
+    <tr><td><b>MCP / 工具扩展</b></td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-5">●●●●●</td></tr>
+    <tr><td><b>自我进化 / 闭环学习</b></td>
+      <td class="score-cell s-2">●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-4">●●●●</td></tr>
+    <tr><td><b>国区合规 / 数据境内</b></td>
+      <td class="score-cell s-4">●●●● (自部署)</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-1">● (出境)</td></tr>
+    <tr><td><b>入门门槛低（开箱即用）</b></td>
+      <td class="score-cell s-2">●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-4">●●●●</td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-3">●●●</td></tr>
+    <tr><td><b>定制 / 二次开发自由度</b></td>
+      <td class="score-cell s-5">●●●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-3">●●●</td>
+      <td class="score-cell s-3">●●●</td></tr>
+    <tr><td><b>成本（对个人用户）</b></td>
+      <td class="score-cell s-5">●●●●● (免费)</td>
+      <td class="score-cell s-4">●●●● (有 Credits)</td>
+      <td class="score-cell s-4">●●●●</td>
+      <td class="score-cell s-3">●●● (按用量)</td>
+      <td class="score-cell s-2">●● ($20+/月)</td></tr>
+  </tbody>
+</table>
+
+<!-- ================= 4. 最适合/最不适合（一目了然）================= -->
+<h2>🎯 各产品的"擅长/不擅长" · 一句话定位</h2>
+<table class="strength-table">
+  <thead>
+    <tr>
+      <th style="width: 140px;">产品</th>
+      <th>✅ 最擅长做</th>
+      <th>❌ 别让它做</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>🦞 OpenClaw</b><br><span class="label label-gray">开源框架</span></td>
+      <td><span class="strong">研究 Agent 底层</span>、需要完全控制、本地隐私优先、想基于它做二次开发</td>
+      <td><span class="weak">开箱即用的业务场景</span>、IM/移动端、企业级安全合规</td>
+    </tr>
+    <tr>
+      <td><b>💼 WorkBuddy</b><br><span class="label label-blue">腾讯自研</span></td>
+      <td><span class="strong">通用办公</span>：报告/PPT/数据清洗/文件整理；<span class="strong">移动远控</span>（ClawBot）；<span class="strong">个人/家庭</span>场景</td>
+      <td><span class="weak">深度编码</span>（不如 CodeBuddy）；<span class="weak">连腾讯内网</span>（无 OA 身份）</td>
+    </tr>
+    <tr>
+      <td><b>💻 CodeBuddy</b><br><span class="label label-blue">腾讯自研</span></td>
+      <td><span class="strong">国区日常编码</span>：IDE 深集成、多文件 Craft、单测、评审、commit</td>
+      <td><span class="weak">非编码场景</span>（PPT/数据分析不行）；<span class="weak">公司内部代码</span>（公网版红线）</td>
+    </tr>
+    <tr>
+      <td><b>🗄️ Hermes Agent</b><br><span class="label label-purple">垂直 AI DBA</span></td>
+      <td><span class="strong">腾讯云数据库运维</span>：慢查询、索引优化、监控告警、自动 SOP、持续学习业务</td>
+      <td><span class="weak">数据库以外的一切</span>；<span class="weak">非腾讯云用户</span></td>
+    </tr>
+    <tr>
+      <td><b>🟣 Claude Code</b><br><span class="label label-red">海外 Anthropic</span></td>
+      <td><span class="strong">极限长任务</span>：1M 上下文、Checkpoint 回滚、长链 Agent 工作流、学习前沿范式</td>
+      <td><span class="weak">国区重要项目</span>（数据出境）；<span class="weak">连腾讯生态</span>；<span class="weak">预算敏感</span>（$6/天）</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ================= 5. 关键维度横向对比（核心）================= -->
+<h2>📊 关键维度横向对比</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 140px;">维度</th>
+      <th>🦞 OpenClaw</th>
+      <th>💼 WorkBuddy</th>
+      <th>💻 CodeBuddy</th>
+      <th>🗄️ Hermes</th>
+      <th>🟣 Claude Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="col-head">归属 / 性质</td>
+      <td>开源（个人）</td><td>腾讯自研</td><td>腾讯自研</td>
+      <td>腾讯云</td><td>Anthropic</td></tr>
+    <tr><td class="col-head">定位</td>
+      <td>Agent 框架</td><td>通用办公 Agent</td><td>编码 Agent</td>
+      <td>自进化 Agent 框架</td><td>编码 Agent</td></tr>
+    <tr><td class="col-head">网络域</td>
+      <td>本地 / 可内网</td><td>公网</td><td>公网</td>
+      <td>腾讯云</td><td>公网（境外）</td></tr>
+    <tr><td class="col-head">身份体系</td>
+      <td>无（本地）</td><td>QQ/微信/企微</td><td>腾讯云账号</td>
+      <td>腾讯云账号</td><td>Anthropic</td></tr>
+    <tr><td class="col-head">主形态</td>
+      <td>CLI / 本地运行</td><td>桌面 + 小程序</td><td>IDE/AIDE/CLI</td>
+      <td>DB 控制台</td><td>CLI + 多端</td></tr>
+    <tr><td class="col-head">模型池</td>
+      <td>任选</td><td>Hunyuan/DS/GLM/Kimi/MiniMax</td><td>混元 + DeepSeek V3</td>
+      <td>底层可切换</td><td>Claude 专属</td></tr>
+    <tr><td class="col-head">商业模式</td>
+      <td>免费开源</td><td>Credits + 订阅</td><td>订阅 + 企业版</td>
+      <td>按用量（首 3 月免费）</td><td>$20-$200/月</td></tr>
+    <tr><td class="col-head">上下文窗口</td>
+      <td>模型而定</td><td>模型而定</td><td>模型而定</td>
+      <td>模型而定</td><td><b>1M token</b></td></tr>
+    <tr><td class="col-head">Checkpoint</td>
+      <td class="no">❌</td><td class="no">❌</td><td class="no">❌</td>
+      <td class="no">❌</td><td class="yes">✅ 原生 v2.0</td></tr>
+    <tr><td class="col-head">IM 集成</td>
+      <td class="no">—</td><td class="yes">✅ ClawBot</td><td class="partial">企微/飞书</td>
+      <td class="no">❌</td><td class="no">❌</td></tr>
+    <tr><td class="col-head">国区合规</td>
+      <td>看部署</td><td class="yes">✅</td><td class="yes">✅</td>
+      <td class="yes">✅</td><td class="no">❌ 数据出境</td></tr>
+  </tbody>
+</table>
+
+<!-- ================= 6. 按场景路由 ================= -->
+<h2>🗺️ 按任务场景路由</h2>
+<div class="scenarios">
+  <div class="scenario"><div class="title">📝 对外方案 / 客户材料 / PPT</div><div>通用办公产出</div><div class="pick">👉 WorkBuddy</div></div>
+  <div class="scenario"><div class="title">📊 本地数据清洗 / 表格整理 / 发票归档</div><div>批量文件处理</div><div class="pick">👉 WorkBuddy</div></div>
+  <div class="scenario"><div class="title">📱 出差路上 / 想远控电脑干活</div><div>微信对话框远控</div><div class="pick">👉 WorkBuddy ClawBot</div></div>
+  <div class="scenario"><div class="title">👩‍💼 帮嘻嘻改简历 / 留学材料</div><div>个人对外安全</div><div class="pick">👉 WorkBuddy</div></div>
+  <div class="scenario"><div class="title">💻 国区项目日常编码</div><div>IDE 深度集成</div><div class="pick">👉 CodeBuddy</div></div>
+  <div class="scenario"><div class="title">🧪 代码评审 / 生成单测 / commit message</div><div>CodeBuddy 原生工作流</div><div class="pick">👉 CodeBuddy</div></div>
+  <div class="scenario"><div class="title">🌍 海外项目 / 极限长上下文</div><div>1M token + Checkpoint</div><div class="pick">👉 Claude Code</div></div>
+  <div class="scenario"><div class="title">🔭 学 Agent 前沿工作流</div><div>explore→plan→code→commit</div><div class="pick">👉 Claude Code</div></div>
+  <div class="scenario"><div class="title">🗄️ 腾讯云 MySQL 慢查询 / 索引优化</div><div>DB 垂直场景</div><div class="pick">👉 Hermes Agent</div></div>
+  <div class="scenario"><div class="title">📉 持续 DB 监控 + 自动运维 SOP</div><div>自进化能力</div><div class="pick">👉 Hermes Agent</div></div>
+  <div class="scenario"><div class="title">🏢 查内部需求单 / 企微派活 / 乐享 Wiki</div><div>需 OA 身份 + 内网</div><div class="pick">👉 腾讯 OpenClaw 内网版</div></div>
+  <div class="scenario"><div class="title">🔧 改公司内部代码 / 内部敏感数据</div><div>⚠️ 严禁公网 Agent</div><div class="pick">👉 内网版 / 公司 IDE 插件</div></div>
+  <div class="scenario"><div class="title">🔬 想研究 Agent 底层 / 自己造轮子</div><div>完全控制</div><div class="pick">👉 OpenClaw 开源版</div></div>
+  <div class="scenario"><div class="title">🎯 CRM 业务数据洞察</div><div>数据分析 + 报告生成</div><div class="pick">👉 WorkBuddy</div></div>
+</div>
+
+<!-- ================= 7. 接入路径 ================= -->
+<h2>🚪 接入路径（从零到用上）</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 90px;">步骤</th>
+      <th>🦞 OpenClaw</th><th>💼 WorkBuddy</th><th>💻 CodeBuddy</th><th>🗄️ Hermes</th><th>🟣 Claude Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="col-head">① 资格</td>
+      <td>任何人</td><td>任何人</td><td>任何人</td>
+      <td>腾讯云账号</td><td>$20+ 订阅</td></tr>
+    <tr><td class="col-head">② 获取</td>
+      <td>GitHub 克隆</td><td>官网下载</td><td>IDE 插件市场</td>
+      <td>DB 控制台一键开</td><td><code>npm i -g</code></td></tr>
+    <tr><td class="col-head">③ 登录</td>
+      <td>本地无需</td><td>扫码登录</td><td>腾讯云账号</td>
+      <td>腾讯云账号</td><td>API key</td></tr>
+    <tr><td class="col-head">④ 权益</td>
+      <td>免费</td><td>5000 Credits + 10 技能包</td><td>看版本</td>
+      <td>首 3 月免费</td><td>订阅即用</td></tr>
+    <tr><td class="col-head">⑤ 上手</td>
+      <td>读文档自搭</td><td>Craft 对话</td><td>IDE 内对话</td>
+      <td>自然语言问 DB</td><td><code>claude</code></td></tr>
+  </tbody>
+</table>
+
+<!-- ================= 8. 技术栈分层（可以略过，给深究者）================= -->
+<h2>🔧 技术栈分层细节（深度阅读）</h2>
+
+<div class="stack-section">
+  <div class="stack-header">🎨 前端形态</div>
+  <div class="stack-body">
+    <table>
+      <thead>
+        <tr><th style="width: 160px;">入口</th><th>OpenClaw</th><th>WorkBuddy</th><th>CodeBuddy</th><th>Hermes</th><th>Claude Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-head">桌面 App</td><td class="partial">可自建</td><td class="yes">✅ Mac/Win</td><td class="partial">AIDE</td><td class="no">❌</td><td class="yes">✅</td></tr>
+        <tr><td class="col-head">IDE 插件</td><td class="no">❌</td><td class="no">❌</td><td class="yes">✅ 数十款</td><td class="no">❌</td><td class="yes">✅ VS Code/JB/Cursor</td></tr>
+        <tr><td class="col-head">CLI</td><td class="yes">✅</td><td class="partial">部分</td><td class="yes">✅</td><td class="no">❌</td><td class="yes">✅ 主形态</td></tr>
+        <tr><td class="col-head">小程序</td><td class="no">❌</td><td class="yes">✅ 微信</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td></tr>
+        <tr><td class="col-head">IM 机器人</td><td class="partial">—</td><td class="yes">✅ ClawBot</td><td class="partial">企微/飞书</td><td class="no">❌</td><td class="no">❌</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="stack-section">
+  <div class="stack-header">🧠 模型层</div>
+  <div class="stack-body">
+    <table>
+      <thead>
+        <tr><th style="width: 160px;">模型</th><th>OpenClaw</th><th>WorkBuddy</th><th>CodeBuddy</th><th>Hermes</th><th>Claude Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-head">Claude</td><td class="partial">可接</td><td class="partial">旗舰版</td><td class="no">非主力</td><td class="partial">可切</td><td class="yes">✅ 原生</td></tr>
+        <tr><td class="col-head">混元</td><td class="partial">可接</td><td class="yes">✅</td><td class="yes">✅ 主力</td><td class="yes">✅</td><td class="no">❌</td></tr>
+        <tr><td class="col-head">DeepSeek</td><td class="partial">可接</td><td class="yes">✅</td><td class="yes">✅ 主力</td><td class="yes">✅</td><td class="no">❌</td></tr>
+        <tr><td class="col-head">GLM/Kimi/MiniMax</td><td class="partial">可接</td><td class="yes">✅</td><td class="partial">—</td><td class="partial">—</td><td class="no">❌</td></tr>
+        <tr><td class="col-head">自定义模型</td><td class="yes">✅</td><td class="yes">✅</td><td class="partial">企业版</td><td class="yes">✅</td><td class="no">❌</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="stack-section">
+  <div class="stack-header">🔌 工具 / 连接器</div>
+  <div class="stack-body">
+    <table>
+      <thead>
+        <tr><th style="width: 160px;">能力</th><th>OpenClaw</th><th>WorkBuddy</th><th>CodeBuddy</th><th>Hermes</th><th>Claude Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-head">MCP</td><td class="yes">✅ 原生</td><td class="yes">✅</td><td class="yes">✅ 国内首个</td><td class="partial">—</td><td class="yes">✅</td></tr>
+        <tr><td class="col-head">Skills 生态</td><td class="yes">✅ 源头</td><td class="yes">✅ SkillHub 200+</td><td class="partial">—</td><td class="yes">✅ 自动生成</td><td class="partial">—</td></tr>
+        <tr><td class="col-head">动态 Python 执行</td><td class="yes">✅ 沙盒</td><td class="yes">✅</td><td class="yes">✅</td><td class="partial">—</td><td class="yes">✅</td></tr>
+        <tr><td class="col-head">本地文件</td><td class="yes">✅</td><td class="yes">✅ 核心</td><td class="yes">✅</td><td class="no">❌</td><td class="yes">✅</td></tr>
+        <tr><td class="col-head">Git</td><td class="partial">—</td><td class="partial">—</td><td class="yes">✅</td><td class="no">❌</td><td class="yes">✅</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="stack-section">
+  <div class="stack-header">⚙️ 后端 / 运行环境</div>
+  <div class="stack-body">
+    <table>
+      <thead>
+        <tr><th style="width: 160px;">能力</th><th>OpenClaw</th><th>WorkBuddy</th><th>CodeBuddy</th><th>Hermes</th><th>Claude Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-head">本地执行</td><td class="yes">✅ Local-First</td><td class="yes">✅</td><td class="yes">✅</td><td class="no">❌</td><td class="yes">✅</td></tr>
+        <tr><td class="col-head">远程执行</td><td class="partial">—</td><td class="yes">✅ ClawBot</td><td class="partial">—</td><td class="yes">✅</td><td class="yes">✅</td></tr>
+        <tr><td class="col-head">沙盒</td><td class="yes">✅</td><td class="yes">✅ 网关</td><td class="partial">—</td><td class="partial">—</td><td class="yes">✅ Auto Mode</td></tr>
+        <tr><td class="col-head">闭环学习</td><td class="no">—</td><td class="partial">—</td><td class="partial">—</td><td class="yes">✅ 核心</td><td class="partial">—</td></tr>
+        <tr><td class="col-head">多 Agent</td><td class="partial">—</td><td class="yes">✅</td><td class="partial">—</td><td class="partial">—</td><td class="yes">✅</td></tr>
+        <tr><td class="col-head">Checkpoint</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✅ v2.0</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================= 9. 推荐工作流 ================= -->
+<h2>🦜 糯米鸡推荐工作流（五产品联动）</h2>
+<table>
+  <thead>
+    <tr><th style="width: 220px;">场景</th><th style="width: 200px;">主用</th><th>为什么</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>上班 · 公司内网 · 查内部信息</td><td>腾讯 OpenClaw 内网版</td><td>内网全打通 + 企微响应</td></tr>
+    <tr><td>对客户 / 对外材料</td><td>WorkBuddy</td><td>对外安全 + 通用产出</td></tr>
+    <tr><td>路上 / 移动办公</td><td>WorkBuddy ClawBot</td><td>微信对话框远控</td></tr>
+    <tr><td>国区项目写代码</td><td>CodeBuddy</td><td>IDE 原生 + 国内合规</td></tr>
+    <tr><td>探索前沿 / 长任务研究</td><td>Claude Code</td><td>1M 上下文 + Checkpoint</td></tr>
+    <tr><td>DBA 日常运维</td><td>Hermes Agent</td><td>自进化 + DB 最深垂直</td></tr>
+    <tr><td>研究 Agent 底层</td><td>OpenClaw 自建</td><td>开源 MIT，改源码可行</td></tr>
+    <tr><td>跟嘻嘻相关事务</td><td>WorkBuddy</td><td>个人家庭场景</td></tr>
+  </tbody>
+</table>
+
+<!-- ================= 10. 避坑清单 ================= -->
+<h2>⚠️ 避坑清单</h2>
+<div class="callout callout-warn">
+  <ol style="padding-left: 20px;">
+    <li>❌ 不要把 OpenClaw 当腾讯产品 — 它是奥地利程序员的开源框架</li>
+    <li>❌ 不要把公司内部代码/文档上传到公网版 WorkBuddy/CodeBuddy/Claude Code</li>
+    <li>❌ 不要以为"腾讯文档连接器"能读公司内部文档（实测走微信号）</li>
+    <li>❌ 不要拿 CodeBuddy 当 WorkBuddy 用（coding 之外偏弱）</li>
+    <li>❌ 不要在国区重要项目主用 Claude Code（数据出境 + 网络不稳）</li>
+    <li>❌ 不要把 Hermes Agent 当通用 Agent 用（DB 场景最深，其他场景未成熟）</li>
+    <li>✅ 新用户领 WorkBuddy 5000 Credits + 10 款技能包（30 天有效）</li>
+    <li>✅ 腾讯员工账号自带旗舰权益 — 别浪费</li>
+    <li>✅ Claude Code 平均 $6/天，心里有数</li>
+  </ol>
+</div>
+
+<!-- ================= 终极一句话 ================= -->
+<h2>🎯 终极决策</h2>
+<div class="callout callout-green">
+  <b>数据在哪 + 任务是什么 = 用哪个 Agent</b><br><br>
+  · 内部数据 → <b>腾讯 OpenClaw 内网版</b><br>
+  · 对外办公 / 通用产出 → <b>WorkBuddy</b><br>
+  · 国区写代码 → <b>CodeBuddy</b><br>
+  · 极限长任务 / Agent 前沿 → <b>Claude Code</b><br>
+  · 腾讯云数据库 → <b>Hermes Agent</b><br>
+  · 想造轮子 → <b>OpenClaw 开源</b><br><br>
+  Elementary, my dear 牛牛 🦜
+</div>
+
+<!-- =============================================================
+     以下为附录 · 数据来源与信息校准（置底）
+     ============================================================= -->
+<div class="appendix-section">
+
+<h2>📎 附录 · 数据来源与信息校准</h2>
+<div class="callout callout-gray">
+  <b>置底原因</b>：结论摆前面，证据放后面。牛牛想追溯任何判断，往这里看。
+</div>
+
+<h3>数据来源索引</h3>
+<div class="source-box">
+  <div class="src-title">🦞 OpenClaw（开源 Agent 框架）</div>
+  · <a href="https://new.qq.com/rain/a/20260319A07N6800">腾讯的心思，藏在"虾笼"里 · QQ 新闻 2026-03-19</a><br>
+  · <a href="https://cloud.tencent.com.cn/developer/article/2636065">OpenClaw 是什么 · 腾讯云开发者社区</a>
+</div>
+<div class="source-box">
+  <div class="src-title">💼 WorkBuddy（腾讯桌面 Agent）</div>
+  · <a href="https://copilot.tencent.com/work/">官网 copilot.tencent.com/work</a><br>
+  · <a href="http://cloud.tencent.com/developer/article/2638331">WorkBuddy 正式上线 · 腾讯云开发者</a><br>
+  · <a href="https://cloud.tencent.com/developer/article/2662799">2026 核心更新</a>
+</div>
+<div class="source-box">
+  <div class="src-title">💻 CodeBuddy（腾讯云代码助手）</div>
+  · <a href="https://cloud.tencent.com/document/product/1749">官方文档</a><br>
+  · <a href="https://copilot.tencent.com/setup">copilot.tencent.com/setup</a><br>
+  · <a href="https://cloud.tencent.com/developer/article/2535024">CodeBuddy 详解</a>
+</div>
+<div class="source-box">
+  <div class="src-title">🗄️ Hermes Agent（自进化 Agent 框架）</div>
+  · <a href="https://new.qq.com/rain/a/20260424A05KLR00">数据库 HermesAgent 来了 · 2026-04-24</a><br>
+  · <a href="https://cloud.tencent.com/developer/article/2655369">Hermes Agent 如何重新定义智能体</a><br>
+  · <a href="https://cloud.tencent.com/developer/article/2655361">六大核心功能解析</a>
+</div>
+<div class="source-box">
+  <div class="src-title">🟣 Claude Code CLI（Anthropic）</div>
+  · <a href="https://www.anthropic.com/news/enabling-claude-code-to-work-more-autonomously">Anthropic 官方公告</a><br>
+  · <a href="https://aicodereview.cc/tool/claude-code/">Claude Code Review 2026（定价）</a><br>
+  · <a href="https://www.startuphub.ai/ai-news/reviews/2026/claude-ai-complete-guide-2026">StartupHub 完整指南 2026</a>
+</div>
+<div class="source-box">
+  <div class="src-title">✅ 牛牛提供的第一手实证</div>
+  · 截图：OpenClaw 内网版模板页（龙虾模板、企微绑定）<br>
+  · 截图：WorkBuddy 账户 <code>nicwnwang[Tencent]</code> 旗舰版 + 61,536 积分<br>
+  · 截图：连接器管理页（腾讯文档 connected，其余有「+」入口）<br>
+  · 实测：腾讯文档连接器 = <b>微信扫码</b>（非企微 OA）
+</div>
+
+<h3>信息校准记录（v1 → v2 → v3 → v4）</h3>
+<table>
+  <thead>
+    <tr><th style="width: 80px;">版本</th><th>校准内容</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>v1</td><td>初版三款对比（仅 OpenClaw/WorkBuddy/CodeBuddy），推理为主</td></tr>
+    <tr><td>v2</td><td>扩展至 5 款，加入 Hermes + Claude Code；引入三色可信度标签</td></tr>
+    <tr><td>v3</td><td>联网校准：发现 OpenClaw 非腾讯出品、龙虾为品类代号、WorkBuddy 模型池非 Claude 主导、CodeBuddy 为混元+DeepSeek V3 双模型</td></tr>
+    <tr><td>v4</td><td>结构重构：优缺点改为能力强弱矩阵（打分），引用/校准置底；结论前置，证据后置</td></tr>
+  </tbody>
+</table>
+
+<h3>研究方法论</h3>
+<div class="callout callout-gray">
+  ① 对"产品归属 / 作者 / 模型 / 定价"均以官方页或权威新闻稿为准<br>
+  ② 所有关键数据点（价格 / token / 版本 / Credits）都可追溯到上述引用<br>
+  ③ 能力边界不清时，使用"部分"或"可切换"，不使用绝对表述<br>
+  ④ 每版对上一版做 diff 校验，发现错误即公开修正<br>
+  ⑤ 糯米鸡 SOUL 已固化原则：<b>求真，不畏强权</b> — 官方资料是起点，不是终点
+</div>
+
+<div class="footer">
+  <b>糯米鸡侦查报告 v4 · 矩阵化重构版</b><br>
+  v1 → v4 全过程公开；本版结构遵循「结论前置、证据后置」原则<br>
+  生成时间：2026-04-30 · 风格：GitHub 风格（白底 / #d1d9e0 / label / 无渐变阴影）<br>
+  Elementary, my dear 牛牛 🦜
+</div>
+
+</div>
+
+</body>
+</html>

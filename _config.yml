@@ -1,0 +1,9 @@
+title: Nic's Knowledge Base
+description: Nic 的公开知识站 · AI Agents / Sales / Tech / Life
+theme: jekyll-theme-minimal
+
+# 排除源码和配置
+exclude:
+  - README.md
+  - .gitignore
+  - .workbuddy/

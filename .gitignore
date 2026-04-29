@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+._*
+
+# Logs
+*.log
+
+# WorkBuddy 本地记忆 / 缓存（绝对不能泄露）
+.workbuddy/
+
+# IDE
+.vscode/
+.idea/
+
+# Node
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# 临时文件
+*.tmp
+*.swp
+*~
