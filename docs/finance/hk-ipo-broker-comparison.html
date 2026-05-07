@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>港股打新主流券商费用对比 · 2026-05 · 溯源+计算器版</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    color: #1f2328;
+    margin: 0;
+    padding: 28px 24px 64px;
+    line-height: 1.55;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  h1 { font-size: 28px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.3px; }
+  h2 { font-size: 20px; font-weight: 600; margin: 32px 0 14px; padding-bottom: 8px; border-bottom: 1px solid #d1d9e0; }
+  h3 { font-size: 15px; font-weight: 600; margin: 12px 0 10px; color: #1f2328; }
+  p { margin: 8px 0; font-size: 14px; }
+  .subtitle { color: #59636e; font-size: 14px; margin-bottom: 16px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .label {
+    display: inline-block;
+    padding: 2px 10px;
+    border: 1px solid #d1d9e0;
+    border-radius: 12px;
+    font-size: 12px;
+    background: #f6f8fa;
+  }
+  .label-accent { border-color: #8250df; color: #8250df; background: #fbf7ff; }
+  .label-warn { border-color: #bf8700; color: #9a6700; background: #fff8c5; }
+  .label-ok { border-color: #1a7f37; color: #1a7f37; background: #dafbe1; }
+  a { color: #0969da; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ============ 计算器 ============ */
+  .calculator {
+    border: 2px solid #8250df;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #fbf7ff 0%, #ffffff 60%);
+    padding: 20px 24px;
+    margin: 12px 0 28px;
+    box-shadow: 0 1px 2px rgba(31, 35, 40, 0.04);
+  }
+  .calc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .calc-header h2 {
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+    color: #8250df;
+    font-size: 19px;
+  }
+  .calc-header .tag {
+    font-size: 11px;
+    color: #8250df;
+    background: #fbf7ff;
+    border: 1px solid #d8b9ff;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 800px) { .calc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .calc-grid { grid-template-columns: 1fr; } }
+
+  .calc-field label {
+    display: block;
+    font-size: 12px;
+    color: #59636e;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .calc-field input, .calc-field select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #d1d9e0;
+    border-radius: 5px;
+    font-size: 14px;
+    background: #fff;
+    font-family: inherit;
+    color: #1f2328;
+    font-variant-numeric: tabular-nums;
+  }
+  .calc-field input:focus, .calc-field select:focus {
+    outline: none;
+    border-color: #8250df;
+    box-shadow: 0 0 0 2px rgba(130, 80, 223, 0.15);
+  }
+
+  .preset-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    align-items: center;
+  }
+  .preset-row .preset-label { color: #59636e; margin-right: 4px; }
+  .preset-btn {
+    padding: 3px 10px;
+    border: 1px solid #d1d9e0;
+    background: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #1f2328;
+  }
+  .preset-btn:hover { background: #f6f8fa; border-color: #8250df; color: #8250df; }
+  .preset-btn.active { background: #8250df; border-color: #8250df; color: #fff; }
+
+  .calc-result {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  @media (max-width: 720px) { .calc-result { grid-template-columns: 1fr; } }
+  .result-card {
+    border: 1px solid #d1d9e0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 14px 16px;
+  }
+  .result-card h4 {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: #59636e;
+    font-weight: 600;
+    border-bottom: 1px dashed #d1d9e0;
+    padding-bottom: 8px;
+  }
+  .result-card.hl h4 { color: #1a7f37; }
+  .result-card.warn h4 { color: #bf8700; }
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 3px 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .result-row .rk { color: #59636e; }
+  .result-row .rv { color: #1f2328; font-weight: 500; }
+  .result-total {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #d1d9e0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f2328;
+  }
+  .result-total.hl { color: #1a7f37; }
+  .result-total.warn { color: #bf8700; }
+  .calc-footer {
+    font-size: 11.5px;
+    color: #59636e;
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: #f6f8fa;
+    border-radius: 4px;
+    border: 1px solid #d1d9e0;
+  }
+
+  /* ============ 数据源标签 ============ */
+  .src {
+    display: inline-block;
+    font-size: 10px;
+    color: #0969da;
+    background: #ddf4ff;
+    border: 1px solid #54aeff;
+    padding: 0 5px;
+    border-radius: 8px;
+    margin-left: 3px;
+    vertical-align: middle;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .src:hover { background: #0969da; color: #fff; }
+  .src-official { background: #dafbe1; border-color: #1a7f37; color: #1a7f37; }
+  .src-official:hover { background: #1a7f37; color: #fff; }
+  .src-3rd { background: #fff8c5; border-color: #bf8700; color: #9a6700; }
+  .src-3rd:hover { background: #bf8700; color: #fff; }
+
+  /* ============ 条形图 / 热力表 ============ */
+  .callout {
+    border: 1px solid #d1d9e0;
+    border-left: 3px solid #0969da;
+    background: #f6f8fa;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  .callout-warn { border-left-color: #bf8700; background: #fff8c5; }
+
+  .bar-chart {
+    border: 1px solid #d1d9e0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 12px 0 20px;
+    background: #fff;
+  }
+  .bar-chart h3 { margin-top: 0; display: flex; justify-content: space-between; align-items: center; }
+  .bar-chart .axis-note { font-size: 11px; color: #59636e; font-weight: 400; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 90px;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    font-size: 13px;
+  }
+  .bar-row .name { font-weight: 600; color: #1f2328; }
+  .bar-row .name.dim { color: #8c959f; font-weight: 500; }
+  .bar-track { background: #f6f8fa; border: 1px solid #eaeef2; border-radius: 3px; height: 22px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; padding-left: 6px; color: #fff; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .bar-fill.green { background: linear-gradient(90deg, #1a7f37, #2da44e); }
+  .bar-fill.blue { background: linear-gradient(90deg, #0969da, #54aeff); }
+  .bar-fill.orange { background: linear-gradient(90deg, #bc4c00, #fb8f44); }
+  .bar-fill.red { background: linear-gradient(90deg, #cf222e, #ff6b6b); }
+  .bar-fill.gray { background: repeating-linear-gradient(45deg, #d1d9e0, #d1d9e0 4px, #eaeef2 4px, #eaeef2 8px); color: #59636e; }
+  .bar-val { font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; color: #1f2328; }
+  .chart-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 880px) { .chart-split { grid-template-columns: 1fr; } }
+
+  .heat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0 20px;
+    border: 1px solid #d1d9e0;
+  }
+  .heat-table th, .heat-table td {
+    border: 1px solid #d1d9e0;
+    padding: 8px 10px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .heat-table th { background: #f6f8fa; font-weight: 600; white-space: normal; font-size: 12px; }
+  .heat-table td.broker { text-align: left; font-weight: 600; color: #0969da; white-space: nowrap; }
+  .h1 { background: #d4f4dd; }
+  .h2 { background: #e8f5ec; }
+  .h3 { background: #fff8c5; }
+  .h4 { background: #ffe8c4; }
+  .h5 { background: #ffd6d6; }
+  .h-na { background: #f6f8fa; color: #8c959f; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: #59636e; margin: 6px 0 10px; }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-box { width: 18px; height: 12px; border: 1px solid #d1d9e0; border-radius: 2px; }
+
+  .research-block {
+    border: 1px solid #d1d9e0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    background: #fafbfc;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .research-block strong { color: #8250df; }
+
+  .source-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 12px 0 20px;
+    border: 1px solid #d1d9e0;
+  }
+  .source-table th, .source-table td {
+    border: 1px solid #d1d9e0;
+    padding: 6px 8px;
+    vertical-align: top;
+    text-align: left;
+  }
+  .source-table th { background: #f6f8fa; font-weight: 600; white-space: nowrap; }
+  .source-table td { line-height: 1.5; }
+  .source-table .tag-official { color: #1a7f37; font-weight: 600; font-size: 10px; background:#dafbe1; border:1px solid #1a7f37; border-radius:8px; padding:0 5px; }
+  .source-table .tag-3rd { color: #9a6700; font-weight: 600; font-size: 10px; background:#fff8c5; border:1px solid #bf8700; border-radius:8px; padding:0 5px; }
+
+  .disclaimer { font-size: 11.5px; color: #59636e; margin-top: 16px; padding: 10px 14px; background: #f6f8fa; border-radius: 4px; border: 1px solid #d1d9e0; }
+
+  details { border: 1px solid #d1d9e0; border-radius: 6px; padding: 8px 12px; margin: 8px 0; background: #fafbfc; font-size: 13px; }
+  details summary { cursor: pointer; font-weight: 600; color: #0969da; }
+  details[open] summary { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<h1>港股打新主流券商费用对比</h1>
+<p class="subtitle">溯源版 + 成本计算器 · 每项数据带数据源 · 数据截止 2026-05-07</p>
+
+<!-- 时效自检条 -->
+<div id="freshnessBar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border:1px solid #1a7f37;border-radius:8px;padding:10px 14px;margin:12px 0 18px;font-size:13px;background:#dafbe1;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <span id="freshnessDot" style="width:10px;height:10px;border-radius:50%;background:#1a7f37;box-shadow:0 0 0 4px rgba(26,127,55,.18);"></span>
+    <span>
+      <span id="freshnessLabel" style="font-weight:600;">数据时效检查中…</span>
+      <span id="freshnessMeta" style="font-size:12px;color:#59636e;margin-left:4px;"></span>
+    </span>
+  </div>
+  <div>
+    <span style="font-size:12px;color:#59636e;margin-right:8px;">数据采集日：<strong id="dataDate">2026-05-07</strong></span>
+    <a style="font-size:12px;padding:4px 10px;border:1px solid #d1d9e0;background:#fff;border-radius:4px;color:#0969da;cursor:pointer;text-decoration:none;" onclick="document.getElementById('refreshModal').style.display='flex'">如何手动更新？</a>
+  </div>
+</div>
+
+<!-- 模态：手动更新指引 -->
+<div id="refreshModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:8px;max-width:600px;width:90%;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.15);font-size:13.5px;line-height:1.6;">
+    <button onclick="document.getElementById('refreshModal').style.display='none'" style="float:right;cursor:pointer;color:#59636e;font-size:18px;border:none;background:none;">×</button>
+    <h3 style="margin-top:0;color:#8250df;">🔄 如何手动更新数据</h3>
+    <p>本站点为静态报告，<strong>不会自动从券商官网拉取最新数据</strong>。当顶部时效条变黄/红时，建议按以下顺序自查：</p>
+    <ol style="font-size:13px;line-height:1.8;padding-left:20px;">
+      <li><strong>看一下今天的实时活动：</strong>登录券商 app，点开任一新股的"认购详情页"，查看当只新股的实际利率与手续费（最权威）</li>
+      <li><strong>核对核心利率：</strong>富途/老虎/长桥/华盛/尊嘉/Webull 的官网"收费标准"页都有公开披露，可对照本报告底部"数据溯源表"中的链接</li>
+      <li><strong>关注政策变化：</strong>FINI 系统、回拨新机制、印花税等若有调整，会显著影响成本</li>
+      <li><strong>请 AI 帮忙重生成：</strong>把本报告打开，告诉 AI "请用今天日期重新核验所有数据并更新"</li>
+    </ol>
+    <p style="font-size:12.5px;color:#59636e;margin-top:12px;"><strong>建议更新频率：</strong>每 30 天核验一次；遇到大型 IPO 前 1 周必须重新核验活动价。</p>
+  </div>
+</div>
+
+<div class="meta-row">
+  <span class="label label-accent">v3.0 溯源+计算器</span>
+  <span class="label label-ok">官方源 · 绿标</span>
+  <span class="label label-warn">第三方汇总 · 黄标</span>
+  <span class="label">覆盖 9 家券商</span>
+  <span class="label">数据截止 2026-05-07</span>
+</div>
+
+<!-- ============ ⭐ 计算器（顶格） ============ -->
+<div class="calculator">
+  <div class="calc-header">
+    <h2>🧮 港股打新成本计算器</h2>
+    <span class="tag">实时计算 · 全浏览器本地运行</span>
+  </div>
+
+  <div class="preset-row">
+    <span class="preset-label">💡 快速预设：</span>
+    <button class="preset-btn" onclick="applyPreset('small')">小额一手 · 1万</button>
+    <button class="preset-btn active" onclick="applyPreset('mid')">中等 · 10万×10倍</button>
+    <button class="preset-btn" onclick="applyPreset('large')">顶格大股 · 20万×20倍</button>
+    <button class="preset-btn" onclick="applyPreset('extreme')">极端热门 · 5万×100倍</button>
+  </div>
+
+  <div class="calc-grid">
+    <div class="calc-field">
+      <label>券商（Broker）</label>
+      <select id="broker" onchange="calc()">
+        <option value="yaocai_active">耀才 · 活动价（0 息）</option>
+        <option value="yaocai_reg">耀才 · 常规价</option>
+        <option value="futu_futu">富途 · 富途融资</option>
+        <option value="futu_bank_active">富途 · 银行融资（0 息活动）</option>
+        <option value="futu_bank_reg">富途 · 银行融资（常规 3.98%）</option>
+        <option value="tiger_new" selected>老虎 · 新户 10 倍内 0 息</option>
+        <option value="tiger_reg">老虎 · 常规 7.2%</option>
+        <option value="hstong_bank">华盛 · 银行融资 1.6%</option>
+        <option value="hstong_self">华盛 · 自有孖展 6.8%</option>
+        <option value="longbridge">长桥 · 银行融资 3.99%</option>
+        <option value="uniq">尊嘉 · 融资 P+1.5%（~5.99%）</option>
+        <option value="usmart">盈立 uSMART · 银行融资 1.6%</option>
+        <option value="webull">微牛 Webull · 5.7%</option>
+        <option value="beta_est">贝塔国际 · 行业估算（⚠️ 需致电核实）</option>
+        <option value="beta_custom">贝塔国际 · 自定义（下方输入）</option>
+      </select>
+    </div>
+    <div class="calc-field">
+      <label>认购总金额（HKD）</label>
+      <input type="number" id="totalAmt" value="100000" min="1000" step="1000" oninput="calc()">
+    </div>
+    <div class="calc-field">
+      <label>融资倍数（1 = 全现金）</label>
+      <input type="number" id="leverage" value="10" min="1" max="200" step="1" oninput="calc()">
+    </div>
+    <div class="calc-field">
+      <label>资金冻结天数</label>
+      <input type="number" id="days" value="6" min="1" max="30" step="1" oninput="calc()">
+    </div>
+    <div class="calc-field">
+      <label>假设新股股价（HKD / 股，供卖出测算）</label>
+      <input type="number" id="price" value="50" min="0.1" step="0.1" oninput="calc()">
+    </div>
+    <div class="calc-field">
+      <label>假设中签数量（股，0 = 未中签）</label>
+      <input type="number" id="hit" value="500" min="0" step="100" oninput="calc()">
+    </div>
+    <div class="calc-field">
+      <label>假设首日涨幅（%，用于估盈亏）</label>
+      <input type="number" id="gain" value="10" min="-50" max="200" step="1" oninput="calc()">
+    </div>
+    <div class="calc-field">
+      <label>杠杆倍数描述</label>
+      <input type="text" id="leverageDesc" value="自动" readonly style="background:#f6f8fa;color:#59636e;">
+    </div>
+  </div>
+
+  <!-- 贝塔自定义参数面板（仅在选择贝塔自定义时显示） -->
+  <div id="betaCustomPanel" style="display:none;border:1px dashed #bf8700;background:#fff8c5;padding:10px 14px;border-radius:6px;margin-bottom:14px;">
+    <div style="font-size:12px;font-weight:600;color:#9a6700;margin-bottom:8px;">🔧 贝塔国际 · 自定义费率（官方未公开，请按客服告知的数字填入）</div>
+    <div class="calc-grid" style="margin-bottom:0;">
+      <div class="calc-field">
+        <label>现金认购手续费 (HKD)</label>
+        <input type="number" id="beta_cashFee" value="50" step="1" oninput="calc()">
+      </div>
+      <div class="calc-field">
+        <label>融资认购手续费 (HKD)</label>
+        <input type="number" id="beta_marginFee" value="100" step="1" oninput="calc()">
+      </div>
+      <div class="calc-field">
+        <label>融资年化利率 (%)</label>
+        <input type="number" id="beta_rate" value="6.8" step="0.1" oninput="calc()">
+      </div>
+      <div class="calc-field">
+        <label>经纪佣金 (%)</label>
+        <input type="number" id="beta_sellComm" value="0.25" step="0.01" oninput="calc()">
+      </div>
+      <div class="calc-field">
+        <label>最低佣金 (HKD)</label>
+        <input type="number" id="beta_minComm" value="100" step="1" oninput="calc()">
+      </div>
+      <div class="calc-field">
+        <label>平台费（买+卖合计 HKD）</label>
+        <input type="number" id="beta_platform" value="0" step="1" oninput="calc()">
+      </div>
+    </div>
+  </div>
+
+  <!-- 估算值警示条（选贝塔档时动态显示） -->
+  <div id="estimateWarn" style="display:none;border:1px solid #bf8700;background:#fff8c5;padding:8px 12px;border-radius:6px;margin-bottom:12px;font-size:12.5px;color:#9a6700;">
+    ⚠️ <strong>估算值提醒：</strong>贝塔国际证券官网未公开披露零售打新费率。当前计算使用的是<strong>香港传统中小券商行业标准值</strong>（经纪佣金 0.25%、最低 $100、融资利率 6.8%），实际费率请致电客服 <strong>(852) 3590 9488</strong> 核实后，在上方下拉切换到<strong>"贝塔国际 · 自定义"</strong>档位手动填入。
+  </div>
+
+  <div class="calc-result">
+    <div class="result-card warn">
+      <h4>💸 认购阶段成本（无论是否中签都产生）</h4>
+      <div class="result-row"><span class="rk">现金认购手续费</span><span class="rv" id="r_cashFee">—</span></div>
+      <div class="result-row"><span class="rk">融资认购手续费</span><span class="rv" id="r_marginFee">—</span></div>
+      <div class="result-row"><span class="rk">融资金额</span><span class="rv" id="r_marginAmt">—</span></div>
+      <div class="result-row"><span class="rk">融资利息（年化 × 冻结天数）</span><span class="rv" id="r_interest">—</span></div>
+      <div class="result-total warn"><span>认购成本小计</span><span id="r_subFee">—</span></div>
+    </div>
+
+    <div class="result-card hl">
+      <h4>💰 中签后卖出成本 + 净盈亏</h4>
+      <div class="result-row"><span class="rk">中签市值（股数 × 股价）</span><span class="rv" id="r_hitValue">—</span></div>
+      <div class="result-row"><span class="rk">买入经纪佣金</span><span class="rv" id="r_buyComm">—</span></div>
+      <div class="result-row"><span class="rk">卖出市值（含涨幅）</span><span class="rv" id="r_sellValue">—</span></div>
+      <div class="result-row"><span class="rk">卖出经纪佣金</span><span class="rv" id="r_sellComm">—</span></div>
+      <div class="result-row"><span class="rk">印花税 + 交易所/证监 征费</span><span class="rv" id="r_gov">—</span></div>
+      <div class="result-row"><span class="rk">平台费（买+卖）</span><span class="rv" id="r_platform">—</span></div>
+      <div class="result-total hl"><span>预计净盈亏</span><span id="r_pnl">—</span></div>
+    </div>
+  </div>
+
+  <div class="calc-footer">
+    <strong>说明：</strong>① 利率口径优先使用券商<strong>新股专属活动价</strong>，若为常规价会在选项标注；② 利息按 <em>融资金额 × 年化利率 × 冻结天数 / 365</em> 计算；③ 印花税 0.13% + 交易征费 0.0027% + 交易费 0.00565% + 财汇局 0.00015%（港府统一征收，所有券商相同）；④ 本计算器结果仅供参考，实际以券商认购页披露为准。
+  </div>
+</div>
+
+<div class="callout">
+  <strong>⚡ 使用建议：</strong>先点上方"快速预设"快速套入场景，再逐项微调。切换"券商"下拉会实时更新手续费、利率和平台费。
+</div>
+
+<!-- ============ 数据源总表 ============ -->
+
+<!-- ============ 条形对比图 ============ -->
+<h2>① 关键数字 · 条形对比图</h2>
+
+<div class="chart-split">
+  <div class="bar-chart">
+    <h3>融资利率（年化） <span class="axis-note">越短越省 · 活动/常规均已注明</span></h3>
+    <div class="bar-row"><span class="name">耀才 活动 <a class="src src-3rd" href="https://epaper.tkww.hk/a/202505/13/AP6822586fe4b0fbda9a1f388e.html" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill green" style="width:2%;">0%</div></div><span class="bar-val">0%</span></div>
+    <div class="bar-row"><span class="name">老虎 新户 <a class="src src-official" href="https://docs.google.com/forms/d/e/1FAIpQLSf8vTr4Aa93d7fTuhJWKuJ43pkPl_qNEoBJwkXz48tu6q9iug/viewform" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill green" style="width:2%;">0%</div></div><span class="bar-val">0%</span></div>
+    <div class="bar-row"><span class="name">富途 银行 <a class="src src-official" href="https://www.futuhk.com/hans/blog/detail-new-share-subscription-latest-ipo-ipo-ipo-ipo-tutorial-with-0-interest-0-handling-fee-100-241156010" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill green" style="width:2%;">0% 活动</div></div><span class="bar-val">0%</span></div>
+    <div class="bar-row"><span class="name">华盛 银行 <a class="src src-3rd" href="https://wealth.hket.com/article/3849678" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill green" style="width:22%;">1.6%</div></div><span class="bar-val">1.6%</span></div>
+    <div class="bar-row"><span class="name">uSMART 银行 <a class="src src-3rd" href="https://www.moneyhero.com.hk/zh/investment/provider/usmart" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill green" style="width:22%;">1.6%</div></div><span class="bar-val">1.6%</span></div>
+    <div class="bar-row"><span class="name">长桥 银行 <a class="src src-official" href="https://longbridge.com/nz/support/topics/hk-trade/2mtjlpi" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill blue" style="width:55%;">3.99%</div></div><span class="bar-val">3.99%</span></div>
+    <div class="bar-row"><span class="name">华盛 自有 <a class="src src-official" href="https://www.vbkr.com/margin-financing" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill blue" style="width:67%;">4.8%</div></div><span class="bar-val">4.8%</span></div>
+    <div class="bar-row"><span class="name">Webull <a class="src src-official" href="https://www.webull-hk.com/blog/20" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill blue" style="width:79%;">5.7%</div></div><span class="bar-val">5.7%</span></div>
+    <div class="bar-row"><span class="name">尊嘉 <a class="src src-official" href="https://www.zvsthk.com/qa/three/163" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill orange" style="width:83%;">5.99%</div></div><span class="bar-val">5.99%</span></div>
+    <div class="bar-row"><span class="name">富途 自有 <a class="src src-3rd" href="https://www.lowrisktradesmart.org/zh/blog/tiger-brokers-vs-moomoo-hong-kong-ipo" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill orange" style="width:94%;">6.8%</div></div><span class="bar-val">6.8%</span></div>
+    <div class="bar-row"><span class="name">老虎 常规 <a class="src src-3rd" href="https://www.lowrisktradesmart.org/zh/blog/tiger-brokers-vs-moomoo-hong-kong-ipo" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill red" style="width:100%;">7.2%</div></div><span class="bar-val">7.2%</span></div>
+    <div class="bar-row"><span class="name dim">贝塔国际</span>
+      <div class="bar-track"><div class="bar-fill gray" style="width:100%;">未公开披露</div></div><span class="bar-val">—</span></div>
+  </div>
+
+  <div class="bar-chart">
+    <h3>杠杆倍数上限 <span class="axis-note">越长越多选择</span></h3>
+    <div class="bar-row"><span class="name">老虎 200× <a class="src src-3rd" href="https://caifuhao.eastmoney.com/news/20250224222322812016350" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill green" style="width:100%;">200 倍（活动）</div></div><span class="bar-val">200×</span></div>
+    <div class="bar-row"><span class="name">耀才 100× <a class="src src-3rd" href="https://m.ximalaya.com/sound/808701570" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill green" style="width:50%;">100 倍</div></div><span class="bar-val">100×</span></div>
+    <div class="bar-row"><span class="name">富途 50× <a class="src src-3rd" href="https://caifuhao.eastmoney.com/news/20250224222322812016350" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill blue" style="width:25%;">50 倍（银行）</div></div><span class="bar-val">50×</span></div>
+    <div class="bar-row"><span class="name">长桥 20× <a class="src src-official" href="https://longbridge.com/nz/support/topics/hk-trade/2mtjlpi" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill blue" style="width:10%;">20 倍</div></div><span class="bar-val">20×</span></div>
+    <div class="bar-row"><span class="name">华盛 ~10× <a class="src src-3rd" href="https://www.moneysmart.hk/zh-hk/investments/valuable-capital/ipo" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill orange" style="width:5%;">90% 融资</div></div><span class="bar-val">~10×</span></div>
+    <div class="bar-row"><span class="name">uSMART ~10× <a class="src src-3rd" href="https://www.moneyhero.com.hk/zh/investment/provider/usmart" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill orange" style="width:5%;">95% 融资</div></div><span class="bar-val">~10×</span></div>
+    <div class="bar-row"><span class="name">尊嘉 10× <a class="src src-3rd" href="http://www.03cj.com/gupiao/2026020650593.html" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill orange" style="width:5%;">10 倍</div></div><span class="bar-val">10×</span></div>
+    <div class="bar-row"><span class="name">Webull 10× <a class="src src-official" href="https://www.webull-hk.com/blog/20" target="_blank">源</a></span>
+      <div class="bar-track"><div class="bar-fill orange" style="width:5%;">10 倍</div></div><span class="bar-val">10×</span></div>
+  </div>
+</div>
+
+<!-- 新增：开户门槛 + 卖出佣金率 -->
+<div class="chart-split">
+  <div class="bar-chart">
+    <h3>最低开户入金门槛 <span class="axis-note">越短越易入门（享迎新奖赏所需金额）</span></h3>
+    <div class="bar-row"><span class="name">长桥 <a class="src src-3rd" href="https://www.lowrisktradesmart.org/zh/blog/longbridge-review" target="_blank">源</a></span><div class="bar-track"><div class="bar-fill green" style="width:2%;">无门槛</div></div><span class="bar-val">$0</span></div>
+    <div class="bar-row"><span class="name">尊嘉</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">无门槛</div></div><span class="bar-val">$0</span></div>
+    <div class="bar-row"><span class="name">耀才</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">无门槛</div></div><span class="bar-val">$0</span></div>
+    <div class="bar-row"><span class="name">Webull</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">无门槛</div></div><span class="bar-val">$0</span></div>
+    <div class="bar-row"><span class="name">富途 <a class="src src-3rd" href="https://www.futufin.com/blog/detail-futu-open-account-114-260367002" target="_blank">源</a></span><div class="bar-track"><div class="bar-fill blue" style="width:50%;">≥$10,000 享迎新</div></div><span class="bar-val">$10K</span></div>
+    <div class="bar-row"><span class="name">老虎 <a class="src src-3rd" href="https://www.moneyhero.com.hk/zh/investment/provider/tiger-brokers" target="_blank">源</a></span><div class="bar-track"><div class="bar-fill blue" style="width:50%;">≥$10,000 享迎新</div></div><span class="bar-val">$10K</span></div>
+    <div class="bar-row"><span class="name">华盛</span><div class="bar-track"><div class="bar-fill blue" style="width:50%;">≥$10,000 享迎新</div></div><span class="bar-val">$10K</span></div>
+    <div class="bar-row"><span class="name">uSMART</span><div class="bar-track"><div class="bar-fill blue" style="width:50%;">≥$10,000 享迎新</div></div><span class="bar-val">$10K</span></div>
+    <div class="bar-row"><span class="name dim">贝塔国际</span><div class="bar-track"><div class="bar-fill gray" style="width:100%;">未公开披露</div></div><span class="bar-val">—</span></div>
+  </div>
+
+  <div class="bar-chart">
+    <h3>中签卖出经纪佣金率 <span class="axis-note">越短越省（印花税另计）</span></h3>
+    <div class="bar-row"><span class="name">长桥</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">终身免佣</div></div><span class="bar-val">0%</span></div>
+    <div class="bar-row"><span class="name">尊嘉</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">终身免佣</div></div><span class="bar-val">0%</span></div>
+    <div class="bar-row"><span class="name">Webull</span><div class="bar-track"><div class="bar-fill green" style="width:5%;">推广期免佣</div></div><span class="bar-val">0% 推广</span></div>
+    <div class="bar-row"><span class="name">耀才</span><div class="bar-track"><div class="bar-fill green" style="width:15%;">0.03%</div></div><span class="bar-val">0.03%</span></div>
+    <div class="bar-row"><span class="name">富途</span><div class="bar-track"><div class="bar-fill green" style="width:15%;">0.03% 最低$3</div></div><span class="bar-val">0.03%</span></div>
+    <div class="bar-row"><span class="name">华盛</span><div class="bar-track"><div class="bar-fill green" style="width:15%;">0.03% 最低$3</div></div><span class="bar-val">0.03%</span></div>
+    <div class="bar-row"><span class="name">uSMART</span><div class="bar-track"><div class="bar-fill green" style="width:15%;">0.03% 最低$3-8</div></div><span class="bar-val">0.03%</span></div>
+    <div class="bar-row"><span class="name">老虎</span><div class="bar-track"><div class="bar-fill blue" style="width:30%;">0.06% 最低$15</div></div><span class="bar-val">0.06%</span></div>
+    <div class="bar-row"><span class="name dim">贝塔国际</span><div class="bar-track"><div class="bar-fill orange" style="width:80%;">~0.25%（行业估算）</div></div><span class="bar-val">~0.25%</span></div>
+  </div>
+</div>
+
+<!-- 新增：申购手续费 + 10万6天利息 -->
+<div class="chart-split">
+  <div class="bar-chart">
+    <h3>融资认购单笔手续费 <span class="axis-note">越短越好</span></h3>
+    <div class="bar-row"><span class="name">耀才 活动</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">$0</div></div><span class="bar-val">$0</span></div>
+    <div class="bar-row"><span class="name">老虎 新户</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">$0（10倍内）</div></div><span class="bar-val">$0</span></div>
+    <div class="bar-row"><span class="name">富途 富途融资</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">$0</div></div><span class="bar-val">$0</span></div>
+    <div class="bar-row"><span class="name">尊嘉</span><div class="bar-track"><div class="bar-fill blue" style="width:32%;">$31.9</div></div><span class="bar-val">$31.9</span></div>
+    <div class="bar-row"><span class="name">耀才 常规</span><div class="bar-track"><div class="bar-fill blue" style="width:83%;">$83</div></div><span class="bar-val">$83</span></div>
+    <div class="bar-row"><span class="name">长桥</span><div class="bar-track"><div class="bar-fill orange" style="width:99%;">$99</div></div><span class="bar-val">$99</span></div>
+    <div class="bar-row"><span class="name">富途 银行</span><div class="bar-track"><div class="bar-fill orange" style="width:100%;">$100</div></div><span class="bar-val">$100</span></div>
+    <div class="bar-row"><span class="name">华盛/Webull/uSMART</span><div class="bar-track"><div class="bar-fill orange" style="width:100%;">$100</div></div><span class="bar-val">$100</span></div>
+    <div class="bar-row"><span class="name dim">贝塔国际</span><div class="bar-track"><div class="bar-fill gray" style="width:100%;">~$100（估算）</div></div><span class="bar-val">~$100</span></div>
+  </div>
+
+  <div class="bar-chart">
+    <h3>10万融资 × 6天利息估算 <span class="axis-note">越短越省钱（港元）</span></h3>
+    <div class="bar-row"><span class="name">耀才/老虎/富途活动</span><div class="bar-track"><div class="bar-fill green" style="width:2%;">$0</div></div><span class="bar-val">$0</span></div>
+    <div class="bar-row"><span class="name">华盛 银行</span><div class="bar-track"><div class="bar-fill green" style="width:20%;">$26</div></div><span class="bar-val">$26</span></div>
+    <div class="bar-row"><span class="name">uSMART</span><div class="bar-track"><div class="bar-fill green" style="width:20%;">$26</div></div><span class="bar-val">$26</span></div>
+    <div class="bar-row"><span class="name">长桥</span><div class="bar-track"><div class="bar-fill blue" style="width:50%;">$66</div></div><span class="bar-val">$66</span></div>
+    <div class="bar-row"><span class="name">华盛 自有</span><div class="bar-track"><div class="bar-fill blue" style="width:60%;">$79</div></div><span class="bar-val">$79</span></div>
+    <div class="bar-row"><span class="name">Webull</span><div class="bar-track"><div class="bar-fill blue" style="width:72%;">$94</div></div><span class="bar-val">$94</span></div>
+    <div class="bar-row"><span class="name">尊嘉</span><div class="bar-track"><div class="bar-fill orange" style="width:75%;">$98</div></div><span class="bar-val">$98</span></div>
+    <div class="bar-row"><span class="name">富途 自有</span><div class="bar-track"><div class="bar-fill orange" style="width:85%;">$112</div></div><span class="bar-val">$112</span></div>
+    <div class="bar-row"><span class="name">老虎 常规</span><div class="bar-track"><div class="bar-fill red" style="width:90%;">$118</div></div><span class="bar-val">$118</span></div>
+    <div class="bar-row"><span class="name dim">贝塔国际</span><div class="bar-track"><div class="bar-fill gray" style="width:100%;">~$112（估算）</div></div><span class="bar-val">~$112</span></div>
+  </div>
+</div>
+
+<!-- ============ 热力色阶表 ============ -->
+<h2>② 热力色阶总览表</h2>
+<div class="legend">
+  <span class="legend-item"><span class="legend-box h1"></span>最优</span>
+  <span class="legend-item"><span class="legend-box h2"></span>较优</span>
+  <span class="legend-item"><span class="legend-box h3"></span>中等</span>
+  <span class="legend-item"><span class="legend-box h4"></span>偏高</span>
+  <span class="legend-item"><span class="legend-box h5"></span>最高</span>
+  <span class="legend-item"><span class="legend-box h-na"></span>未披露</span>
+</div>
+
+<table class="heat-table">
+  <thead>
+    <tr>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">券商</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">2026-05 公开披露</span></th>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">现金手续费</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">用现金认购新股的单笔固定费，中签与否都要付</span></th>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">孖展手续费</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">用券商/银行融资认购的单笔固定费，独立于利息</span></th>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">专属利率</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">新股专属优惠利率（年化），活动期可低至 0%</span></th>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">杠杆上限</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">最大融资倍数＝总申购金额 / 自有现金</span></th>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">卖出佣金</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">中签后在二级市场卖出时的经纪佣金率</span></th>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">平台费</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">每笔成交订单的平台使用费（独立于佣金）</span></th>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">10万×6天利息</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">融资 10 万港元、冻结 6 天的预估利息</span></th>
+      <th style="line-height:1.35;vertical-align:top;"><span style="display:block;font-weight:700;color:#1f2328;margin-bottom:2px;">数据源</span><span style="display:block;font-weight:400;color:#59636e;font-size:10.5px;line-height:1.3;">官方=券商官网；第三方=权威媒体</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="broker">耀才</td><td class="h1">$0</td><td class="h1">$0 活动</td><td class="h1">0%</td><td class="h1">100×</td><td class="h1">0.03%</td><td class="h1">$0</td><td class="h1">$0</td><td><span class="tag-3rd">媒体</span></td></tr>
+    <tr><td class="broker">富途</td><td class="h1">$0</td><td class="h1">$0 / $100</td><td class="h1">0% 活动</td><td class="h2">50×</td><td class="h1">0.03%</td><td class="h3">$15</td><td class="h1">$0</td><td><span class="tag-official">官方</span></td></tr>
+    <tr><td class="broker">老虎</td><td class="h1">$0</td><td class="h1">$0 新户</td><td class="h1">0% 新户</td><td class="h1">200×</td><td class="h3">0.06%</td><td class="h3">$15</td><td class="h1">$0</td><td><span class="tag-official">官方</span></td></tr>
+    <tr><td class="broker">华盛</td><td class="h3">$0–$50</td><td class="h4">$100</td><td class="h2">1.6%</td><td class="h3">~10×</td><td class="h1">0.03%</td><td class="h3">$15</td><td class="h2">$26</td><td><span class="tag-official">官方</span></td></tr>
+    <tr><td class="broker">长桥</td><td class="h3">$49</td><td class="h4">$99</td><td class="h3">3.99%</td><td class="h2">20×</td><td class="h1">0%</td><td class="h3">$15</td><td class="h3">$66</td><td><span class="tag-official">官方</span></td></tr>
+    <tr><td class="broker">尊嘉</td><td class="h1">$0</td><td class="h2">$31.9</td><td class="h4">5.99%</td><td class="h3">10×</td><td class="h1">0%</td><td class="h1">$0</td><td class="h4">$98</td><td><span class="tag-official">官方</span></td></tr>
+    <tr><td class="broker">uSMART</td><td class="h1">$0</td><td class="h4">$100</td><td class="h2">1.6%</td><td class="h3">~10×</td><td class="h1">0.03%</td><td class="h1">$0</td><td class="h2">$26</td><td><span class="tag-3rd">第三方</span></td></tr>
+    <tr><td class="broker">Webull</td><td class="h3">$0–$50</td><td class="h4">$100</td><td class="h4">5.7%</td><td class="h3">10×</td><td class="h1">$0 推广</td><td class="h1">$0</td><td class="h4">$94</td><td><span class="tag-official">官方</span></td></tr>
+    <tr><td class="broker">贝塔国际</td><td class="h-na">未披露</td><td class="h-na">未披露</td><td class="h-na">未披露</td><td class="h-na">未披露</td><td class="h5">1% 级别</td><td class="h-na">未披露</td><td class="h-na">—</td><td><span class="tag-3rd">仅牌照</span></td></tr>
+  </tbody>
+</table>
+
+<!-- ============ 研判 ============ -->
+<h2>③ 销售视角研判（参考）</h2>
+
+<div style="border:1px solid #d1d9e0;border-radius:6px;padding:14px 18px;background:#fafbfc;margin:12px 0;font-size:12.5px;color:#59636e;line-height:1.7;">
+  <ol style="padding-left:20px;margin:4px 0;">
+    <li style="margin:4px 0;"><strong style="color:#1f2328;font-weight:600;">成本趋同，体验分化：</strong>主流券商单次打新成本已压至 HK$0–$100 区间，差异几乎可忽略。决定长期收益的是杠杆上限 × 暗盘流动性 × IPO 覆盖广度——富途、老虎、耀才三家领先。</li>
+    <li style="margin:4px 0;"><strong style="color:#1f2328;font-weight:600;">银行融资 &gt; 券商自有孖展：</strong>银行融资年化 1.6%–4%（官方披露），券商自有 4.8%–7.2%。建议绑定 2 家账户，大 IPO 用银行融资+高杠杆，冷门 IPO 用现金。</li>
+    <li style="margin:4px 0;"><strong style="color:#1f2328;font-weight:600;">"0 息"本质是营销：</strong>耀才 2025 财年 IPO 孖展利息收入占比 34.9%（同花顺披露），0 息属阶段性贴钱抢客，不宜长期锁定。</li>
+    <li style="margin:4px 0;"><strong style="color:#1f2328;font-weight:600;">贝塔国际定位差异：</strong>SFC 中央编号 ABN652，主业为 IPO 承销/配售，未公开披露零售打新费率，不建议作为主力账户；如需使用先致电 (852) 3590 9488 确认。</li>
+    <li style="margin:4px 0;"><strong style="color:#1f2328;font-weight:600;">FINI 新规后策略转向：</strong>一手中签率低至 0.02%，逾 9 成参与者已转孖展。杠杆对收益影响远高于手续费，盯活动期"0 息+高倍数"组合即可。</li>
+  </ol>
+</div>
+
+<!-- SOURCE_TABLE_BLOCK_START -->
+<h2>④ 数据源溯源表（每项数据可追溯）</h2>
+<p style="font-size:13px;color:#59636e;"><span class="tag-official" style="font-size:10px;background:#dafbe1;border:1px solid #1a7f37;color:#1a7f37;padding:0 5px;border-radius:8px;font-weight:600;">官方</span> = 券商官网直接披露；<span class="tag-3rd" style="font-size:10px;background:#fff8c5;border:1px solid #bf8700;color:#9a6700;padding:0 5px;border-radius:8px;font-weight:600;">第三方</span> = MoneyHero/HKET/新华社等汇总披露，已交叉验证。</p>
+
+<table class="source-table">
+  <thead>
+    <tr>
+      <th>券商</th>
+      <th>关键数据</th>
+      <th>官方数据源</th>
+      <th>第三方交叉源</th>
+      <th>验证状态</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>长桥</strong></td>
+      <td>现金 $49 / 融资 $99 / 银行融资 3.99% / 融资比例 97%</td>
+      <td><a href="https://longbridge.com/nz/support/topics/hk-trade/2mtjlpi" target="_blank">官网收费标准</a> <span class="tag-official">官方</span></td>
+      <td><a href="https://www.moneyhero.com.hk/zh/investment/provider/longbridge-%E9%95%B7%E6%A9%8B%E8%AD%89%E5%88%B8" target="_blank">MoneyHero</a></td>
+      <td>✅ 官方直达</td>
+    </tr>
+    <tr>
+      <td><strong>华盛</strong></td>
+      <td>现金 $50 / 融资 $100 / 自有融资 4.8%（二级）/ 新股融资 6.8% / 银行融资 1.6%</td>
+      <td><a href="https://www.vbkr.com/margin-financing" target="_blank">官网融资说明</a> <span class="tag-official">官方</span> · <a href="https://www.vbkr.com/help/topic2-0lx" target="_blank">0息活动细则</a> <span class="tag-official">官方</span></td>
+      <td><a href="https://www.moneysmart.hk/zh-hk/investments/valuable-capital/ipo" target="_blank">MoneySmart</a></td>
+      <td>✅ 官方直达</td>
+    </tr>
+    <tr>
+      <td><strong>富途</strong></td>
+      <td>现金 $0 / 富途融资 6.8% / 银行融资活动 0 息</td>
+      <td><a href="https://www.futuhk.com/hans/blog/detail-new-share-subscription-latest-ipo-ipo-ipo-ipo-tutorial-with-0-interest-0-handling-fee-100-241156010" target="_blank">官网新股教程</a> <span class="tag-official">官方</span></td>
+      <td><a href="https://wealth.hket.com/article/3849678" target="_blank">HKET 汇总</a></td>
+      <td>✅ 官方直达</td>
+    </tr>
+    <tr>
+      <td><strong>老虎</strong></td>
+      <td>新户 10 倍内 0 息 0 手续费 / 常规 7.2%</td>
+      <td><a href="https://docs.google.com/forms/d/e/1FAIpQLSf8vTr4Aa93d7fTuhJWKuJ43pkPl_qNEoBJwkXz48tu6q9iug/viewform" target="_blank">官方新人礼条款</a> <span class="tag-official">官方</span></td>
+      <td><a href="https://www.moneyhero.com.hk/zh/investment/provider/tiger-brokers" target="_blank">MoneyHero</a></td>
+      <td>✅ 官方条款</td>
+    </tr>
+    <tr>
+      <td><strong>耀才</strong></td>
+      <td>现金 $0 / 孖展 $83 或 $0 活动 / 热门股 0 息</td>
+      <td><a href="https://epaper.tkww.hk/a/202505/13/AP6822586fe4b0fbda9a1f388e.html" target="_blank">耀才官宣（大公报）</a> <span class="tag-3rd">媒体</span></td>
+      <td><a href="https://www.stheadline.com/zh-hans/investment/3489402/" target="_blank">Headline 汇总</a> · <a href="http://m.10jqka.com.cn/20260319/c675415764.shtml" target="_blank">同花顺（2025 财报）</a></td>
+      <td>⚠️ 官方无集中页</td>
+    </tr>
+    <tr>
+      <td><strong>尊嘉</strong></td>
+      <td>现金 $0 / 融资 $31.9 / 利率 P+1.5%（~5.99%）/ 10 倍</td>
+      <td><a href="https://www.zvsthk.com/qa/three/163" target="_blank">官方帮助中心</a> <span class="tag-official">官方</span></td>
+      <td><a href="https://baike.baidu.com/item/%E5%B0%8A%E5%98%89%E9%87%91%E8%9E%8D/22213957" target="_blank">百度百科</a></td>
+      <td>✅ 官方直达</td>
+    </tr>
+    <tr>
+      <td><strong>盈立 uSMART</strong></td>
+      <td>现金 $0 / 融资 $100 / 银行融资 1.6% 起 / 95% 融资</td>
+      <td><a href="https://www.moneyhero.com.hk/zh/investment/provider/usmart" target="_blank">MoneyHero 披露</a> <span class="tag-3rd">第三方</span></td>
+      <td><a href="https://www.moneyhero.com.hk/zh/investment/blog/%E6%B5%B7%E5%A4%A9%E5%91%B3%E6%A5%ADIPO" target="_blank">IPO 对比</a></td>
+      <td>⚠️ 官方页失效</td>
+    </tr>
+    <tr>
+      <td><strong>微牛 Webull</strong></td>
+      <td>港股 0 佣金推广期 / 港币孖展 5.7% / 美元 4.75%</td>
+      <td><a href="https://www.webull-hk.com/blog/20" target="_blank">官网费率指南</a> <span class="tag-official">官方</span></td>
+      <td><a href="https://www.moneyhero.com.hk/zh/investment/comparison/hk-stock-account" target="_blank">MoneyHero</a></td>
+      <td>✅ 官方直达</td>
+    </tr>
+    <tr>
+      <td><strong>贝塔国际</strong></td>
+      <td>零售打新费率 <strong>官方未披露</strong>；以 IPO 承销为主业。计算器内置"行业估算"档位（佣金 0.25% / 最低 $100 / 融资 6.8%），仅供参考</td>
+      <td><a href="https://baike.baidu.hk/item/%E8%B4%9D%E5%A1%94%E5%9B%BD%E9%99%85%E8%AF%81%E5%88%B8%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/64768043" target="_blank">持牌信息</a> <span class="tag-3rd">第三方</span></td>
+      <td>官方客服 <strong>(852) 3590 9488</strong>（核实后用"自定义"档位输入）</td>
+      <td>❌ 需致电</td>
+    </tr>
+    <tr>
+      <td><strong>市场汇总</strong></td>
+      <td>14 券商+银行优惠一览 / 20 间券商孖展对比</td>
+      <td>—</td>
+      <td><a href="https://www.stheadline.com/zh-hans/investment/3489402/" target="_blank">Headline 报道</a> · <a href="https://wealth.hket.com/article/3849678" target="_blank">HKET 专题</a> · <a href="https://lowrisktradesmart.org/zh-hk/blog/hk-ipo-application-fees-2026" target="_blank">TradeSmart 2026</a></td>
+      <td>✅ 交叉验证</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout callout-warn">
+  <strong>📌 数据更新纪律：</strong>所有"专属利率/0 息活动"均以 <strong>认购单只新股时的详情页</strong> 为最终依据，本表仅反映截至 2026-05-07 公开披露的标准值。热门大股（如蜜雪冰城、宁德时代港股）会临时推出 0 息+100 倍杠杆组合，以券商 app 实时推送为准。
+</div>
+<!-- SOURCE_TABLE_BLOCK_END -->
+
+<div class="disclaimer">
+  <strong>免责声明：</strong>本报告数据来源含券商官网与 MoneyHero / HKET / Headline / TradeSmart / 雪球 / 新华社等公开汇总，数据截止 <strong>2026-05-07</strong>。港股孖展利率与 HIBOR 挂钩，各券商常针对单只新股调整费率及活动，实际认购费率请以认购详情页为准。计算器结果仅供参考，<strong>不构成任何投资建议</strong>。
+</div>
+
+<!-- ============ JavaScript 计算器 ============ -->
+<script>
+// 时效自检
+const DATA_DATE = '2026-05-07';
+function checkFreshness() {
+  const dataDate = new Date(DATA_DATE + 'T00:00:00');
+  const today = new Date();
+  const diffDays = Math.floor((today - dataDate) / 86400000);
+  const bar = document.getElementById('freshnessBar');
+  const lab = document.getElementById('freshnessLabel');
+  const meta = document.getElementById('freshnessMeta');
+  const dot = document.getElementById('freshnessDot');
+  document.getElementById('dataDate').textContent = DATA_DATE;
+
+  if (diffDays < 0) {
+    lab.textContent = '🟢 数据为未来日期';
+    meta.textContent = '（请检查系统时间）';
+  } else if (diffDays <= 14) {
+    bar.style.borderColor = '#1a7f37';
+    bar.style.background = '#dafbe1';
+    dot.style.background = '#1a7f37';
+    dot.style.boxShadow = '0 0 0 4px rgba(26,127,55,.18)';
+    lab.textContent = '🟢 数据新鲜';
+    meta.textContent = `已采集 ${diffDays} 天，建议 30 天内复核`;
+  } else if (diffDays <= 30) {
+    bar.style.borderColor = '#bf8700';
+    bar.style.background = '#fff8c5';
+    dot.style.background = '#bf8700';
+    dot.style.boxShadow = '0 0 0 4px rgba(191,135,0,.18)';
+    lab.textContent = '🟡 接近过期';
+    meta.textContent = `已采集 ${diffDays} 天，建议尽快复核活动价`;
+  } else {
+    bar.style.borderColor = '#cf222e';
+    bar.style.background = '#ffd6d6';
+    dot.style.background = '#cf222e';
+    dot.style.boxShadow = '0 0 0 4px rgba(207,34,46,.18)';
+    lab.textContent = '🔴 数据已过期';
+    meta.textContent = `已采集 ${diffDays} 天，强烈建议重新核验`;
+  }
+}
+checkFreshness();
+const BROKERS = {
+  // 每个 broker: cashFee, marginFee, rate(年化%), sellComm(%), platform(买+卖港元), minSellComm
+  yaocai_active: { name: '耀才·活动', cashFee: 0, marginFee: 0, rate: 0, sellComm: 0.03, platform: 0, minSellComm: 0 },
+  yaocai_reg:    { name: '耀才·常规', cashFee: 0, marginFee: 83, rate: 6.8, sellComm: 0.03, platform: 0, minSellComm: 0 },
+  futu_futu:     { name: '富途·富途融资', cashFee: 0, marginFee: 0, rate: 6.8, sellComm: 0.03, platform: 30, minSellComm: 3 },
+  futu_bank_active: { name: '富途·银行活动', cashFee: 0, marginFee: 100, rate: 0, sellComm: 0.03, platform: 30, minSellComm: 3 },
+  futu_bank_reg: { name: '富途·银行常规', cashFee: 0, marginFee: 100, rate: 3.98, sellComm: 0.03, platform: 30, minSellComm: 3 },
+  tiger_new:     { name: '老虎·新户', cashFee: 0, marginFee: 0, rate: 0, sellComm: 0.06, platform: 30, minSellComm: 15 },
+  tiger_reg:     { name: '老虎·常规', cashFee: 0, marginFee: 80, rate: 7.2, sellComm: 0.06, platform: 30, minSellComm: 15 },
+  hstong_bank:   { name: '华盛·银行融资', cashFee: 50, marginFee: 100, rate: 1.6, sellComm: 0.03, platform: 30, minSellComm: 3 },
+  hstong_self:   { name: '华盛·自有孖展', cashFee: 50, marginFee: 100, rate: 6.8, sellComm: 0.03, platform: 30, minSellComm: 3 },
+  longbridge:    { name: '长桥', cashFee: 49, marginFee: 99, rate: 3.99, sellComm: 0, platform: 30, minSellComm: 0 },
+  uniq:          { name: '尊嘉', cashFee: 0, marginFee: 31.9, rate: 5.99, sellComm: 0, platform: 0, minSellComm: 0 },
+  usmart:        { name: 'uSMART', cashFee: 0, marginFee: 100, rate: 1.6, sellComm: 0.03, platform: 0, minSellComm: 3 },
+  webull:        { name: 'Webull', cashFee: 50, marginFee: 100, rate: 5.7, sellComm: 0, platform: 0, minSellComm: 0 },
+  // 贝塔国际：官方未公开披露零售打新费率，以下为按"传统中小券商"行业标准的估算，需致电 3590 9488 核实
+  beta_est:      { name: '贝塔·估算', cashFee: 50, marginFee: 100, rate: 6.8, sellComm: 0.25, platform: 0, minSellComm: 100, estimated: true },
+  beta_custom:   { name: '贝塔·自定义', custom: true },
+};
+
+function fmt(n) {
+  if (!isFinite(n)) return '—';
+  return 'HK$ ' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtSigned(n) {
+  if (!isFinite(n)) return '—';
+  const sign = n >= 0 ? '+' : '';
+  return sign + 'HK$ ' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function calc() {
+  const brokerKey = document.getElementById('broker').value;
+  let b = BROKERS[brokerKey];
+
+  // 贝塔自定义：动态从输入框读取
+  const customPanel = document.getElementById('betaCustomPanel');
+  const estimateWarn = document.getElementById('estimateWarn');
+  if (brokerKey === 'beta_custom') {
+    customPanel.style.display = 'block';
+    estimateWarn.style.display = 'block';
+    b = {
+      name: '贝塔·自定义',
+      cashFee: parseFloat(document.getElementById('beta_cashFee').value) || 0,
+      marginFee: parseFloat(document.getElementById('beta_marginFee').value) || 0,
+      rate: parseFloat(document.getElementById('beta_rate').value) || 0,
+      sellComm: parseFloat(document.getElementById('beta_sellComm').value) || 0,
+      platform: parseFloat(document.getElementById('beta_platform').value) || 0,
+      minSellComm: parseFloat(document.getElementById('beta_minComm').value) || 0,
+      custom: true,
+    };
+  } else if (brokerKey === 'beta_est') {
+    customPanel.style.display = 'none';
+    estimateWarn.style.display = 'block';
+  } else {
+    customPanel.style.display = 'none';
+    estimateWarn.style.display = 'none';
+  }
+
+  const total = parseFloat(document.getElementById('totalAmt').value) || 0;
+  const lev = Math.max(1, parseFloat(document.getElementById('leverage').value) || 1);
+  const days = Math.max(1, parseFloat(document.getElementById('days').value) || 1);
+  const price = parseFloat(document.getElementById('price').value) || 0;
+  const hit = parseFloat(document.getElementById('hit').value) || 0;
+  const gain = parseFloat(document.getElementById('gain').value) || 0;
+
+  document.getElementById('leverageDesc').value = lev === 1 ? '纯现金（无融资）' : lev + '× 融资';
+
+  // 认购成本
+  const useMargin = lev > 1;
+  const cashFee = useMargin ? 0 : b.cashFee;
+  const marginFee = useMargin ? b.marginFee : 0;
+  const marginAmt = useMargin ? total * (lev - 1) / lev : 0;
+  const interest = marginAmt * (b.rate / 100) * (days / 365);
+  const subFee = cashFee + marginFee + interest;
+
+  document.getElementById('r_cashFee').textContent = fmt(cashFee);
+  document.getElementById('r_marginFee').textContent = fmt(marginFee);
+  document.getElementById('r_marginAmt').textContent = fmt(marginAmt);
+  document.getElementById('r_interest').textContent = fmt(interest) + '（' + b.rate + '% × ' + days + '天）';
+  document.getElementById('r_subFee').textContent = fmt(subFee);
+
+  // 中签后
+  const hitValue = hit * price;
+  const buyCommRaw = hitValue * (b.sellComm / 100);
+  const buyComm = Math.max(buyCommRaw, hitValue > 0 ? b.minSellComm : 0);
+  const sellPrice = price * (1 + gain / 100);
+  const sellValue = hit * sellPrice;
+  const sellCommRaw = sellValue * (b.sellComm / 100);
+  const sellComm = Math.max(sellCommRaw, sellValue > 0 ? b.minSellComm : 0);
+  // 政府/交易所征费（买+卖）：印花税0.13% + 交易征费0.0027% + 交易费0.00565% + 财汇局0.00015%
+  const govRate = 0.0013 + 0.000027 + 0.0000565 + 0.0000015;
+  const govFee = (hitValue + sellValue) * govRate;
+  const platformFee = hit > 0 ? b.platform : 0;
+
+  const pnl = (sellValue - hitValue) - buyComm - sellComm - govFee - platformFee - subFee;
+
+  document.getElementById('r_hitValue').textContent = fmt(hitValue);
+  document.getElementById('r_buyComm').textContent = fmt(buyComm);
+  document.getElementById('r_sellValue').textContent = fmt(sellValue);
+  document.getElementById('r_sellComm').textContent = fmt(sellComm);
+  document.getElementById('r_gov').textContent = fmt(govFee);
+  document.getElementById('r_platform').textContent = fmt(platformFee);
+
+  const pnlEl = document.getElementById('r_pnl');
+  pnlEl.textContent = fmtSigned(pnl);
+  const totalEl = pnlEl.parentElement;
+  totalEl.classList.toggle('hl', pnl >= 0);
+  totalEl.style.color = pnl >= 0 ? '#1a7f37' : '#cf222e';
+}
+
+function applyPreset(kind) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  if (kind === 'small') {
+    document.getElementById('totalAmt').value = 10000;
+    document.getElementById('leverage').value = 1;
+    document.getElementById('days').value = 6;
+    document.getElementById('price').value = 10;
+    document.getElementById('hit').value = 1000;
+    document.getElementById('gain').value = 10;
+  } else if (kind === 'mid') {
+    document.getElementById('totalAmt').value = 100000;
+    document.getElementById('leverage').value = 10;
+    document.getElementById('days').value = 6;
+    document.getElementById('price').value = 50;
+    document.getElementById('hit').value = 500;
+    document.getElementById('gain').value = 10;
+  } else if (kind === 'large') {
+    document.getElementById('totalAmt').value = 200000;
+    document.getElementById('leverage').value = 20;
+    document.getElementById('days').value = 7;
+    document.getElementById('price').value = 80;
+    document.getElementById('hit').value = 800;
+    document.getElementById('gain').value = 15;
+  } else if (kind === 'extreme') {
+    document.getElementById('totalAmt').value = 50000;
+    document.getElementById('leverage').value = 100;
+    document.getElementById('days').value = 6;
+    document.getElementById('price').value = 20;
+    document.getElementById('hit').value = 200;
+    document.getElementById('gain').value = 30;
+  }
+  calc();
+}
+
+// 初始化
+calc();
+</script>
+
+</body>
+</html>
