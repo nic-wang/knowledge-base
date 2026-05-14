@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 编程协作工具讲解 · nic</title>
+<style>
+:root{
+  --bg:#fff;--bg-alt:#fbfbfd;--hero-bg:#000;--hero-fg:#f5f5f7;
+  --fg:#1d1d1f;--fg-2:#424245;--muted:#6e6e73;--hairline:#d2d2d7;
+  --accent:#0071e3;--accent-hover:#0077ed;
+  --grad-blue:linear-gradient(135deg,#0070f3 0%,#06b6d4 100%);
+  --grad-purple:linear-gradient(135deg,#bf5af2 0%,#ff375f 100%);
+  --grad-warm:linear-gradient(135deg,#ff9f0a 0%,#ff375f 100%);
+  --grad-mint:linear-gradient(135deg,#30d158 0%,#0071e3 100%);
+  --grad-gray:linear-gradient(135deg,#86868b 0%,#1d1d1f 100%);
+  --font-display:"SF Pro Display","PingFang SC",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-text:"SF Pro Text","PingFang SC",-apple-system,system-ui,sans-serif;
+  --font-mono:"SF Mono",ui-monospace,Menlo,monospace;
+  --fs-hero:96px;--fs-h1:56px;--fs-h2:40px;--fs-h3:28px;
+  --fs-body:21px;--fs-small:17px;--fs-caption:13px;
+  --lh-tight:1.07;--lh-body:1.47;--tracking-tight:-0.022em;
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:72px;--s7:96px;--s8:128px;
+  --r-sm:8px;--r-md:18px;--r-lg:28px;--r-pill:980px;
+  --sh-card:0 4px 24px rgba(0,0,0,.06);--sh-lift:0 12px 40px rgba(0,0,0,.10);
+  --ease-spring:cubic-bezier(.28,.16,.22,1);--dur:400ms;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;color:var(--fg);font-family:var(--font-text);font-size:var(--fs-body);line-height:var(--lh-body);-webkit-font-smoothing:antialiased;overflow:hidden}
+img{max-width:100%;display:block}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#000}
+.track{display:flex;width:100%;height:100%;transition:transform var(--dur) var(--ease-spring)}
+.slide{flex:0 0 100vw;height:100vh;background:var(--bg);overflow-y:auto;position:relative;padding:var(--s6) var(--s7)}
+.slide.dark{background:var(--hero-bg);color:var(--hero-fg)}
+.slide.dark *{color:inherit}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;background:rgba(0,0,0,.06);z-index:50}
+.progress>div{height:100%;background:var(--accent);transition:width .3s var(--ease-spring);width:0}
+.eyebrow{font-family:var(--font-text);font-size:var(--fs-caption);letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:var(--s2)}
+.dark .eyebrow{color:#86868b}
+.hud-num{position:fixed;bottom:18px;right:24px;font-family:var(--font-mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;z-index:40;background:rgba(255,255,255,.7);padding:4px 10px;border-radius:var(--r-pill);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.hud-hint{position:fixed;bottom:18px;left:24px;font-size:11px;color:var(--muted);z-index:40;background:rgba(255,255,255,.7);padding:4px 10px;border-radius:var(--r-pill);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.hud-hint kbd{background:#fff;border:1px solid var(--hairline);border-radius:4px;padding:1px 5px;font-family:var(--font-mono);font-size:10px;margin:0 2px}
+.content{max-width:1180px;margin:0 auto;width:100%}
+h1.hero{font-family:var(--font-display);font-size:var(--fs-hero);line-height:var(--lh-tight);letter-spacing:var(--tracking-tight);font-weight:700;color:var(--hero-fg)}
+h1.title{font-family:var(--font-display);font-size:var(--fs-h1);line-height:1.1;letter-spacing:var(--tracking-tight);font-weight:700;color:var(--fg);margin-bottom:var(--s3)}
+h1.title .grad{background:var(--grad-blue);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1.title .grad-purple{background:var(--grad-purple);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1.title .grad-warm{background:var(--grad-warm);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1.title .grad-mint{background:var(--grad-mint);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{font-size:var(--fs-h3);line-height:1.3;color:var(--muted);font-weight:400;margin-bottom:var(--s5);letter-spacing:-.01em}
+h2.section-h{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:600;letter-spacing:-.01em;color:var(--fg);margin:var(--s4) 0 var(--s2)}
+h3{font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--fg);margin:var(--s3) 0 var(--s1)}
+p{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--fg-2)}
+p+p{margin-top:var(--s2)}
+ul,ol{margin:var(--s2) 0 var(--s2) 22px}
+li{font-size:var(--fs-small);line-height:1.55;color:var(--fg-2);margin:6px 0}
+li::marker{color:var(--muted)}
+strong{color:var(--fg);font-weight:600}
+code{font-family:var(--font-mono);background:var(--bg-alt);border:1px solid var(--hairline);border-radius:6px;padding:1px 7px;font-size:.88em}
+.dark code{background:#1d1d1f;border-color:#2a2a2c;color:#f5f5f7}
+.term{position:relative;text-decoration:underline dotted var(--muted);text-underline-offset:3px;cursor:help;font-weight:500;color:var(--fg)}
+.dark .term{color:var(--hero-fg);text-decoration-color:#86868b}
+.term:hover::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);background:#fff;color:var(--fg);border:1px solid var(--hairline);border-radius:var(--r-md);padding:14px 18px;width:max-content;max-width:340px;font-size:14px;line-height:1.5;font-weight:400;letter-spacing:0;text-decoration:none;box-shadow:var(--sh-lift);white-space:normal;text-align:left;z-index:30;pointer-events:none;animation:tipIn .2s var(--ease-spring) both}
+.term:hover::before{content:"";position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#fff;border-right:1px solid var(--hairline);border-bottom:1px solid var(--hairline);z-index:31;pointer-events:none}
+@keyframes tipIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.grid{display:grid;gap:var(--s3)}
+.grid-2{grid-template-columns:1fr 1fr}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--bg-alt);border-radius:var(--r-lg);padding:var(--s4)}
+.card.flat{background:#fff;border:1px solid var(--hairline)}
+.card h3{margin-top:0;margin-bottom:var(--s1)}
+.card .one-line{font-size:14px;color:var(--muted);margin-bottom:var(--s2)}
+.dark .card{background:#1d1d1f;color:#f5f5f7}
+.dark .card p,.dark .card li{color:#a1a1a6}
+.dark .card strong{color:#f5f5f7}
+.card-grad{position:relative;background:#fff;border:1px solid var(--hairline);border-radius:var(--r-lg);padding:var(--s4);overflow:hidden}
+.card-grad::before{content:"";position:absolute;top:0;left:0;right:0;height:6px}
+.card-grad.g-blue::before{background:var(--grad-blue)}
+.card-grad.g-purple::before{background:var(--grad-purple)}
+.card-grad.g-warm::before{background:var(--grad-warm)}
+.card-grad.g-mint::before{background:var(--grad-mint)}
+.card-grad.g-gray::before{background:var(--grad-gray)}
+.card-grad .row{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px dashed var(--hairline);color:var(--fg-2)}
+.card-grad .row:last-child{border-bottom:0}
+.card-grad .row b{color:var(--fg);font-weight:600}
+.plugin-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline)}
+.plugin-row:last-child{border-bottom:0}
+.plugin-row .name{font-weight:600;font-size:16px;color:var(--fg);display:flex;align-items:center;gap:8px}
+.plugin-row .desc{color:var(--muted);font-size:14px;text-align:right;max-width:260px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%}
+table{width:100%;border-collapse:collapse;font-size:15px;margin-top:var(--s2);background:#fff}
+thead th{background:var(--bg-alt);text-align:left;padding:12px 14px;font-weight:600;color:var(--fg);font-size:13px;letter-spacing:.02em;border-bottom:1px solid var(--hairline)}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--hairline);color:var(--fg-2);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+td.k{font-weight:600;color:var(--fg);width:120px}
+td .pill{display:inline-block;padding:2px 9px;border-radius:var(--r-pill);font-size:12px;font-weight:600}
+.pill.good{background:#e8f5e9;color:#1a7f37}
+.pill.warn{background:#fff8c5;color:#9a6700}
+.pill.bad{background:#ffebee;color:#cf222e}
+.pill.info{background:#e3f2fd;color:#0550ae}
+.callout{background:linear-gradient(135deg,#f5f5f7 0%,#fbfbfd 100%);border-left:3px solid var(--accent);border-radius:var(--r-md);padding:var(--s3) var(--s4);margin-top:var(--s3);font-size:16px;color:var(--fg-2)}
+.callout strong{color:var(--fg)}
+.callout.warn{border-left-color:#ff9f0a}
+.callout.good{border-left-color:#30d158}
+.dark .callout{background:#1d1d1f;color:#a1a1a6}
+.notes{margin-top:var(--s4);padding:var(--s3);background:#fffbe6;border:1px dashed #d4a72c;border-radius:var(--r-md);font-size:14px;color:#8b6914;display:none}
+.notes.show{display:block}
+.notes b{color:#5c4406}
+.dark .notes{background:#2a2310;border-color:#5c4406;color:#d4a72c}
+.shot{border-radius:var(--r-lg);overflow:hidden;background:var(--bg-alt);border:1px solid var(--hairline);box-shadow:var(--sh-card)}
+.shot img{width:100%;display:block}
+.shot-cap{padding:12px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--hairline);background:#fff}
+.hero-slide{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:var(--s7);position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 30%,#1a1a1d 0%,#000 70%)}
+.hero-slide .blob{position:absolute;border-radius:50%;filter:blur(140px);pointer-events:none;animation:breathe 8s ease-in-out infinite}
+.hero-slide .blob.b1{width:680px;height:680px;right:-180px;bottom:-180px;background:var(--grad-blue);opacity:.32}
+.hero-slide .blob.b2{width:580px;height:580px;left:-180px;top:-160px;background:var(--grad-purple);opacity:.22;animation-delay:-4s}
+.hero-slide .blob.b3{width:420px;height:420px;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#bf5af2 0%,transparent 70%);opacity:.18;animation-delay:-2s}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.hero-slide .blob.b3{animation:breathe-c 10s ease-in-out infinite}
+@keyframes breathe-c{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.18)}}
+.hero-slide .meta{margin-top:var(--s5);font-size:var(--fs-small);color:#86868b;text-align:center;letter-spacing:0.01em}
+.hero-eyebrow{font-family:var(--font-text);font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#86868b;margin-bottom:24px;animation:fadeUp .8s var(--ease-spring) .1s both}
+.hero-eyebrow .dot-sep{display:inline-block;width:3px;height:3px;border-radius:50%;background:#86868b;vertical-align:middle;margin:0 10px;transform:translateY(-2px)}
+h1.hero-mega{font-family:var(--font-display);font-size:140px;font-weight:700;letter-spacing:-.05em;line-height:.96;color:var(--hero-fg);text-align:center;animation:fadeUp .9s var(--ease-spring) .25s both}
+h1.hero-mega .grad-text{background:linear-gradient(90deg,#06b6d4 0%,#0070f3 30%,#bf5af2 60%,#ff375f 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradientShift 6s linear infinite}
+@keyframes gradientShift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.hero-tagline{font-family:var(--font-display);font-size:30px;line-height:1.35;font-weight:400;letter-spacing:-.012em;color:#a1a1a6;margin-top:32px;max-width:900px;text-align:center;animation:fadeUp .9s var(--ease-spring) .45s both}
+.hero-tagline .strong-name{color:var(--hero-fg);font-weight:500}
+.hero-tagline .sep-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:#5e5e63;vertical-align:middle;margin:0 12px;transform:translateY(-3px)}
+.hero-meta-row{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:48px;animation:fadeUp .9s var(--ease-spring) .65s both}
+.hero-meta-row .chip{padding:7px 16px;border-radius:980px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);font-size:12px;color:#a1a1a6;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);font-weight:500}
+.hero-scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:#5e5e63;font-size:11px;letter-spacing:.12em;text-transform:uppercase;animation:fadeUp .9s var(--ease-spring) .9s both,bounceY 2s ease-in-out 1.8s infinite}
+.hero-scroll-cue .arr{width:18px;height:18px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:2px}
+@keyframes bounceY{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero-end h1.hero-mega{font-size:180px;letter-spacing:-.06em}
+.chapter-slide{display:flex;flex-direction:column;justify-content:flex-end;padding:var(--s7) var(--s8);position:relative}
+.chapter-slide .ch-num{font-family:var(--font-display);font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:#86868b;margin-bottom:var(--s2)}
+.chapter-slide .ch-title{font-family:var(--font-display);font-size:96px;font-weight:700;line-height:1.05;letter-spacing:var(--tracking-tight);color:var(--hero-fg);max-width:1200px}
+.chapter-slide .ch-sub{margin-top:var(--s3);font-size:24px;color:#a1a1a6;max-width:780px;line-height:1.4}
+.chapter-slide .ch-chip{position:absolute;top:var(--s7);right:var(--s7);width:88px;height:12px;border-radius:var(--r-pill)}
+.chapter-slide .ch-chip.g1{background:var(--grad-blue)}
+.chapter-slide .ch-chip.g2{background:var(--grad-purple)}
+.chapter-slide .ch-chip.g3{background:var(--grad-warm)}
+.chapter-slide .ch-chip.g4{background:var(--grad-mint)}
+.chapter-slide .ch-chip.g5{background:var(--grad-gray)}
+.svg-wrap{margin:var(--s3) 0;border-radius:var(--r-md);overflow:hidden}
+.svg-wrap svg{width:100%;height:auto;display:block}
+body.pdf-mode{overflow:visible;height:auto}
+body.pdf-mode .deck{height:auto;overflow:visible}
+body.pdf-mode .track{display:block;transform:none!important;width:100%;height:auto}
+body.pdf-mode .slide{flex:none;width:1400px;height:875px;min-height:875px;max-height:875px;page-break-after:always;break-after:page;break-inside:avoid;page-break-inside:avoid;overflow:hidden;padding:42px 60px}
+body.pdf-mode .progress,body.pdf-mode .hud-num,body.pdf-mode .hud-hint{display:none}
+body.pdf-mode .notes{display:block;font-size:11px;padding:8px 12px;margin-top:10px}
+body.pdf-mode .term{text-decoration:none;cursor:default}
+body.pdf-mode .term::after{content:"（"attr(data-tip)"）";color:var(--muted);font-size:.78em;font-weight:400;margin-left:2px}
+body.pdf-mode .term:hover::after,body.pdf-mode .term:hover::before{display:none;animation:none}
+body.pdf-mode .chapter-slide{padding:48px 80px}
+body.pdf-mode .chapter-slide .ch-title{font-size:72px}
+body.pdf-mode .hero-slide h1.hero{font-size:80px}
+body.pdf-mode .hero-slide h1.hero-mega{font-size:120px;line-height:1}
+body.pdf-mode .hero-end h1.hero-mega{font-size:160px}
+body.pdf-mode .hero-tagline{font-size:24px}
+body.pdf-mode .hero-eyebrow{font-size:11px}
+body.pdf-mode .hero-scroll-cue{display:none}
+body.pdf-mode .hero-slide .blob{animation:none!important}
+body.pdf-mode h1.title{font-size:40px;margin-bottom:10px}
+body.pdf-mode .subtitle{font-size:17px;margin-bottom:20px}
+body.pdf-mode h2.section-h{font-size:18px;margin:12px 0 6px}
+body.pdf-mode h3{font-size:16px;margin:8px 0 4px}
+body.pdf-mode p,body.pdf-mode li{font-size:13px;line-height:1.45}
+body.pdf-mode .callout{padding:10px 14px;font-size:12px;margin-top:10px}
+body.pdf-mode .card,body.pdf-mode .card-grad{padding:16px}
+body.pdf-mode .grid{gap:12px}
+body.pdf-mode .card-grad .row{font-size:12px;padding:4px 0}
+body.pdf-mode .plugin-row{padding:7px 0}
+body.pdf-mode .plugin-row .name{font-size:13px}
+body.pdf-mode .plugin-row .desc{font-size:11px}
+body.pdf-mode .shot img{max-height:240px;object-fit:contain}
+body.pdf-mode .svg-wrap{margin:6px 0}
+body.pdf-mode .svg-wrap svg{max-height:340px}
+body.pdf-mode table{font-size:11px}
+body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
+@page{size:1400px 875px;margin:0}
+@media print{body{background:#fff!important;overflow:visible;-webkit-print-color-adjust:exact;print-color-adjust:exact;color-adjust:exact}.deck{height:auto;overflow:visible}.track{display:block;transform:none!important}.slide{page-break-after:always;break-after:page;break-inside:avoid;page-break-inside:avoid;width:1400px;height:875px;min-height:875px;max-height:875px;overflow:hidden;padding:42px 60px}.progress,.hud-num,.hud-hint{display:none!important}.term{text-decoration:none!important}.term::after{content:"（"attr(data-tip)"）";color:var(--muted);font-size:.78em}.notes{display:block!important;font-size:11px;padding:8px 12px;margin-top:10px}.chapter-slide{padding:48px 80px}.chapter-slide .ch-title{font-size:72px}.hero-slide h1.hero{font-size:80px}h1.title{font-size:40px;margin-bottom:10px}.subtitle{font-size:17px;margin-bottom:20px}h2.section-h{font-size:18px;margin:12px 0 6px}h3{font-size:16px;margin:8px 0 4px}p,li{font-size:13px;line-height:1.45}.callout{padding:10px 14px;font-size:12px;margin-top:10px}.card,.card-grad{padding:16px}.grid{gap:12px}.card-grad .row{font-size:12px;padding:4px 0}.plugin-row{padding:8px 0}.plugin-row .name{font-size:13px}.plugin-row .desc{font-size:12px}.shot img{max-height:260px;object-fit:contain}.svg-wrap{margin:8px 0}.svg-wrap svg{max-height:340px}table{font-size:12px}thead th,tbody td{padding:8px 10px}}
+</style>
+</head>
+<body>
+<div class="progress"><div id="bar"></div></div>
+<div class="hud-hint"><kbd>←</kbd><kbd>→</kbd> 翻页 · <kbd>P</kbd> 备注 · <kbd>F</kbd> 全屏</div>
+<div class="hud-num"><span id="cur">1</span>/<span id="total">34</span></div>
+<div class="deck"><div class="track" id="track">
+<!-- 1 · 封面（Apple Intelligence 风 · 渐变大字 + 呼吸光斑 + scroll cue） -->
+<section class="slide dark hero-slide">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="content" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%">
+    <div class="hero-eyebrow">AI · For Business<span class="dot-sep"></span>2026 W19<span class="dot-sep"></span>商务服务行业内训</div>
+    <h1 class="hero-mega">把 AI 当<br><span class="grad-text">同事</span>用。</h1>
+    <p class="hero-tagline">
+      <span class="strong-name">CodeBuddy</span><span class="sep-dot"></span><span class="strong-name">Claude Code</span><span class="sep-dot"></span><span class="strong-name">WorkBuddy</span><br>
+      三个 AI 同事 · 怎么用 · 怎么选 · 怎么落地
+    </p>
+    <div class="hero-meta-row">
+      <span class="chip">nic</span>
+      <span class="chip">商务服务行业销售</span>
+      <span class="chip">2026.05.10</span>
+    </div>
+  </div>
+  <div class="hero-scroll-cue">
+    <span>swipe / press →</span>
+    <span class="arr"></span>
+  </div>
+</section>
+
+<!-- 2 · 章扉 1 -->
+<section class="slide dark chapter-slide">
+  <div class="ch-chip g1"></div>
+  <div class="ch-num">Chapter 01</div>
+  <div class="ch-title">心智模型</div>
+  <div class="ch-sub">把 AI 当工具，用一辈子也用不顺。<br>把 AI 当同事，三天就开窍。</div>
+</section>
+
+<!-- 3 · 今天讲什么 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">导览</div>
+    <h1 class="title">今天讲<span class="grad">什么</span></h1>
+    <p class="subtitle">5 章 · 34 页 · 30-40 分钟 · 有 demo · 可截图带走</p>
+    <div class="grid grid-3" style="margin-top:var(--s5)">
+      <div class="card-grad g-blue"><h3>1 · 心智模型</h3><p style="font-size:15px;color:var(--muted)">心智 · 三层架构 · 名词速查 · Claw 家族 · Harness/Hermes · MCP 协议 · 合规边界</p></div>
+      <div class="card-grad g-purple"><h3>2 · 三同事详解</h3><p style="font-size:15px;color:var(--muted)">CC / WorkBuddy / CodeBuddy 速览 + 4 个真实 demo · 横向对比 · 决策矩阵</p></div>
+      <div class="card-grad g-warm"><h3>3 · 模型与 Context</h3><p style="font-size:15px;color:var(--muted)">Opus / Sonnet / Haiku 同事类比 · Context Window · 价格直觉 · 非 Anthropic 模型</p></div>
+      <div class="card-grad g-mint"><h3>4 · 配置即记忆</h3><p style="font-size:15px;color:var(--muted)">AGENTS.md why+how · Skill / Hook 最小模板</p></div>
+      <div class="card-grad g-gray"><h3>5 · 起步路径</h3><p style="font-size:15px;color:var(--muted)">5 条误解辟谣 · 场景速查 · 成长路径 Day 1 → Quarter 1</p></div>
+    </div>
+    <div class="callout" style="margin-top:var(--s5)"><strong>预期：</strong>听完之后，你能说清楚自己手头的活该用哪个 agent，知道至少 1 处可以马上节省 30 分钟的具体落地点。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 开场 1 分钟。强调 "今天不会让你装东西，先听完再决定要不要上手"。</aside>
+  </div>
+</section>
+
+<!-- 4 · AI 是同事 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 1 章 · 心智模型</div>
+    <h1 class="title">AI 不是<span class="grad-warm">工具</span>，是<span class="grad">同事</span>。</h1>
+    <p class="subtitle">心智一旦切对，整套用法都顺了</p>
+    <div class="grid grid-2" style="margin-top:var(--s4)">
+      <div class="card"><h3 style="color:#cf222e">❌ 把 AI 当工具</h3>
+        <ul><li>每次都从零交代背景</li><li>不给上下文，问完就走</li><li>得到一句模糊回答，骂"AI 不行"</li><li>不教它，不喂资料，不写偏好</li><li>结果：5 分钟省下 30 秒，再花 4 分钟改</li></ul></div>
+      <div class="card"><h3 style="color:#1a7f37">✅ 把 AI 当同事</h3>
+        <ul><li>给身份："我是法律行业销售"</li><li>给偏好："HTML 我要 Apple 风"</li><li>给项目地图："这个客户的历史在 X 文件"</li><li>明确反模式："不要给我 5 个选项让我挑"</li><li>结果：1 小时投入 / 半年复利</li></ul></div>
+    </div>
+    <div class="callout good"><strong>核心切换：</strong>从 "AI 帮我做 X" → 变成 "AI 知道我是谁、在哪、要去哪、之后再帮我做 X"。<br>这就是为什么"配置"和"记忆"是这堂课最重要的两个词。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是全场心智锚点。可以问听众"你最近一次用 AI 失望是什么时候？" 大概率答案都是把 AI 当工具的失败经历。</aside>
+  </div>
+</section>
+
+<!-- 5 · 章扉 2 -->
+<section class="slide dark chapter-slide">
+  <div class="ch-chip g2"></div>
+  <div class="ch-num">Chapter 02</div>
+  <div class="ch-title">三个同事</div>
+  <div class="ch-sub">CC 是动手实习生，CodeBuddy 是身边小助理，WorkBuddy 是长期顾问。</div>
+</section>
+
+<!-- 6 · 三同事角色定位（升级版：加市面同类 + 记忆模块对比） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · 三同事</div>
+    <h1 class="title">三个 <span class="grad">AI 同事</span> · 角色 + 市面归类</h1>
+    <p class="subtitle">先认人 · 再看名片 · 再判断它和你常用的工具是不是一类</p>
+    <div class="grid grid-3" style="margin-top:var(--s3)">
+      <div class="card-grad g-blue"><h3><span class="term" data-tip="Claude Code · Anthropic 官方 CLI · 在终端运行 · 能读写文件、跑 shell、git">CC</span></h3><p class="one-line">动手实习生 · 终端 CLI</p>
+        <div class="row"><span>载体</span><b>命令行 CLI</b></div>
+        <div class="row"><span>最强场景</span><b>批量改文件 / git</b></div>
+        <div class="row"><span>叫它</span><b>"我电脑上要动手做"</b></div>
+        <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--hairline);font-size:11px;color:var(--muted)">市面同类 · CLI agent</div>
+        <div style="font-size:12px;color:var(--fg-2);line-height:1.5;margin-top:4px"><b>Aider</b> · <b>Cursor CLI</b> · <b>OpenAI Codex CLI</b> · <b>Gemini CLI</b> · <b>OpenCode</b> · <b>Goose</b></div>
+      </div>
+      <div class="card-grad g-purple"><h3>WorkBuddy</h3><p class="one-line">长期顾问 · 独立桌面 agent</p>
+        <div class="row"><span>载体</span><b>独立 agent 实例</b></div>
+        <div class="row"><span>最强场景</span><b>跨日策略 / 复盘</b></div>
+        <div class="row"><span>叫它</span><b>"参考过去半年的事"</b></div>
+        <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--hairline);font-size:11px;color:var(--muted)">市面同类 · 桌面 agent</div>
+        <div style="font-size:12px;color:var(--fg-2);line-height:1.5;margin-top:4px"><b>ChatGPT Desktop</b> · <b>Claude Desktop</b> · <b>Perplexity</b> · <b>Notion AI</b> · <b>Granola</b>（会议）</div>
+      </div>
+      <div class="card-grad g-warm"><h3>CodeBuddy</h3><p class="one-line">身边小助理 · IDE 插件</p>
+        <div class="row"><span>载体</span><b>IDE 插件</b></div>
+        <div class="row"><span>最强场景</span><b>编辑器内补全 / 解释</b></div>
+        <div class="row"><span>叫它</span><b>"在 IDE 里随手问一下"</b></div>
+        <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--hairline);font-size:11px;color:var(--muted)">市面同类 · IDE 插件</div>
+        <div style="font-size:12px;color:var(--fg-2);line-height:1.5;margin-top:4px"><b>GitHub Copilot</b> · <b>Cursor</b> · <b>Windsurf</b> · <b>Cline</b> · <b>通义灵码</b> · <b>Comate</b></div>
+      </div>
+    </div>
+
+    <h2 class="section-h" style="margin-top:var(--s4)">三同事的「记忆」机制对比</h2>
+    <table>
+      <thead><tr><th style="width:110px">维度</th><th>CC · CLAUDE.md</th><th>CodeBuddy · User Rules + 项目文件</th><th>WorkBuddy · 自动持续沉淀</th></tr></thead>
+      <tbody>
+        <tr><td class="k">怎么写</td><td>手动写 markdown，会话注入</td><td>UI 设置里填规则 + 读项目内 .md</td><td>对话中自动写 daily memory（agent 自管）</td></tr>
+        <tr><td class="k">维护成本</td><td><span class="pill warn">中</span> 自己定期清理</td><td><span class="pill good">低</span> 设置一次半年不动</td><td><span class="pill good">低</span> 自动管理</td></tr>
+        <tr><td class="k">记忆深度</td><td>会话级 + 项目级</td><td>项目级 + 全局偏好</td><td>跨日跨项目（最深）</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>能不能共用一份记忆？</strong>—— 部分可以。
+      <strong>可共用</strong>：项目级 <code>AGENTS.md</code>（CC + CodeBuddy + Cursor 都吃）。
+      <strong>不要共用</strong>：WorkBuddy 的 daily memory 和 SOUL 人格——它是对话沉淀，强行喂给 CC 反而污染上下文。
+      <strong>建议</strong>：项目规则 → 一份 AGENTS.md 跨家共用；个人偏好 → CC 写 CLAUDE.md / CodeBuddy 写 User Rules（手动同步）；业务记忆 → WorkBuddy 独占。
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页停 2 分钟。市面同类那行让大家"对号入座"——他们用过 Cursor / Copilot 就秒懂 CodeBuddy 是什么。记忆机制差异是这堂课的暗线，后面 P12 会再展开 WB 三件套。</aside>
+  </div>
+</section>
+
+<!-- 7 · 三层架构（升级版：加常见名词解析） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 1 章 · 心智模型</div>
+    <h1 class="title">三层架构 + <span class="grad">常见名词速查</span></h1>
+    <p class="subtitle">所有 AI agent 都长一个样 · 名词听到不再蒙</p>
+
+    <div class="svg-wrap">
+      <svg viewBox="0 0 1180 240" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="10" width="1140" height="60" rx="14" fill="#fbfbfd" stroke="#d2d2d7"/>
+        <text x="40" y="36" font-family="SF Pro Display" font-size="12" font-weight="700" fill="#86868b" letter-spacing="2">APPLICATION · 应用层</text>
+        <text x="40" y="58" font-family="SF Pro Text" font-size="15" font-weight="600" fill="#1d1d1f">CodeBuddy · Claude Code · WorkBuddy · 微信机器人 · …</text>
+        <text x="1140" y="58" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="end">你直接打字的对象</text>
+        <rect x="20" y="90" width="1140" height="60" rx="14" fill="url(#g1)"/>
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0070f3"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs>
+        <text x="40" y="116" font-family="SF Pro Display" font-size="12" font-weight="700" fill="#fff" letter-spacing="2">ROUTING · 路由层</text>
+        <text x="40" y="138" font-family="SF Pro Text" font-size="15" font-weight="600" fill="#fff">OpenClaw 网关 · 鉴权 · 模型分发 · 设备配对 · 审批流</text>
+        <text x="1140" y="138" font-family="SF Pro Text" font-size="11" fill="#dceeff" text-anchor="end">公司 IT 配好的"水电"</text>
+        <rect x="20" y="170" width="1140" height="60" rx="14" fill="#fbfbfd" stroke="#d2d2d7"/>
+        <text x="40" y="196" font-family="SF Pro Display" font-size="12" font-weight="700" fill="#86868b" letter-spacing="2">MODEL · 模型层</text>
+        <text x="40" y="218" font-family="SF Pro Text" font-size="15" font-weight="600" fill="#1d1d1f">Anthropic Claude（Opus / Sonnet / Haiku）· 智谱 GLM · DeepSeek · OpenAI GPT · 混元</text>
+      </svg>
+    </div>
+
+    <h2 class="section-h" style="margin-top:var(--s2)">名词速查 · 听到这些词不再懵</h2>
+    <div class="grid grid-4" style="gap:10px">
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#0071e3">Agent</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">能"自己决定下一步做什么"的 AI 实例。三同事都是 agent。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#0071e3">Tool / Function</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">AI 能调用的"动作"。读文件、发请求、跑命令都算 tool。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#0071e3">Token</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">AI 处理文本的最小单位。1 个汉字≈1.5-2 token。计费就按它算。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#0071e3">Prompt</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">你给 AI 的输入。包括 system prompt（角色设定）+ user prompt（你的话）。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#bf5af2">Context Window</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">"AI 一次能装在脑子里的信息量"。200K / 1M 是上限。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#bf5af2">RAG</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">检索增强 · 让 AI"先去查资料再回答"。知识库类应用都用它。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#bf5af2">Embedding</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">把文本转成向量数字 · 用于"相似搜索"。RAG 的底层。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#bf5af2">Function Calling</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">AI 主动决定调哪个 tool 的能力。Agent 的核心机制。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#ff9f0a">MCP</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">Model Context Protocol · "AI 怎么连外部"的开放协议。后面专讲。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#ff9f0a">System Prompt</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">藏在最前面的"角色定义"。SOUL.md / CLAUDE.md 都注入这里。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#ff9f0a">Hallucination</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">幻觉 · AI 编了个看起来对的答案。给上下文是最好的解药。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#ff9f0a">Fine-tuning</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">微调 · 在原模型上喂数据训出"专属版"。业务用通常不需要。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#30d158">Inference</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">推理 · 模型从输入生成输出的过程。你每次"问 AI"就是一次 inference。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#30d158">Streaming</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">流式输出 · 一边生成一边显示。所以你看到 AI"打字"。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#30d158">Skill</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">工作流模板 · 把"反复做的事"封装成 SKILL.md。一句话调用。</div></div>
+      <div class="card flat" style="padding:12px"><div style="font-weight:700;font-size:14px;color:#30d158">Hook</div><div style="font-size:12px;color:var(--fg-2);line-height:1.4;margin-top:3px">触发器 · "写完文件后自动跑测试" 这种自动化。</div></div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是"扫盲页"。听众看到这些词以后就不会蒙。强调 token / context / RAG / MCP / Skill / Hook 这 6 个最常听到的，其他过一下即可。</aside>
+  </div>
+</section>
+
+<!-- 8 · OpenClaw 与各类 Claw（合并版） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 1 章 · 心智模型</div>
+    <h1 class="title">"<span class="grad-purple">Claw</span>" 这个词 · 一次说清</h1>
+    <p class="subtitle">市面 + 腾讯内部叫 Claw 的有 4 类 · 不在同一层 · 别混淆</p>
+
+    <table style="margin-top:var(--s2)">
+      <thead><tr><th style="width:140px">名字</th><th style="width:100px">所在层</th><th>它是什么（专业版）</th><th>大白话理解</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="k"><strong>OpenClaw</strong></td>
+          <td><span class="pill info">路由层</span></td>
+          <td>多模型路由网关 · 本机表现为 <code>~/.openclaw/</code> 服务进程 · 统一鉴权 + 模型分发 + 审批流</td>
+          <td>"水电管线" · 你不用直接和它说话 · 但所有 agent 都靠它接到模型</td>
+        </tr>
+        <tr>
+          <td class="k"><strong>Claw Code</strong></td>
+          <td><span class="pill warn">应用层 CLI</span></td>
+          <td>Claude Code 的开源衍生 / 二次封装 · npm 安装 · 可自部署 · 兼容 CC 的 hook/skill 机制</td>
+          <td>"开源版 CC" · 给开发者用的可改可路由的 CLI · 业务同事一般不会直接接触</td>
+        </tr>
+        <tr>
+          <td class="k"><strong>WorkBuddy Claw</strong></td>
+          <td><span class="pill purple" style="background:#f3e8ff;color:#6b21a8">应用层 Agent</span></td>
+          <td>WorkBuddy 桌面实例的品牌昵称 · 独立 agent 进程 · 自带 SOUL/IDENTITY/USER 人格 + 自动 daily memory</td>
+          <td>"长期顾问的英文名字" · 听到 "WorkBuddy Claw" = 听到 "WorkBuddy"</td>
+        </tr>
+        <tr>
+          <td class="k"><strong>CodeBuddy 内的 Claw 标签</strong></td>
+          <td><span class="pill good">应用层插件特性</span></td>
+          <td>CodeBuddy IDE 中标识"接入 OpenClaw 网关 / 走 Claw 模型组合"的能力开关</td>
+          <td>"CodeBuddy 的一个开关" · 开了之后它走 OpenClaw 路由，不开就走默认</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card"><h3 style="margin-top:0">关键判断：听到 "Claw" 怎么反应</h3>
+        <ul>
+          <li><strong>同事说"用 Claw 帮我写"</strong> → 八成指 WorkBuddy Claw 或 Claw Code，问一句"你说的是哪个"</li>
+          <li><strong>IT 说"Claw 网关挂了"</strong> → 是 OpenClaw（路由层故障，所有 agent 受影响）</li>
+          <li><strong>CodeBuddy 设置里出现 Claw 选项</strong> → 是 CodeBuddy 接 OpenClaw 的开关</li>
+          <li><strong>看到 GitHub 上 "claw-code"</strong> → 是开源衍生项目（不等于 Anthropic 官方 CC）</li>
+        </ul>
+      </div>
+      <div class="card"><h3 style="margin-top:0">为什么这么多 "Claw"</h3>
+        <p style="font-size:14px">"Claw" 是腾讯内部围绕 AI agent 体系搭建的一套品牌前缀，含义偏向"敏捷的、能动手的助手"。但它指代的<strong>不是单个产品</strong>——而是整个生态的不同部件。</p>
+        <p style="font-size:14px;margin-top:8px">类比：<strong>"水龙头"</strong>。OpenClaw 是水管总阀（路由）· Claw Code 是工厂里能拆能改的工业水龙头（CLI）· WorkBuddy Claw 是装在你家厨房的成品（桌面 agent）· CodeBuddy Claw 标签是水龙头开关上的一个挡位（插件特性）。</p>
+        <div class="callout warn" style="margin-top:8px;padding:10px 14px"><strong>记一句：</strong>OpenClaw ≠ Claw Code ≠ WorkBuddy Claw ≠ CodeBuddy 的 Claw 标签。下次听到先确认"哪一层"。</div>
+      </div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这是核心 framing 页。同事最容易混的就是这几个 "Claw"。可以让 1 位听众复述一遍 4 类区别 —— 复述对了说明吃透了。</aside>
+  </div>
+</section>
+
+<!-- 9 · Harness 工程 + Hermes 框架 · 行业视野 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 1 章 · 心智模型 · 行业视野</div>
+    <h1 class="title"><span class="grad-warm">Harness</span> 工程 + <span class="grad-purple">Hermes</span> 框架</h1>
+    <p class="subtitle">两个"业内热词" · 听过别蒙 · 看完知道在哪一层</p>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card-grad g-warm">
+        <h3>Harness 工程 · "怎么跑"</h3>
+        <p style="font-size:14px;color:var(--muted);margin-top:4px">不是产品 · 是一套 framing</p>
+        <p style="font-size:15px;margin-top:10px">套在 AI agent 外面那层<strong>管理框架</strong>——决定 agent 如何被约束、如何运转、如何交付结果。</p>
+        <h3 style="margin-top:14px;font-size:14px">三件事的对照</h3>
+        <table style="margin-top:6px">
+          <thead><tr><th style="width:120px">工程</th><th>关注什么</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Prompt 工程</td><td>怎么"说" · 写好 instruction</td></tr>
+            <tr><td class="k">Context 工程</td><td>给"什么" · 管理 context 内容</td></tr>
+            <tr><td class="k"><strong>Harness 工程</strong></td><td><strong>怎么"跑"</strong> · 编排 / 权限 / 多 agent / 反馈循环</td></tr>
+          </tbody>
+        </table>
+        <div class="callout" style="margin-top:10px;padding:10px 14px;font-size:13px"><strong>典型例子：</strong>Claude Code 的源码（46k 行 QueryEngine + 40 个 permission-gated tools + 多层 hook）就是个 Harness。CodeBuddy 内部也有 Harness 层管多 agent 协作。</div>
+      </div>
+
+      <div class="card-grad g-purple">
+        <h3>Hermes Agent · 开源具体产品</h3>
+        <p style="font-size:14px;color:var(--muted);margin-top:4px">Nous Research · 2026.02 开源 · MIT 协议</p>
+        <p style="font-size:15px;margin-top:10px">"<strong>会学习、会沉淀的自进化 agent</strong>"—— 被誉为 OpenClaw 的开源替代方案。</p>
+        <h3 style="margin-top:14px;font-size:14px">核心特性</h3>
+        <ul style="margin-top:4px;font-size:13px;line-height:1.6">
+          <li><strong>持久记忆</strong>：本机 <code>~/.hermes/</code>，关机不丢，跨会话保留</li>
+          <li><strong>自我学习循环</strong>：从过去任务失败中学，下次自动调整</li>
+          <li><strong>40+ 内置工具</strong>：文件 / 浏览器 / shell / API 调用</li>
+          <li><strong>Skill 自动生成</strong>：完成任务后自动写可复用 skill 文档</li>
+          <li><strong>支持 MCP server 模式</strong>：和下一页要讲的 MCP 协议互通</li>
+          <li><strong>多平台接入</strong>：飞书 / 钉钉 / Telegram / QQ 等 12+ 平台</li>
+        </ul>
+        <div class="callout" style="margin-top:10px;padding:10px 14px;font-size:13px"><strong>对我们的意义：</strong>不一定要用，但要知道——业界正在把 "agent 自进化"做成标准能力。WorkBuddy 的 daily memory 就是这个方向的腾讯版。</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:var(--s3)"><strong>记一句：</strong>Harness 是<strong>视角</strong>（怎么管 agent），Hermes 是<strong>产品</strong>（一个开源 agent 框架）。听到 "Harness" 想 "外壳"，听到 "Hermes" 想 "OpenClaw 的开源同行"。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是行业视野扩展。讲 30 秒带过即可。重点让听众对"Harness 工程"这个词有印象——以后看技术文章不蒙；对 Hermes 知道是 "OpenClaw 同类开源框架"即可。</aside>
+  </div>
+</section>
+
+<!-- 10 · MCP 协议（从原 P14 移过来 · 改章节归属为第 1 章压轴） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 1 章 · 心智模型 · 协议层</div>
+    <h1 class="title"><span class="grad-mint">MCP</span> · 让 AI 连上"外部世界"的协议</h1>
+    <p class="subtitle">Model Context Protocol · Anthropic 2024 年开放 · 现已成业界事实标准</p>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card"><h3 style="margin-top:0">问题：AI 默认是"封闭脑袋"</h3>
+        <p>没有 MCP 之前，每个 agent 想接 Notion、GitHub、腾讯文档——都要 <strong>各自写一遍接入代码</strong>。100 个 agent × 100 个服务 = 10000 份重复实现。</p>
+        <p style="margin-top:8px">业务同事的痛：CodeBuddy 接了 Notion · CC 没接 · 你只能在两个工具间复制粘贴。</p>
+      </div>
+      <div class="card"><h3 style="margin-top:0;color:#1a7f37">解法：MCP 是"AI 界的 USB-C"</h3>
+        <p>MCP 定义了一套<strong>统一协议</strong>：服务方写一次 MCP Server，所有支持 MCP 的 agent 都能直接接。</p>
+        <ul style="margin-top:6px">
+          <li><strong>MCP Server</strong> = 服务方写的"插头"（如 notion-mcp-server）</li>
+          <li><strong>MCP Client</strong> = AI agent 内置的"插孔"（CodeBuddy / Claude Desktop / Cursor / Hermes 都有）</li>
+          <li>插上 → AI 能列出、读取、操作那个服务的数据</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="svg-wrap" style="background:var(--bg-alt);padding:var(--s2);margin-top:var(--s3)">
+      <svg viewBox="0 0 1180 160" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="20" width="200" height="120" rx="14" fill="#fff" stroke="#d2d2d7"/>
+        <text x="120" y="42" font-family="SF Pro Display" font-size="11" font-weight="700" fill="#86868b" letter-spacing="2" text-anchor="middle">AGENTS · MCP CLIENTS</text>
+        <text x="120" y="68" font-family="SF Pro Text" font-size="13" font-weight="600" fill="#1d1d1f" text-anchor="middle">CodeBuddy</text>
+        <text x="120" y="88" font-family="SF Pro Text" font-size="13" font-weight="600" fill="#1d1d1f" text-anchor="middle">Claude Desktop · Cursor</text>
+        <text x="120" y="108" font-family="SF Pro Text" font-size="13" font-weight="600" fill="#1d1d1f" text-anchor="middle">Hermes · Windsurf</text>
+        <text x="120" y="128" font-family="SF Pro Text" font-size="13" font-weight="600" fill="#1d1d1f" text-anchor="middle">…</text>
+
+        <rect x="280" y="40" width="600" height="80" rx="14" fill="url(#g2)"/>
+        <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#30d158"/><stop offset="100%" stop-color="#0071e3"/></linearGradient></defs>
+        <text x="580" y="72" font-family="SF Pro Display" font-size="14" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="2">MCP PROTOCOL · 统一协议层</text>
+        <text x="580" y="98" font-family="SF Pro Text" font-size="13" fill="#fff" text-anchor="middle">JSON-RPC · stdio / SSE · 标准化 tool list / call</text>
+
+        <rect x="940" y="20" width="220" height="120" rx="14" fill="#fff" stroke="#d2d2d7"/>
+        <text x="1050" y="42" font-family="SF Pro Display" font-size="11" font-weight="700" fill="#86868b" letter-spacing="2" text-anchor="middle">MCP SERVERS · 服务方</text>
+        <text x="1050" y="68" font-family="SF Pro Text" font-size="13" font-weight="600" fill="#1d1d1f" text-anchor="middle">Notion · GitHub · 腾讯文档</text>
+        <text x="1050" y="88" font-family="SF Pro Text" font-size="13" font-weight="600" fill="#1d1d1f" text-anchor="middle">QQ 邮箱 · IMA 知识库</text>
+        <text x="1050" y="108" font-family="SF Pro Text" font-size="13" font-weight="600" fill="#1d1d1f" text-anchor="middle">TAPD · 腾讯会议</text>
+        <text x="1050" y="128" font-family="SF Pro Text" font-size="13" font-weight="600" fill="#1d1d1f" text-anchor="middle">…</text>
+
+        <path d="M220 80 L280 80" stroke="#86868b" stroke-width="2" marker-end="url(#a)"/>
+        <path d="M880 80 L940 80" stroke="#86868b" stroke-width="2" marker-end="url(#a)"/>
+        <defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#86868b"/></marker></defs>
+      </svg>
+    </div>
+
+    <div class="callout"><strong>对业务同事的意义：</strong>装一个 Notion MCP，CodeBuddy 和 Claude Desktop 都能用，不用学两遍。<strong>对 IT 的意义：</strong>公司只要做一次 "腾讯文档 MCP Server"，全员所有 agent 受益。<strong>第 2 章插件矩阵</strong>会列出我们能直接用上的 MCP。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页放在第 1 章压轴。OpenClaw / Claw 家族 / Harness · Hermes / MCP 形成"基础设施 → 视野 → 协议"的递进。下一章直接讲三同事用法时，所有概念已就位。</aside>
+  </div>
+</section>
+
+<!-- 11 · 安全合规边界 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 1 章 · 心智模型 · 合规边界</div>
+    <h1 class="title">数据安全 · 隐私 · <span class="grad-warm">合规边界</span></h1>
+    <p class="subtitle">什么能喂 AI · 什么不能 · 出事怎么办 —— 销售第一个会被问的问题</p>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card"><h3 style="margin-top:0;color:#1a7f37">✅ 可以喂 AI 的</h3>
+        <ul>
+          <li>公开行业资料 / 公开政策文件</li>
+          <li>客户案例（<span class="term" data-tip="去掉真实姓名/手机/合同金额，用 A 公司/B 客户代替">脱敏</span>后的版本）</li>
+          <li>我自己的工作产出（提案模板 / 通话纪要骨架）</li>
+          <li>行业拓展指引 / 内部已发布的培训资料</li>
+          <li>开源代码 / 公开技术文档</li>
+        </ul></div>
+      <div class="card"><h3 style="margin-top:0;color:#cf222e">❌ 不要喂 AI 的</h3>
+        <ul>
+          <li>客户真实姓名 / 手机 / 身份证 / 合同金额</li>
+          <li>内部薪酬 / 考核 / 组织架构未公开信息</li>
+          <li>未公开的产品策略 / 定价方案</li>
+          <li>其他客户的数据（用于和当前客户对比）</li>
+          <li>带水印 / 标注"内部"的文件原图</li>
+        </ul></div>
+    </div>
+
+    <h2 class="section-h" style="margin-top:var(--s3)">模型走向 · 三同事各走哪条路</h2>
+    <table>
+      <thead><tr><th style="width:130px">数据敏感度</th><th>建议路径</th><th>三同事选谁</th><th>风险</th></tr></thead>
+      <tbody>
+        <tr><td class="k">高敏（客户真名/金额）</td><td><span class="term" data-tip="走腾讯内部混元/自研模型，数据不出公司">内网模型</span> · 必须脱敏后才上</td><td>CodeBuddy（内网可控）</td><td><span class="pill bad">高</span></td></tr>
+        <tr><td class="k">中敏（脱敏案例/复盘）</td><td>OpenClaw 路由内部模型</td><td>WorkBuddy 走 OpenClaw 内部线 / CodeBuddy</td><td><span class="pill warn">中</span></td></tr>
+        <tr><td class="k">低敏（公开资料 / 个人产出）</td><td>任意模型均可</td><td>CC / WB / CodeBuddy 都行</td><td><span class="pill good">低</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn" style="margin-top:var(--s3)"><strong>出事处理 SOP：</strong>① 立即停止使用当前会话 → ② 截图保留对话上下文 → ③ 报合规 / 法务团队 → ④ <strong>不要私自删数据</strong>（删了反而难追溯）。<span class="term" data-tip="数据存储和处理在哪个国家/地区，关系到管辖法律">数据驻留</span>问题不确定时，默认走内网模型最稳。</div>
+
+    <aside class="notes"><b>讲师备注 ·</b> 这页是销售视角必备。可问 "上周谁把客户合同金额发给过 AI？" 大概率有人举手。强调"脱敏不难，A 公司 / B 客户即可"。能答清楚客户更信任。</aside>
+  </div>
+</section>
+
+<!-- 12 · CC 速览 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · CC</div>
+    <h1 class="title"><span class="grad">Claude Code</span> · 速览</h1>
+    <p class="subtitle">Anthropic 官方 CLI · 终端里的"动手干活"工程师</p>
+    <div class="grid grid-2" style="margin-top:var(--s4)">
+      <div class="card"><h3 style="color:#1a7f37">✅ 强项</h3><ul><li>读写本地文件、跑 shell 命令</li><li>跨多文件批改、git 操作</li><li>能"读图"（截图直接发它）</li><li>支持 <span class="term" data-tip="Hook：在写完文件、运行命令等时机自动触发后续脚本">hook</span>：写完文件自动触发后续动作</li><li>支持 <span class="term" data-tip="Skill：把可复用工作流封装成模板，下次一句话调用">skill</span>：把工作流封装成模板</li></ul></div>
+      <div class="card"><h3 style="color:#9a6700">⚠ 局限</h3><ul><li>跨会话失忆（除非你写 <code>CLAUDE.md</code>）</li><li>没有日历 / 邮件 / 业务历史</li><li>不擅长跨日叙事（"我们三个月在做的事"）</li><li>计费按量 token，长上下文成本快速上升</li></ul></div>
+    </div>
+    <h2 class="section-h">什么时候叫它</h2>
+    <p>"我需要在我电脑上动手做一件具体的事" —— 改代码 / 整理一批文件 / 跑脚本 / debug / 出 HTML 单页。</p>
+    <div class="callout"><strong>一句话定位：</strong>CC 是"我的实习工程师"，给具体任务、给路径、给约束，它直接动手。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 强调 "终端" 这个词业务同事可能怕。安抚 "你只要会输入中文就行，就像微信打字"。</aside>
+  </div>
+</section>
+
+<!-- 13 · CC Demo -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · CC Demo</div>
+    <h1 class="title">CC Demo · 你的 <span class="grad">token</span> 花哪了</h1>
+    <p class="subtitle">真实截图 · "本月用量 + 任务分布" 单页面板</p>
+    <div class="grid grid-2" style="grid-template-columns:1.4fr 1fr;align-items:start">
+      <div class="shot"><img src="assets/ai-coding-tools-explained/demo-cc-usage.png" alt="CC token 用量看板"><div class="shot-cap">CC 一句话生成 · 本机 ccusage 数据 · 单 HTML 文件可分享</div></div>
+      <div><h3>怎么做的</h3>
+        <ul><li>跟 CC 说："读 <code>~/.claude/usage.json</code>，生成单页面板"</li><li>CC 自动：读文件 → 算分布 → 写 HTML → 起本地 server</li><li>调一轮颜色和字号 → 截图 → 发群</li></ul>
+        <h3>耗时</h3><p>从开口到出图，约 15 分钟。换我手写要 1 小时。</p>
+        <div class="callout good"><strong>关键点：</strong>这种"读本机文件 → 算 → 出页面"的活，CC 是首选。它能直接动手，不需要你来回粘贴数据。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · WorkBuddy 速览 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · WorkBuddy</div>
+    <h1 class="title">WorkBuddy · 速览</h1>
+    <p class="subtitle">业务场景定制人格 · 自动跨日记忆 · "长期顾问"</p>
+    <div class="grid grid-2" style="margin-top:var(--s4)">
+      <div class="card"><h3 style="color:#1a7f37">✅ 强项</h3><ul><li><strong>自动持续记忆</strong>：每次会话自动写 daily memory</li><li>默认上 <span class="term" data-tip="模型一次能装在脑子里的信息量。1M ≈ 5 本书 / 半年对话">1M context</span>，记得住半年事</li><li>有 <span class="term" data-tip="角色人格定义文件，决定 AI 的语气、立场、边界">SOUL.md</span> · IDENTITY · USER 三件套人格</li><li>跨工作区共享记忆，跨日叙事最强</li></ul></div>
+      <div class="card"><h3 style="color:#9a6700">⚠ 局限</h3><ul><li>慢（深思考型，5-30 秒/轮）</li><li>贵（默认 Opus + 1M）</li><li>不擅长在你电脑上"动手"（不主动跑命令）</li><li>需要持续投喂 1-2 周才显威力</li></ul></div>
+    </div>
+    <h2 class="section-h">什么时候叫它</h2>
+    <p>需要"想得深、连得上、记得住"的活。复盘、季度规划、客户故事重组、跨多个项目找规律。</p>
+    <div class="callout"><strong>一句话定位：</strong>WorkBuddy 是"我的长期顾问"，要给它喂背景、喂偏好、喂历史，它给你跨周/跨月的洞察。</div>
+  </div>
+</section>
+
+<!-- 15 · WorkBuddy 三件套人格（详解版） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · WorkBuddy</div>
+    <h1 class="title">三件套人格 · <span class="grad-purple">SOUL · IDENTITY · USER</span></h1>
+    <p class="subtitle">为什么 WorkBuddy 体感"懂你"——它每次会话自动注入这三份文件</p>
+
+    <div class="grid grid-3" style="margin-top:var(--s3)">
+      <div class="card-grad g-purple">
+        <h3>SOUL.md</h3>
+        <p class="one-line">人格 · 怎么说话 · 做事原则</p>
+        <div class="row"><span>作用区间</span><b>每次会话注入 system prompt 顶端</b></div>
+        <div class="row"><span>典型字段</span><b>Core Truths · 操作风格 · 边界 · 语气样本</b></div>
+        <div class="row"><span>影响</span><b>语气 / 立场 / 决断风格</b></div>
+        <div class="row"><span>例子</span><b>"专业 · 简洁 · 不让用户做选择题"</b></div>
+      </div>
+      <div class="card-grad g-blue">
+        <h3>IDENTITY.md</h3>
+        <p class="one-line">名片 · 我是谁</p>
+        <div class="row"><span>作用区间</span><b>SOUL 之后注入 · 给"自我"一个锚点</b></div>
+        <div class="row"><span>典型字段</span><b>名字 · 形态 · vibe · emoji</b></div>
+        <div class="row"><span>影响</span><b>自称 / 签名 / 视觉符号</b></div>
+        <div class="row"><span>例子</span><b>"我叫小助理，📎 是搭档"</b></div>
+      </div>
+      <div class="card-grad g-warm">
+        <h3>USER.md</h3>
+        <p class="one-line">用户档案 · 你是谁</p>
+        <div class="row"><span>作用区间</span><b>注入 · 让 AI 知道对面是谁</b></div>
+        <div class="row"><span>典型字段</span><b>名字 · 称呼 · 城市 · 工作 · 偏好 · 硬规则</b></div>
+        <div class="row"><span>影响</span><b>专业术语 · 业务背景 · 关系网</b></div>
+        <div class="row"><span>例子</span><b>"叫 nic · 深圳 · 商务服务行业销售"</b></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card"><h3 style="margin-top:0">三件套的"分工"</h3>
+        <ul>
+          <li><strong>SOUL = 性格</strong> · 改它 = 换人</li>
+          <li><strong>IDENTITY = 自我认知</strong> · 改它 = 改名/改人设</li>
+          <li><strong>USER = 对方档案</strong> · 改它 = 换服务对象</li>
+        </ul>
+        <p style="font-size:14px;color:var(--muted);margin-top:8px">三个文件分开写而不是合一，是为了"局部修改不影响整体"——比如你换工作只改 USER.md，性格不变。</p>
+      </div>
+      <div class="card"><h3 style="margin-top:0;color:#cf222e">为什么 CC / CodeBuddy 没有？</h3>
+        <ul>
+          <li><strong>定位不同</strong>：CC 是"工程师工具"·CodeBuddy 是"编辑器助手"·WorkBuddy 是"业务顾问"——只有顾问需要"长期人设"</li>
+          <li><strong>架构不同</strong>：CC/CodeBuddy 主打多人协作（不绑定个人），WorkBuddy 是单用户独占实例</li>
+          <li><strong>成本不同</strong>：三件套每次会话都要注入 system prompt，吃 token，CC/CodeBuddy 默认 Sonnet 成本敏感</li>
+          <li><strong>替代品</strong>：CC 可以用 <code>~/.claude/CLAUDE.md</code> 模拟一份，但需要手写 + 手维护 · CodeBuddy 用 IDE 的"用户规则"达到 70% 效果</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是 WorkBuddy 价值最深的解释。强调"局部修改"——为什么分三份。同事问"我也想让 CC 像 WB 一样懂我" → 答 "CLAUDE.md 写得越细越接近，但不会自动累积，要手动迭代"。</aside>
+  </div>
+</section>
+
+<!-- 16 · WorkBuddy Demo -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · WorkBuddy Demo</div>
+    <h1 class="title">WorkBuddy Demo · 客户复盘 <span class="grad-purple">半小时出 v0</span></h1>
+    <p class="subtitle">同一个客户 · 两个视角 · 同一份数据 · 不同呈现</p>
+    <div class="grid grid-2">
+      <div class="shot"><img src="assets/ai-coding-tools-explained/demo-customer-review-external.png" alt="对外客户复盘"><div class="shot-cap">对外版 · 给客户看 · 突出价值 · 留白多 · 数字克制</div></div>
+      <div class="shot"><img src="assets/ai-coding-tools-explained/demo-customer-review-internal.png" alt="对内复盘"><div class="shot-cap">对内版 · 给 Leader 看 · 突出问题 · 数据密集 · 直接打分</div></div>
+    </div>
+    <div class="callout"><strong>关键差异：</strong>WorkBuddy 知道 "对外/对内" 不只是"换个标题"——是整套语气、详略、数据敏感度都要换。这种"懂场景"的能力靠的是它持续读你过去 10 个版本的复盘。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页停 1 分钟让大家对比看。这是 WorkBuddy 价值最直观的 demo。</aside>
+  </div>
+</section>
+
+<!-- 17 · CodeBuddy 速览（含 vs WB 对位差异） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · CodeBuddy</div>
+    <h1 class="title">CodeBuddy · 速览 + <span class="grad-warm">vs WorkBuddy</span></h1>
+    <p class="subtitle">同样是聊天式 AI · 但场景、记忆、节奏完全不同</p>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card"><h3 style="margin-top:0;color:#1a7f37">✅ CodeBuddy 强项</h3>
+        <ul>
+          <li>编辑器内即时补全 / 解释（IDE 原生）</li>
+          <li>选中代码 → 右键 → 改 / 注释 / 翻译</li>
+          <li>支持 <span class="term" data-tip="刚讲过的那个：AI 接外部服务的统一协议">MCP</span>，可接 Notion / GitHub / 腾讯文档 / IMA</li>
+          <li>内网可控、合规审批走通</li>
+          <li>学习曲线最低（5 分钟上手）</li>
+        </ul>
+      </div>
+      <div class="card"><h3 style="margin-top:0;color:#9a6700">⚠ CodeBuddy 局限</h3>
+        <ul>
+          <li>不直接跑 bash（但能生成命令让你跑）</li>
+          <li>跨日记忆较弱（靠 User Rules + 项目文件）</li>
+          <li>主要场景在编辑器里，跳出 IDE 体验弱</li>
+          <li>批量改文件不如 CC 直接</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-h" style="margin-top:var(--s3)">CodeBuddy vs WorkBuddy · 5 个对位差异</h2>
+    <table>
+      <thead><tr><th style="width:120px">维度</th><th>CodeBuddy</th><th>WorkBuddy</th><th style="width:200px">业务影响</th></tr></thead>
+      <tbody>
+        <tr><td class="k">场景</td><td>编辑器内 · 写文档/写报告中途随手问</td><td>独立桌面 · 专门"坐下来"和它聊事</td><td>CB 适合工作流中插入 · WB 适合阶段性深聊</td></tr>
+        <tr><td class="k">记忆深度</td><td>项目级（AGENTS.md）+ 全局偏好（User Rules）· 不自动累积</td><td>跨项目跨日 · 自动 daily memory · 三件套人格</td><td>同一个客户的连续 10 次复盘 · WB 记得住，CB 要每次喂背景</td></tr>
+        <tr><td class="k">默认模型</td><td>Sonnet（性价比）</td><td>Opus + 1M context（深思考）</td><td>CB 快但浅 · WB 慢但深</td></tr>
+        <tr><td class="k">交互节奏</td><td>秒级响应 · 适合"问一句答一句"</td><td>秒到几十秒 · 适合"想清楚再问"</td><td>CB 不打断流 · WB 鼓励暂停</td></tr>
+        <tr><td class="k">扩展机制</td><td><strong>MCP</strong> 接外部服务（Notion/腾讯文档）</td><td><strong>Skill</strong> 沉淀工作流（双周会/客户复盘）</td><td>CB 强在"接什么数据" · WB 强在"按什么流程做"</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout"><strong>什么时候用谁的判定：</strong>"我在写代码/文档中途突然要问一下" → CodeBuddy；"我要专门花 30 分钟想一件大事" → WorkBuddy。两个不冲突，可以同时开着。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页核心是消除"它俩看起来差不多"的误解。强调"打不打断当前流"——这是体感上最直接的差别。</aside>
+  </div>
+</section>
+
+<!-- 18 · CodeBuddy 三种用法 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · CodeBuddy</div>
+    <h1 class="title">CodeBuddy · 三种<span class="grad-mint">典型用法</span></h1>
+    <p class="subtitle">不止补全 · 也不只是写代码</p>
+    <div class="grid grid-3">
+      <div class="card-grad g-blue"><h3>① 补全 / 解释</h3><p style="color:var(--muted);font-size:14px">最入门用法</p>
+        <ul><li>写一半自动补</li><li>选中按 explain</li><li>翻译注释为中文</li><li>3 秒搞定一个 if</li></ul></div>
+      <div class="card-grad g-purple"><h3>② Chat + MCP</h3><p style="color:var(--muted);font-size:14px">进阶用法</p>
+        <ul><li>"帮我查腾讯文档里 X 文件"</li><li>"在 GitHub 提个 issue"</li><li>"读 Notion 里的产品文档"</li><li>外部数据直接进 chat</li></ul></div>
+      <div class="card-grad g-warm"><h3>③ 单页文档</h3><p style="color:var(--muted);font-size:14px">业务同事最实用</p>
+        <ul><li>对话生成 HTML 单页</li><li>素材提炼成可视化报告</li><li>"做一个法律行业拓展指引"</li><li>导出 PDF / 截图发群</li></ul></div>
+    </div>
+    <div class="callout"><strong>实操路径：</strong>第一周只用 ① 补全 / 解释；第二周加 ② MCP 接腾讯文档 / 知识库；第三周开始用 ③ 出单页文档。三周见明显效率差异。</div>
+  </div>
+</section>
+
+<!-- 19 · 章扉 3 -->
+<section class="slide dark chapter-slide">
+  <div class="ch-chip g3"></div>
+  <div class="ch-num">Chapter 03</div>
+  <div class="ch-title">该用谁</div>
+  <div class="ch-sub">三个同事不是替代关系。每个任务都有最适合的那一个。</div>
+</section>
+
+<!-- 20 · 横向对比 + 插件矩阵融合 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · 横向对比 + 插件外挂</div>
+    <h1 class="title">能力对比表 + <span class="grad">扩展生态</span></h1>
+    <p class="subtitle">同一张表把"内置能力"和"外挂方式"全部说清</p>
+
+    <table style="margin-top:var(--s2)">
+      <thead><tr><th style="width:110px">维度</th><th>CodeBuddy</th><th>Claude Code (CC)</th><th>WorkBuddy</th></tr></thead>
+      <tbody>
+        <tr><td class="k">载体</td><td>IDE 插件</td><td>命令行 CLI</td><td>独立 agent 实例</td></tr>
+        <tr><td class="k">最强场景</td><td>编辑器内补全 / 解释</td><td>批量改文件 / git</td><td>跨日策略 / 业务记忆</td></tr>
+        <tr><td class="k">记忆能力</td><td>项目文件 + User Rules</td><td><code>CLAUDE.md</code> 手动维护</td><td><strong>自动持续沉淀（最强）</strong></td></tr>
+        <tr><td class="k">能否跑 bash</td><td>不直接</td><td><strong>可以（核心能力）</strong></td><td>不擅长</td></tr>
+        <tr><td class="k">公司合规</td><td><span class="pill good">内网可控</span></td><td><span class="pill warn">视模型而定</span></td><td><span class="pill warn">视模型而定</span></td></tr>
+        <tr><td class="k">速度</td><td>快（IDE 即时）</td><td>中</td><td>较慢（深思考）</td></tr>
+        <tr><td class="k">成本</td><td><span class="pill good">低</span></td><td><span class="pill info">中</span></td><td><span class="pill bad">高</span></td></tr>
+        <tr><td class="k"><strong>扩展机制</strong></td><td><strong>MCP</strong> 协议接外部服务</td><td><strong>Skill</strong> + <strong>Hook</strong></td><td><strong>Skill</strong> + 长期记忆</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="section-h" style="margin-top:var(--s3)">外挂矩阵 · "它能做的事远超内置"</h2>
+    <div class="grid grid-2" style="margin-top:6px">
+      <div class="card" style="padding:18px"><h3 style="margin-top:0;font-size:15px">CodeBuddy · MCP 生态（连"外部服务"）</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+          <span style="background:#e3f2fd;color:#0550ae;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">Notion</span>
+          <span style="background:#f0f0f0;color:#1d1d1f;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">GitHub</span>
+          <span style="background:#dbeafe;color:#1e40af;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">腾讯文档</span>
+          <span style="background:#f3e8ff;color:#6b21a8;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">IMA 知识库</span>
+          <span style="background:#fff3e0;color:#9a6700;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">QQ 邮箱</span>
+          <span style="background:#dafbe1;color:#1a7f37;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">TAPD</span>
+          <span style="background:#ffebee;color:#cf222e;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">腾讯会议</span>
+          <span style="background:#f5f5f7;color:#6e6e73;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">+ N 持续扩</span>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px">机制：协议层接外部数据 · 装一次全 agent 受益</p>
+      </div>
+      <div class="card" style="padding:18px"><h3 style="margin-top:0;font-size:15px">WorkBuddy · Skill 体系（封"工作流"）</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+          <span style="background:#e3f2fd;color:#0550ae;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">pdf</span>
+          <span style="background:#f3e8ff;color:#6b21a8;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">pptx</span>
+          <span style="background:#fff3e0;color:#9a6700;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">docx</span>
+          <span style="background:#dafbe1;color:#1a7f37;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">xlsx</span>
+          <span style="background:#ffebee;color:#cf222e;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">agent-browser</span>
+          <span style="background:#dbeafe;color:#1e40af;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">playwright</span>
+          <span style="background:#f5f5f7;color:#6e6e73;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">find-skills</span>
+          <span style="background:#1d1d1f;color:#fff;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">NeoData</span>
+          <span style="background:#fff8c5;color:#9a6700;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">bs-ads-biweekly</span>
+          <span style="background:#fff8c5;color:#9a6700;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">客户复盘</span>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px">机制：SKILL.md 文档化工作流 · 一句话调用</p>
+      </div>
+    </div>
+    <div class="callout"><strong>核心区分：</strong>MCP 解决"AI 能拿到什么数据"（外部连接），Skill 解决"AI 按什么流程做"（内部工作流）。两者互补 —— 双周会用 Skill 套模板，但模板里要的数据通过 MCP 拉。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是 P16 + P18 融合版。把"对比表"和"插件矩阵"合到一页，避免重复。强调最后那句"互补"。</aside>
+  </div>
+</section>
+
+<!-- 21 · 决策矩阵（升级版） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · 决策</div>
+    <h1 class="title">"我该用谁" · <span class="grad-mint">决策矩阵</span></h1>
+    <p class="subtitle">4 维需求 × 利弊分析 · 比单一决策树更全面</p>
+
+    <table style="margin-top:var(--s2)">
+      <thead><tr>
+        <th style="width:140px">任务特征</th>
+        <th style="width:140px">推荐工具</th>
+        <th>为什么</th>
+        <th>替代方案 + 利弊</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="k">📁 批量改文件 / git 操作</td>
+          <td><span class="pill info">CC</span></td>
+          <td>能直接读写本地 + 跑 shell · 跨多文件批改最快</td>
+          <td><strong>CodeBuddy</strong>：可生成命令但要你自己跑 · <strong>WB</strong>：不擅长动手</td>
+        </tr>
+        <tr>
+          <td class="k">📊 跨日策略 / 季度复盘</td>
+          <td><span class="pill" style="background:#f3e8ff;color:#6b21a8">WorkBuddy</span></td>
+          <td>1M context + 自动记忆 · 记得住半年事</td>
+          <td><strong>CC</strong>：手写 CLAUDE.md 模拟 · 累 · <strong>CodeBuddy</strong>：项目级记忆够浅</td>
+        </tr>
+        <tr>
+          <td class="k">⚡ IDE 内即时补全</td>
+          <td><span class="pill good">CodeBuddy</span></td>
+          <td>原生 IDE 集成 · 秒级响应 · 不打断流</td>
+          <td><strong>Cursor</strong>：体验类似但非内网 · <strong>CC</strong>：要切到终端，太重</td>
+        </tr>
+        <tr>
+          <td class="k">📝 业务文档单页报告</td>
+          <td><span class="pill info">CC</span> 或 <span class="pill good">CodeBuddy</span></td>
+          <td>CC 能直接出 HTML + 起 server · CB 能边写文档边改</td>
+          <td><strong>WB</strong>：可以但贵 · 用它做"内容深度"，让 CC/CB 出"形式"</td>
+        </tr>
+        <tr>
+          <td class="k">🔐 涉敏感客户数据</td>
+          <td><span class="pill good">CodeBuddy</span></td>
+          <td>内网可控 · 合规审批走通 · 默认走内部模型</td>
+          <td><strong>CC/WB</strong>：视模型而定 · 走 OpenClaw 内部模型 OK · 走 Claude API 不行</td>
+        </tr>
+        <tr>
+          <td class="k">🔌 接 Notion / 腾讯文档</td>
+          <td><span class="pill good">CodeBuddy</span></td>
+          <td>MCP 生态最丰富 · 装一次复用</td>
+          <td><strong>Claude Desktop</strong>：装 MCP 也行但脱离 IDE · <strong>CC</strong>：可装但要 CLI 配置</td>
+        </tr>
+        <tr>
+          <td class="k">🎯 反复做的工作流（双周会/复盘）</td>
+          <td><span class="pill" style="background:#f3e8ff;color:#6b21a8">WorkBuddy</span></td>
+          <td>Skill 沉淀 · 一句话调用 · 自带历史口径</td>
+          <td><strong>CC</strong>：能写 skill 但不带业务记忆 · <strong>CB</strong>：可调用 skill 但不沉淀</td>
+        </tr>
+        <tr>
+          <td class="k">💸 成本敏感批量任务</td>
+          <td><span class="pill info">CC</span> + Haiku 模型</td>
+          <td>按量计费 · Haiku 极便宜 · 适合分类/格式化</td>
+          <td><strong>CB</strong>：默认 Sonnet 也便宜 · <strong>WB</strong>：默认 Opus 太贵不要</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn"><strong>兜底原则：</strong>从轻到重升级。先 CodeBuddy → 不行升 CC → 还不行升 WorkBuddy。<strong>反过来不要</strong>：用 WB 做"翻译一句文案" = 100 倍成本干 1× 的活。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页代替原决策树。优势：每个场景都列了"替代方案 + 利弊"，让听众理解"为什么这个不那个"。可以让大家挑 2-3 行自己最常碰到的场景对号入座。</aside>
+  </div>
+</section>
+
+<!-- 22 · 章扉 4 -->
+<section class="slide dark chapter-slide">
+  <div class="ch-chip g4"></div>
+  <div class="ch-num">Chapter 04</div>
+  <div class="ch-title">模型与上下文</div>
+  <div class="ch-sub">Opus 是顾问 · Sonnet 是员工 · Haiku 是实习生。Context 是脑子大小。</div>
+</section>
+
+<!-- 23 · 模型家族 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 3 章 · 模型与 Context</div>
+    <h1 class="title">模型家族 · 用<span class="grad-warm">同事类比</span>记一辈子</h1>
+    <p class="subtitle">Claude 主流三档 · 选型不需要懂技术参数</p>
+    <div class="grid grid-3">
+      <div class="card-grad g-warm"><h3><span class="term" data-tip="Anthropic 旗舰模型，最强推理力，最贵">Opus</span></h3><p class="one-line">高级顾问 · 最贵 · 最稳</p>
+        <div class="row"><span>用在</span><b>策略 / 复盘 / 关键文档</b></div><div class="row"><span>速度</span><b>慢（5-30 秒/轮）</b></div><div class="row"><span>成本量级</span><b>1×（基准）</b></div><div class="row"><span>不要用</span><b>简单查询、补全</b></div></div>
+      <div class="card-grad g-blue"><h3><span class="term" data-tip="Anthropic 主力模型，性价比最高的中档">Sonnet</span></h3><p class="one-line">资深员工 · 性价比最高</p>
+        <div class="row"><span>用在</span><b>日常 80% 任务</b></div><div class="row"><span>速度</span><b>中（2-10 秒/轮）</b></div><div class="row"><span>成本量级</span><b>1/5（比 Opus 便宜 5 倍）</b></div><div class="row"><span>注意</span><b>主力模型，默认用它</b></div></div>
+      <div class="card-grad g-mint"><h3><span class="term" data-tip="Anthropic 轻量模型，速度极快价格极低">Haiku</span></h3><p class="one-line">实习生 · 快 · 便宜</p>
+        <div class="row"><span>用在</span><b>分类 / 摘要 / 格式化</b></div><div class="row"><span>速度</span><b>快（&lt;2 秒/轮）</b></div><div class="row"><span>成本量级</span><b>1/50（极便宜）</b></div><div class="row"><span>不要用</span><b>需要思考的复杂任务</b></div></div>
+    </div>
+    <div class="callout"><strong>实操建议：</strong>日常用 Sonnet；卡住或要做关键决策时换 Opus；批量低难度任务用 Haiku。WorkBuddy 之所以贵是因为它默认 Opus + 1M context。</div>
+    <aside class="notes"><b>讲师备注 ·</b> "1× / 1/5 / 1/50" 是量级，不是精确数字。CC 和 CodeBuddy 默认 Sonnet，WorkBuddy 默认 Opus —— 这是为什么 WorkBuddy 体感更聪明也更贵。</aside>
+  </div>
+</section>
+
+<!-- 24 · Context + 价格直觉 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 3 章 · 模型与 Context</div>
+    <h1 class="title"><span class="term" data-tip="模型一次能装在脑子里的信息量。摊不下的就放抽屉里它看不到">Context Window</span> + 价格直觉</h1>
+    <p class="subtitle">"AI 同事一次能装在脑子里的信息量" · 决定能跨多深的事</p>
+    <div class="grid grid-2" style="grid-template-columns:1fr 1.2fr">
+      <div class="card"><h3 style="margin-top:0">类比：办公桌</h3>
+        <p>Context window = AI 桌上能摊开的资料量。摊不下的就放抽屉里，它看不到。</p>
+        <ul><li><strong>200K context</strong>（普通版）≈ 一本 300 页书</li><li><strong>1M context</strong>（WorkBuddy 用的）≈ 5 本书 / 一个项目半年的对话</li></ul>
+        <div class="callout warn" style="margin-top:var(--s2)"><strong>权衡：</strong>1M 适合"长期顾问"角色；不适合"一次性任务"——杀鸡用牛刀。</div></div>
+      <div class="card"><h3 style="margin-top:0">价格直觉表</h3>
+        <table style="margin-top:0">
+          <thead><tr><th style="width:120px">任务类型</th><th>建议模型</th><th>相对成本</th></tr></thead>
+          <tbody>
+            <tr><td class="k">分类 / 摘要</td><td>Haiku</td><td>1×（基准）</td></tr>
+            <tr><td class="k">日常写代码</td><td>Sonnet</td><td>~10×</td></tr>
+            <tr><td class="k">关键决策</td><td>Opus（200K）</td><td>~50×</td></tr>
+            <tr><td class="k">长期顾问</td><td><strong>Opus + 1M</strong></td><td>~100×</td></tr>
+          </tbody>
+        </table>
+        <div class="callout" style="margin-top:var(--s2)"><strong>典型踩坑：</strong>用 Opus 1M 跑"翻译一句文案"——100 倍成本干 1× 的活。反过来用 Haiku 跑季度复盘也亏，质量崩盘要重做。</div></div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 不要给精确数字（合规问题 + plan 不同价格不同）。"量级"是关键词。同事问"我用 CodeBuddy 要不要担心成本"→答"公司给买的，你随便用，但别用 Opus 写补全代码这种事"。</aside>
+  </div>
+</section>
+
+<!-- 25 · 非 Anthropic -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 3 章 · 模型与 Context</div>
+    <h1 class="title">非 <span class="grad-purple">Anthropic</span> 模型怎么用</h1>
+    <p class="subtitle">GLM / DeepSeek / 混元 / GPT 都能进 · 但路径不一样</p>
+    <div class="grid grid-2">
+      <div class="card"><h3 style="margin-top:0">通过 OpenClaw 网关接入</h3>
+        <ul><li>智谱 GLM 4.7 · 国内合规可用</li><li>DeepSeek 3.2 · 价格便宜、推理强</li><li>OpenAI GPT 系列 · 通用</li><li>混元 / 自研模型 · 公司内场景</li></ul>
+        <div class="callout"><strong>实战经验：</strong>同一个 agent 可挂多个模型，按任务切换。中文密集任务有时 GLM 比 Claude 体感更顺。</div></div>
+      <div class="card"><h3 style="margin-top:0;color:#cf222e">⚠ 选模型的常见误区</h3>
+        <ul><li><strong>不是越新越好</strong>：GPT 5.4 发布不代表你的任务该换</li><li><strong>不是越大越好</strong>：72B 参数模型未必比 7B 适合分类</li><li><strong>中英文表现不同</strong>：Claude 中文略弱于国产模型</li><li><strong>合规优先</strong>：内部数据要走内网模型</li></ul></div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页可以快过。重点是"模型 ≠ 智能"这个心智 —— 选对场景比追新更重要。</aside>
+  </div>
+</section>
+
+<!-- 26 · 章扉 5 -->
+<section class="slide dark chapter-slide">
+  <div class="ch-chip g5"></div>
+  <div class="ch-num">Chapter 05</div>
+  <div class="ch-title">配置即记忆</div>
+  <div class="ch-sub">写一份 Markdown，每次会话自动注入。一小时投入，半年复利。</div>
+</section>
+
+<!-- 27 · AGENTS.md · Why -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 4 章 · 配置即记忆</div>
+    <h1 class="title"><span class="term" data-tip="项目级配置文件，OpenAI/Cursor/CodeBuddy 共享格式。一份文件三家共吃">AGENTS.md</span> · <span class="grad-warm">Why</span> 为什么是它</h1>
+    <p class="subtitle">不是 README · 不是 CLAUDE.md · 不是 CodeBuddy User Rules · 是跨家共用的"项目身份证"</p>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card"><h3 style="margin-top:0;color:#cf222e">❌ 没有 AGENTS.md 时</h3>
+        <ul>
+          <li><strong>每个 agent 写一份配置</strong>：CC 写 CLAUDE.md · CodeBuddy 写 User Rules · Cursor 写 .cursorrules</li>
+          <li><strong>规则漂移</strong>：改了 CLAUDE.md 忘了同步 .cursorrules → 同一个项目两个 agent 行为不一致</li>
+          <li><strong>新人接手</strong>：不知道哪份是真规则</li>
+          <li><strong>README 不顶用</strong>：README 是给"人"看的（介绍项目），AI 看了不会按它执行</li>
+        </ul>
+      </div>
+      <div class="card"><h3 style="margin-top:0;color:#1a7f37">✅ AGENTS.md 解决</h3>
+        <ul>
+          <li><strong>单一来源</strong>：一份文件，CC + CodeBuddy + Cursor + Codex 全部自动加载</li>
+          <li><strong>开放标准</strong>：OpenAI 推动，Anthropic / Cursor 跟进，事实上的"agent 项目规约"</li>
+          <li><strong>给 AI 看的</strong>：用命令式语言（"用 X 不用 Y"），不像 README 是叙述</li>
+          <li><strong>规则集中</strong>：项目身份 / 数据 schema / 反模式 / 部署流程 / 跨 agent 注意事项</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-h" style="margin-top:var(--s3)">三层配置 · 各司其职 · 不要混着写</h2>
+    <table>
+      <thead><tr><th style="width:130px">层级</th><th>位置</th><th>谁吃</th><th>写什么</th></tr></thead>
+      <tbody>
+        <tr><td class="k">全局偏好</td><td><code>~/.claude/CLAUDE.md</code> + CodeBuddy User Rules</td><td>CC + CodeBuddy（手动同步）</td><td>身份 / 语气 / 输出格式偏好 / 反模式</td></tr>
+        <tr><td class="k">项目规则</td><td><code>项目根/AGENTS.md</code></td><td>CC + CodeBuddy + Cursor + Codex 共吃</td><td>项目身份 · 文件地图 · schema · 部署 · 反例</td></tr>
+        <tr><td class="k">业务记忆</td><td><code>~/.workbuddy/memory/</code></td><td>WorkBuddy 自动维护</td><td>对话沉淀 · 客户故事 · 决策历史（不要手写）</td></tr>
+      </tbody>
+    </table>
+    <aside class="notes"><b>讲师备注 ·</b> 这页讲 why。强调"AGENTS.md 是给 AI 看的、是命令式的"。下一页讲 how。</aside>
+  </div>
+</section>
+
+<!-- 28 · AGENTS.md · How（新增） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 4 章 · 配置即记忆</div>
+    <h1 class="title">AGENTS.md · <span class="grad-mint">How</span> 怎么写</h1>
+    <p class="subtitle">球鞋站项目实例 · 88 行 / 6 个章节 / 三家 agent 共吃</p>
+
+    <div class="grid grid-2" style="grid-template-columns:1fr 1.2fr;margin-top:var(--s3)">
+      <div class="shot"><img src="assets/ai-coding-tools-explained/demo-sneakers.png" alt="sneakers 站"><div class="shot-cap">nic-wang.github.io/sneakers-collection · 一份 AGENTS.md 维护半年</div></div>
+      <div><h3 style="margin-top:0">推荐章节骨架</h3>
+        <ol style="margin-left:18px">
+          <li><strong>项目身份</strong>：是什么、给谁用、技术栈、不变量（"纯静态站、无构建"）</li>
+          <li><strong>关键文件地图</strong>：data/* · index.html · style.css · 各文件职责一句话</li>
+          <li><strong>数据 schema</strong>：每个 JSON / 每张表的字段定义（AI 改数据时按它走）</li>
+          <li><strong>反模式</strong>：明确禁止（"不要引入构建工具" / "不要改 schema" / "不要 inline style"）</li>
+          <li><strong>部署流程</strong>：怎么发布（"git push → Pages 自动"），失败怎么回滚</li>
+          <li><strong>常见任务模式</strong>：典型工作流（"加新鞋款 = 改 data/aj.json + 跑测试"）</li>
+        </ol>
+        <h3>维护节奏</h3>
+        <ul>
+          <li>项目启动时写 v0（30 分钟）· 跑通一次完整流程后回填遗漏的"不变量"</li>
+          <li>每次踩坑后追加"反模式"一行 · 半年下来形成项目知识库</li>
+          <li>不要让 AI 自己改 AGENTS.md（除非你确认）—— 它是"宪法"，要人审</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card" style="background:#fffbe6;border-left:3px solid #d4a72c"><h3 style="margin-top:0;color:#8b6914;font-size:14px">✅ 好句式（命令式 · 给 AI 看）</h3>
+        <ul style="font-size:12px;line-height:1.5"><li>"加新鞋款时 MUST 同时更新 data/aj.json 和 sitemap"</li><li>"图片必须走 DuckDuckGo 抓取脚本，禁止手动下载"</li><li>"金额字段保留 ¥ 符号，不要换成 RMB"</li></ul>
+      </div>
+      <div class="card" style="background:#ffebee;border-left:3px solid #cf222e"><h3 style="margin-top:0;color:#cf222e;font-size:14px">❌ 坏句式（叙述式 · 不像规则）</h3>
+        <ul style="font-size:12px;line-height:1.5"><li>"这个项目主要做的是球鞋数据展示" → README 内容，AI 不需要</li><li>"我们之前讨论过用 React，但后来改了" → 历史叙事，无用</li><li>"如果可能的话最好不要..." → 模糊，AI 不知道是不是要遵守</li></ul>
+      </div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页讲 how。强调"命令式 vs 叙述式"——这是同事最容易写错的点。带一份 88 行的实例，给同事看完整结构。</aside>
+  </div>
+</section>
+
+<!-- 29 · Skill -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 4 章 · 配置即记忆</div>
+    <h1 class="title"><span class="term" data-tip="Skill：把可复用工作流封装成 SKILL.md，下次一句话调用">Skill</span> · 把<span class="grad">反复工作</span>变模板</h1>
+    <p class="subtitle">每周双周会汇总 / 客户复盘 / 报告排版 · 都可以一句话触发</p>
+    <div class="grid grid-2">
+      <div class="card"><h3 style="margin-top:0">已有 Skill 示例</h3>
+        <ul>
+          <li><strong>bs-ads-biweekly-review</strong> · 部门双周会汇总规约</li>
+          <li><strong>bs-ads-quarterly-client-review</strong> · 客户季度复盘（对外/对内双模板）</li>
+          <li><strong>tencent-docs-precise-docx</strong> · 精确排版上传腾讯文档</li>
+          <li><strong>qq-email</strong> · QQ 邮箱收发自动化</li>
+          <li><strong>luckcraft-to-frontend</strong> · 命理算法纯前端化</li>
+        </ul>
+        <p style="color:var(--muted);font-size:14px;margin-top:var(--s2)">每个 Skill 一份 SKILL.md，描述触发词、流程步骤、踩坑备忘。</p></div>
+      <div class="card"><h3 style="margin-top:0">用法对比</h3>
+        <p style="color:#cf222e"><strong>❌ 没 Skill 时</strong>：每次双周会都要重新解释"用什么格式、强调什么、跳过什么"——5 分钟过去了。</p>
+        <p style="color:#1a7f37;margin-top:var(--s2)"><strong>✅ 有 Skill 后</strong>：一句"双周会"或"客户复盘"，AI 自动加载规约、套模板、按口径输出 v0。</p>
+        <div class="callout good"><strong>关键洞察：</strong>Skill 是"工作流的快捷方式"。如果某件事你一年要做 5 次以上，就值得 Skill 化。</div></div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 强调 Skill 不是技术活——本质是把口头规约写成 markdown，AI 自动按它执行。任何一个销售都能写。</aside>
+  </div>
+</section>
+
+<!-- 30 · Hook -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 4 章 · 配置即记忆</div>
+    <h1 class="title"><span class="term" data-tip="Hook：写完文件、运行命令等时机，自动触发后续脚本">Hook</span> · 让 AI 写完<span class="grad-mint">自动接力</span></h1>
+    <p class="subtitle">"AI 写完代码 → 自动跑测试" · "AI 写完 markdown → 自动同步到知识库"</p>
+    <div class="grid grid-2">
+      <div class="card"><h3 style="margin-top:0">三类常用 Hook</h3>
+        <ul>
+          <li><strong>PostWriteFile</strong>：写完文件后跑 lint / 测试 / 格式化</li>
+          <li><strong>PreCommit</strong>：提交前自动检查规范</li>
+          <li><strong>OnSessionEnd</strong>：会话结束自动归档 daily memory</li>
+        </ul>
+        <p style="color:var(--muted);font-size:14px;margin-top:var(--s2)">Hook 用配置 JSON 写，CC 和 WorkBuddy 都支持。</p></div>
+      <div class="card"><h3 style="margin-top:0">为什么重要</h3>
+        <p>Skill 解决"主动让 AI 做什么"，Hook 解决"AI 做完后自动做什么"。两者配合 → AI 真正接近"同事"——你给个起点，它自己跑完整条流水线。</p>
+        <div class="callout"><strong>我的实例：</strong>WorkBuddy 写完工作记忆后，hook 自动把它推送到 Obsidian 仓库 + 同步 iCloud。我手动一次也不用动。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 31 · Skill / Hook 最小可执行模板 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 4 章 · 配置即记忆 · 上手模板</div>
+    <h1 class="title">Skill / Hook · <span class="grad-mint">最小可执行模板</span></h1>
+    <p class="subtitle">复制即用 · 三步替换占位符 · 第二天就能用上</p>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card" style="background:#0d1117;color:#c9d1d9;padding:18px;border-radius:18px">
+        <h3 style="margin-top:0;color:#7ee787;font-size:14px;font-family:var(--font-mono)">SKILL.md · 最小模板</h3>
+        <pre style="margin:8px 0 0;font-family:var(--font-mono);font-size:11px;line-height:1.55;color:#c9d1d9;white-space:pre-wrap;word-break:break-word"><code>---
+name: customer-email-draft
+description: 客户邮件初稿生成器
+triggers: ["写邮件", "回复客户", "邮件初稿"]
+---
+
+## When to use
+当需要给客户写正式邮件（提案/跟进/异议回复）
+且希望保持我个人的语气和落款风格时。
+
+## Steps
+1. 询问对方角色（决策人/执行层）+ 邮件目的
+2. 套用我固定模板：开头问候 → 1 句价值 → 3 点正文 → 行动召唤
+3. 用克制中性语气，不夸张
+4. 落款固定 "nic"，不加 emoji
+
+## Output format
+- Markdown · 主题行 + 正文
+- 长度 200-400 字
+- 关键数据用粗体标注</code></pre>
+      </div>
+
+      <div class="card" style="background:#0d1117;color:#c9d1d9;padding:18px;border-radius:18px">
+        <h3 style="margin-top:0;color:#79c0ff;font-size:14px;font-family:var(--font-mono)">hooks.json · 写完自动同步</h3>
+        <pre style="margin:8px 0 0;font-family:var(--font-mono);font-size:11px;line-height:1.55;color:#c9d1d9;white-space:pre-wrap;word-break:break-word"><code>{
+  "hooks": [
+    {
+      "name": "auto-sync-daily-report",
+      "trigger": "PostWriteFile",
+      "match": "reports/daily/*.md",
+      "actions": [
+        "prettier --write {file}",
+        "tencent-docs upload {file} --space biweekly"
+      ],
+      "on_failure": "notify"
+    }
+  ]
+}</code></pre>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.4">写完 <code>reports/daily/*.md</code> 自动跑 prettier 格式化 + 推到腾讯文档"双周会"空间。再也不用手动同步。</p>
+      </div>
+    </div>
+
+    <div class="callout good" style="margin-top:var(--s3)"><strong>三步替换占位符即可上手：</strong>① 把 <code>customer-email-draft</code> 改成你的场景名 · ② <code>triggers</code> 改成你会说的中文触发词 · ③ <code>Steps</code> 写成你的实际工作流。<strong>Hook 同理</strong>：改 <code>match</code> 匹配你的文件路径，改 <code>actions</code> 写要跑什么命令。</div>
+
+    <aside class="notes"><b>讲师备注 ·</b> 这页建议现场打开 IDE 改一行让大家看。强调"不是技术活，是把口头规约写成 markdown"。任何一个销售都能写 Skill；Hook 稍微进阶但也只是 JSON。</aside>
+  </div>
+</section>
+
+<!-- 32 · 辟谣 + 起步 + 场景 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 5 章 · 起步</div>
+    <h1 class="title">5 条<span class="grad-warm">误解辟谣</span> + <span class="grad">场景速查</span></h1>
+    <p class="subtitle">现场可问可答 · 截图发群保存</p>
+    <div class="grid grid-2" style="margin-top:var(--s4)">
+      <div class="card"><h3 style="margin-top:0">5 条常见误解</h3>
+        <ol style="margin-left:18px">
+          <li>"AI 会替代我"→不会，会替代不用 AI 的人</li>
+          <li>"我不懂代码不能用"→正相反，业务同事最受益</li>
+          <li>"用 AI 会泄密"→看模型走哪个网关，合规模型 OK</li>
+          <li>"AI 不准"→大概率是没给上下文</li>
+          <li>"装一个就够"→三个 agent 对应不同场景</li>
+        </ol></div>
+      <div class="card"><h3 style="margin-top:0">场景速查</h3>
+        <ul style="margin-left:18px">
+          <li><strong>客户邮件初稿</strong>→CodeBuddy</li>
+          <li><strong>季度复盘</strong>→WorkBuddy</li>
+          <li><strong>批量改文件名</strong>→CC</li>
+          <li><strong>查腾讯文档</strong>→CodeBuddy + MCP</li>
+          <li><strong>跨周策略思考</strong>→WorkBuddy</li>
+          <li><strong>HTML 单页报告</strong>→CC 或 CodeBuddy</li>
+        </ul></div>
+    </div>
+    <div class="callout good"><strong>第一性原则：</strong>先用，再调，再扩。不要一上来就追求完美配置。让"用了之后省了多少时间"驱动你下一步装什么。</div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页给同事截图带走。下一页讲完整成长路径（Day 1 → Quarter 1）。</aside>
+  </div>
+</section>
+
+<!-- 33 · 成长路径 4 阶段 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 5 章 · 起步 · 成长路径</div>
+    <h1 class="title">成长路径 · <span class="grad">Day 1</span> → <span class="grad-purple">Week 1</span> → <span class="grad-warm">Month 1</span> → <span class="grad-mint">Quarter 1</span></h1>
+    <p class="subtitle">四阶段曲线 · 不要跳级 · 上一阶段没跑通别上下一级</p>
+
+    <div class="svg-wrap" style="background:var(--bg-alt);padding:var(--s3);margin-top:var(--s2)">
+      <svg viewBox="0 0 1180 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ts" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0070f3"/>
+            <stop offset="33%" stop-color="#bf5af2"/>
+            <stop offset="66%" stop-color="#ff9f0a"/>
+            <stop offset="100%" stop-color="#30d158"/>
+          </linearGradient>
+        </defs>
+        <line x1="60" y1="50" x2="1120" y2="50" stroke="url(#ts)" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="100" cy="50" r="11" fill="#0070f3"/>
+        <circle cx="430" cy="50" r="11" fill="#bf5af2"/>
+        <circle cx="760" cy="50" r="11" fill="#ff9f0a"/>
+        <circle cx="1090" cy="50" r="11" fill="#30d158"/>
+        <text x="100" y="28" font-family="SF Pro Display" font-size="13" font-weight="700" fill="#1d1d1f" text-anchor="middle">Day 1</text>
+        <text x="430" y="28" font-family="SF Pro Display" font-size="13" font-weight="700" fill="#1d1d1f" text-anchor="middle">Week 1</text>
+        <text x="760" y="28" font-family="SF Pro Display" font-size="13" font-weight="700" fill="#1d1d1f" text-anchor="middle">Month 1</text>
+        <text x="1090" y="28" font-family="SF Pro Display" font-size="13" font-weight="700" fill="#1d1d1f" text-anchor="middle">Quarter 1</text>
+        <text x="100" y="80" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">起手</text>
+        <text x="430" y="80" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">试水</text>
+        <text x="760" y="80" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">沉淀</text>
+        <text x="1090" y="80" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">驾驭</text>
+      </svg>
+    </div>
+
+    <div class="grid grid-4" style="margin-top:var(--s3);gap:12px">
+      <div class="card-grad g-blue">
+        <h3>Day 1 · 起手</h3>
+        <p style="font-size:12px;color:var(--muted);margin-top:2px">投入 30 分钟</p>
+        <div style="margin-top:8px;font-size:12px;line-height:1.6">
+          <div><b>主要工具</b> · CodeBuddy</div>
+          <div><b>关键产出</b> · 跑通 1 次补全 · 写 1 条 User Rules</div>
+          <div><b>别做</b> · 还别装 CC / 别碰 WorkBuddy</div>
+        </div>
+      </div>
+
+      <div class="card-grad g-purple">
+        <h3>Week 1 · 试水</h3>
+        <p style="font-size:12px;color:var(--muted);margin-top:2px">投入 2-3 小时</p>
+        <div style="margin-top:8px;font-size:12px;line-height:1.6">
+          <div><b>主要工具</b> · CodeBuddy + MCP</div>
+          <div><b>关键产出</b> · 接腾讯文档 MCP · 用 1 次客户复盘 · 出 1 份单页报告</div>
+          <div><b>别做</b> · 还别自己写 Skill</div>
+        </div>
+      </div>
+
+      <div class="card-grad g-warm">
+        <h3>Month 1 · 沉淀</h3>
+        <p style="font-size:12px;color:var(--muted);margin-top:2px">投入 半天 / 周</p>
+        <div style="margin-top:8px;font-size:12px;line-height:1.6">
+          <div><b>主要工具</b> · + CC + AGENTS.md</div>
+          <div><b>关键产出</b> · 项目 AGENTS.md · 自己写 1 个 Skill · 加 1 个 Hook 自动归档</div>
+          <div><b>别做</b> · 别想着把所有人都拉上 WorkBuddy</div>
+        </div>
+      </div>
+
+      <div class="card-grad g-mint">
+        <h3>Quarter 1 · 驾驭</h3>
+        <p style="font-size:12px;color:var(--muted);margin-top:2px">已成日常</p>
+        <div style="margin-top:8px;font-size:12px;line-height:1.6">
+          <div><b>主要工具</b> · CC + WB 多 agent 协作</div>
+          <div><b>关键产出</b> · 团队级 AGENTS.md · 跨工具记忆共享 · 算清 ROI</div>
+          <div><b>别做</b> · 别"装备党"——工具够用，重点是产出</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout good" style="margin-top:var(--s3)"><strong>不跳级原则：</strong>Day 1 没跑通别上 Week 1。Week 1 还在抗拒 MCP 就别想 Month 1 的 AGENTS.md。投入是<strong>复利</strong>的——前一阶段做扎实，后一阶段才省时间。我的实际曲线：Month 1 末才开始用 WorkBuddy，到 Quarter 1 才形成跨工具记忆。</div>
+
+    <aside class="notes"><b>讲师备注 ·</b> 这页是全场"行动召唤"。建议每个听众散场前自己写一句"我的 Day 1 是什么"。强调"不跳级"——很多人栽在第一周就上 WorkBuddy，结果太贵太慢就放弃了。</aside>
+  </div>
+</section>
+
+<!-- 34 · 收尾（Apple 风升级） -->
+<section class="slide dark hero-slide hero-end">
+  <div class="blob b1" style="background:var(--grad-purple);opacity:.32"></div>
+  <div class="blob b2" style="background:var(--grad-blue);opacity:.22"></div>
+  <div class="blob b3"></div>
+  <div class="content" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%">
+    <div class="hero-eyebrow">Thank you · 提问环节</div>
+    <h1 class="hero-mega"><span class="grad-text">Questions?</span></h1>
+    <p class="hero-tagline" style="margin-top:40px">把 AI 当同事用 · 从今天开始<br>第一周用一次 · 第二周用三次 · 第三周离不开</p>
+    <div class="hero-meta-row">
+      <span class="chip">nic</span>
+      <span class="chip">商务服务行业销售</span>
+      <span class="chip">下次 W21 双周会前 · 给我反馈"哪一步最卡"</span>
+    </div>
+  </div>
+</section>
+
+</div></div>
+<script>
+(function(){
+  var track=document.getElementById('track');
+  var bar=document.getElementById('bar');
+  var curEl=document.getElementById('cur');
+  var totalEl=document.getElementById('total');
+  if(/[?&]pdf=1/.test(location.search)){document.body.classList.add('pdf-mode');return}
+  var slides=track.querySelectorAll('.slide');
+  var total=slides.length;
+  totalEl.textContent=total;
+  var i=parseInt(localStorage.getItem('deck-i')||'0',10);
+  if(i>=total||i<0)i=0;
+  var numBuf='',numTimer=null;
+  function go(n){
+    if(n<0)n=0;if(n>=total)n=total-1;
+    i=n;
+    track.style.transform='translateX('+(-i*100)+'vw)';
+    bar.style.width=((i+1)/total*100)+'%';
+    curEl.textContent=i+1;
+    localStorage.setItem('deck-i',i);
+  }
+  go(i);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1)}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}
+    else if(e.key==='Home'){e.preventDefault();go(0)}
+    else if(e.key==='End'){e.preventDefault();go(total-1)}
+    else if(e.key==='p'||e.key==='P'){document.querySelectorAll('.notes').forEach(function(n){n.classList.toggle('show')})}
+    else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}
+    else if(/^[0-9]$/.test(e.key)){
+      numBuf+=e.key;
+      if(numTimer)clearTimeout(numTimer);
+      numTimer=setTimeout(function(){
+        var n=parseInt(numBuf,10);if(!isNaN(n)&&n>=1&&n<=total)go(n-1);
+        numBuf='';
+      },500)
+    }
+  });
+  // Touch swipe
+  var sx=0,sy=0;
+  document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx;var dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){if(dx<0)go(i+1);else go(i-1)}
+  });
+})();
+</script>
+</body>
+</html>
