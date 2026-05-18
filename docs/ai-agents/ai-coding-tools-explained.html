@@ -257,7 +257,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 <body>
 <div class="progress"><div id="bar"></div></div>
 <div class="hud-hint"><kbd>←</kbd><kbd>→</kbd> 翻页 · <kbd>P</kbd> 备注 · <kbd>F</kbd> 全屏</div>
-<div class="hud-num"><span id="cur">1</span>/<span id="total">39</span></div>
+<div class="hud-num"><span id="cur">1</span>/<span id="total">43</span></div>
 <div class="deck"><div class="track" id="track">
 <!-- 1 · 封面（Apple Intelligence 风 · 渐变大字 + 呼吸光斑 + scroll cue） -->
 <section class="slide dark hero-slide">
@@ -296,13 +296,15 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   <div class="content">
     <div class="eyebrow">导览</div>
     <h1 class="title">今天讲<span class="grad">什么</span></h1>
-    <p class="subtitle">5 章 · 39 页 · 30-40 分钟 · 有 demo · 可截图带走</p>
-    <div class="grid grid-3" style="margin-top:var(--s5)">
-      <div class="card-grad g-blue"><h3>1 · 心智模型</h3><p style="color:var(--muted)">心智 · 三层架构 · 名词速查 · Claw 家族 · Harness 工程 · Hermes vs OpenClaw · MCP 协议 · 合规边界</p></div>
-      <div class="card-grad g-purple"><h3>2 · 三同事详解</h3><p style="color:var(--muted)">CC / WB / CB 速览 + demo · 横向对比 · 决策矩阵 · 一天工作流 · 项目全流程 · 多 agent 并行 · AI 工厂飞轮</p></div>
-      <div class="card-grad g-warm"><h3>3 · 模型与 Context</h3><p style="color:var(--muted)">Opus / Sonnet / Haiku 同事类比 · Context Window · 价格直觉 · 非 Anthropic 模型</p></div>
-      <div class="card-grad g-mint"><h3>4 · 配置即记忆</h3><p style="color:var(--muted)">三层记忆概览 · AGENTS.md · Skill · Hook（vs 多 agent）· 最小模板</p></div>
-      <div class="card-grad g-gray"><h3>5 · 起步路径</h3><p style="color:var(--muted)">5 条误解辟谣 · 场景速查 · 成长路径 Day 1 → Quarter 1</p></div>
+    <p class="subtitle">7 章 · 30-40 分钟 · 有 demo · 可截图带走</p>
+    <div class="grid grid-3" style="margin-top:var(--s4);gap:14px">
+      <div class="card-grad g-blue"><h3>1 · 心智模型</h3><p style="color:var(--muted)">把 AI 当同事 · 三层架构 · Claw 家族 · Harness · Hermes vs OpenClaw · MCP · 合规边界</p></div>
+      <div class="card-grad g-purple"><h3>2 · 自家两主角</h3><p style="color:var(--muted)">WorkBuddy（长期顾问）+ CodeBuddy（IDE 助理）· 速览 / Demo / 三件套 / vs 对位差异</p></div>
+      <div class="card-grad g-warm"><h3>3 · 内网工具生态</h3><p style="color:var(--muted)">4 大分类 · 20+ 工具全景 · 销售常用 7 个深讲 · CLI 三剑客 · Internal 封装版</p></div>
+      <div class="card-grad g-mint"><h3>4 · 该用谁</h3><p style="color:var(--muted)">横向对比 · 决策矩阵 · 销售一天工作流 · 项目全流程 · 多 agent · AI 工厂愿景</p></div>
+      <div class="card-grad g-gray"><h3>5 · 模型与 Context</h3><p style="color:var(--muted)">Opus / Sonnet / Haiku 同事类比 · Context Window · 价格直觉 · 选型速查</p></div>
+      <div class="card-grad g-blue"><h3>6 · 配置即记忆</h3><p style="color:var(--muted)">三层记忆概览 · AGENTS.md · Skill · Hook（vs 多 agent）· 最小模板</p></div>
+      <div class="card-grad g-warm"><h3>7 · 起步路径</h3><p style="color:var(--muted)">5 条误解辟谣 · 场景速查 · 成长路径 Day 1 → Quarter 1</p></div>
     </div>
     <div class="callout" style="margin-top:var(--s5)"><div class="callout-tag">本场预期</div><div class="callout-lead">能说清自己手头的活该用哪个 agent</div><div class="callout-body">至少找到 1 处可以马上节省 30 分钟的具体落地点。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 开场 1 分钟。强调 "今天不会让你装东西，先听完再决定要不要上手"。</aside>
@@ -330,59 +332,59 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 <section class="slide dark chapter-slide">
   <div class="ch-chip g2"></div>
   <div class="ch-num">Chapter 02</div>
-  <div class="ch-title">三个同事</div>
-  <div class="ch-sub">CC 是动手实习生，CodeBuddy 是身边小助理，WorkBuddy 是长期顾问。</div>
+  <div class="ch-title">自家两主角</div>
+  <div class="ch-sub">WorkBuddy 是长期顾问，CodeBuddy 是 IDE 内随手助理。<br>这两个才是腾讯自研的"自家人"。</div>
 </section>
 
-<!-- 6 · 三同事角色定位（升级版：加市面同类 + 记忆模块对比） -->
+<!-- 6 · 自家两主角 · WorkBuddy + CodeBuddy 双卡 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 2 章 · 三同事</div>
-    <h1 class="title">三个 <span class="grad">AI 同事</span> · 角色 + 市面归类</h1>
-    <p class="subtitle">先认人 · 再看名片 · 再判断它和你常用的工具是不是一类</p>
-    <div class="grid grid-3" style="margin-top:var(--s3)">
-      <div class="card-grad g-blue"><h3><span class="term" data-tip="Claude Code · Anthropic 官方 CLI · 在终端运行 · 能读写文件、跑 shell、git">CC</span></h3><p class="one-line">动手实习生 · 终端 CLI</p>
-        <div class="row"><span>载体</span><b>命令行 CLI</b></div>
-        <div class="row"><span>最强场景</span><b>批量改文件 / git</b></div>
-        <div class="row"><span>叫它</span><b>"我电脑上要动手做"</b></div>
-        <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--hairline);font-size:11px;color:var(--muted)">市面同类 · CLI agent</div>
-        <div style="font-size:12px;color:var(--fg-2);line-height:1.5;margin-top:4px"><b>Aider</b> · <b>Cursor CLI</b> · <b>OpenAI Codex CLI</b> · <b>Gemini CLI</b> · <b>OpenCode</b> · <b>Goose</b></div>
-      </div>
-      <div class="card-grad g-purple"><h3>WorkBuddy</h3><p class="one-line">长期顾问 · 独立桌面 agent</p>
+    <div class="eyebrow">第 2 章 · 自家两主角</div>
+    <h1 class="title">两个 <span class="grad">自家 AI 同事</span> · 角色 + 维度差异</h1>
+    <p class="subtitle">先认人 · 再看场景 · 第 3 章再讲整个内网工具生态（20+ 工具）</p>
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card-grad g-purple">
+        <h3>WorkBuddy</h3>
+        <p class="one-line">长期顾问 · 独立桌面 agent</p>
         <div class="row"><span>载体</span><b>独立 agent 实例</b></div>
-        <div class="row"><span>最强场景</span><b>跨日策略 / 复盘</b></div>
+        <div class="row"><span>最强场景</span><b>跨日策略 / 复盘 / 业务记忆</b></div>
         <div class="row"><span>叫它</span><b>"参考过去半年的事"</b></div>
-        <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--hairline);font-size:11px;color:var(--muted)">市面同类 · 桌面 agent</div>
-        <div style="font-size:12px;color:var(--fg-2);line-height:1.5;margin-top:4px"><b>ChatGPT Desktop</b> · <b>Claude Desktop</b> · <b>Perplexity</b> · <b>Notion AI</b> · <b>Granola</b>（会议）</div>
+        <div class="row"><span>默认模型</span><b>Opus + 1M context</b></div>
+        <div class="row"><span>记忆机制</span><b>自动 daily memory · 三件套人格</b></div>
+        <div class="row"><span>节奏</span><b>慢思考 · 5-30 秒/轮</b></div>
       </div>
-      <div class="card-grad g-warm"><h3>CodeBuddy</h3><p class="one-line">身边小助理 · IDE 插件</p>
-        <div class="row"><span>载体</span><b>IDE 插件</b></div>
-        <div class="row"><span>最强场景</span><b>编辑器内补全 / 解释</b></div>
+      <div class="card-grad g-warm">
+        <h3>CodeBuddy</h3>
+        <p class="one-line">IDE 助理 · 编辑器内即时</p>
+        <div class="row"><span>载体</span><b>IDE 插件 + 网页端</b></div>
+        <div class="row"><span>最强场景</span><b>编辑器内补全 / 单页报告 / 文档主力</b></div>
         <div class="row"><span>叫它</span><b>"在 IDE 里随手问一下"</b></div>
-        <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--hairline);font-size:11px;color:var(--muted)">市面同类 · IDE 插件</div>
-        <div style="font-size:12px;color:var(--fg-2);line-height:1.5;margin-top:4px"><b>GitHub Copilot</b> · <b>Cursor</b> · <b>Windsurf</b> · <b>Cline</b> · <b>通义灵码</b> · <b>Comate</b></div>
+        <div class="row"><span>默认模型</span><b>Sonnet（性价比）</b></div>
+        <div class="row"><span>记忆机制</span><b>User Rules + AGENTS.md</b></div>
+        <div class="row"><span>节奏</span><b>秒级 · 不打断当前流</b></div>
       </div>
     </div>
 
-    <h2 class="section-h" style="margin-top:var(--s4)">三同事的「记忆」机制对比</h2>
+    <h2 class="section-h" style="margin-top:var(--s3)">两主角的 5 个对位差异</h2>
     <table>
-      <thead><tr><th style="width:110px">维度</th><th>CC · CLAUDE.md</th><th>CodeBuddy · User Rules + 项目文件</th><th>WorkBuddy · 自动持续沉淀</th></tr></thead>
+      <thead><tr><th style="width:110px">维度</th><th>WorkBuddy</th><th>CodeBuddy</th><th style="width:200px">业务影响</th></tr></thead>
       <tbody>
-        <tr><td class="k">怎么写</td><td>手动写 markdown，会话注入</td><td>UI 设置里填规则 + 读项目内 .md</td><td>对话中自动写 daily memory（agent 自管）</td></tr>
-        <tr><td class="k">维护成本</td><td><span class="pill warn">中</span> 自己定期清理</td><td><span class="pill good">低</span> 设置一次半年不动</td><td><span class="pill good">低</span> 自动管理</td></tr>
-        <tr><td class="k">记忆深度</td><td>会话级 + 项目级</td><td>项目级 + 全局偏好</td><td>跨日跨项目（最深）</td></tr>
+        <tr><td class="k">使用场景</td><td>专门坐下来"想一件大事"</td><td>写代码 / 文档中途随手问</td><td>WB 适合阶段性深聊 · CB 适合工作流插入</td></tr>
+        <tr><td class="k">记忆深度</td><td>跨项目跨日 · 自动累积</td><td>项目级 + 全局偏好</td><td>同客户 10 次复盘 · WB 记得住</td></tr>
+        <tr><td class="k">扩展机制</td><td><strong>Skill</strong> 沉淀工作流</td><td><strong>MCP</strong> 接外部服务</td><td>WB 强在"按什么流程做" · CB 强在"接什么数据"</td></tr>
+        <tr><td class="k">交互节奏</td><td>秒到几十秒 · 鼓励暂停</td><td>秒级响应 · 不打断流</td><td>WB 想清楚再问 · CB 问一句答一句</td></tr>
+        <tr><td class="k">成本</td><td><span class="pill bad">高</span> 默认 Opus + 1M</td><td><span class="pill good">低</span> 默认 Sonnet</td><td>WB 单次贵但跨日省 · CB 日常便宜随便用</td></tr>
       </tbody>
     </table>
     <div class="callout">
-      <div class="callout-tag">能不能共用一份记忆</div>
-      <div class="callout-lead">部分可以 —— 共用层和私有层要分清</div>
+      <div class="callout-tag">什么时候用谁</div>
       <div class="callout-grid">
-        <div class="item"><b>可共用</b>项目级 <code>AGENTS.md</code> · CC + CodeBuddy + Cursor 都吃</div>
-        <div class="item"><b>不要共用</b>WB 的 daily memory · 强行喂 CC 反而污染上下文</div>
+        <div class="item"><b>写文档中途随手问</b>→ CodeBuddy</div>
+        <div class="item"><b>专门花 30 分钟想一件大事</b>→ WorkBuddy</div>
       </div>
-      <div class="callout-body"><span class="callout-prefix">建议</span> · 项目规则 → 一份 AGENTS.md 跨家共用 · 个人偏好 → CC 写 CLAUDE.md / CodeBuddy 写 User Rules（手动同步）· 业务记忆 → WorkBuddy 独占。</div>
+      <div class="callout-body">两个不冲突 · 可以同时开着 · 第 3 章会讲内网还有 20+ 工具来补足这两位之外的场景。</div>
     </div>
-    <aside class="notes"><b>讲师备注 ·</b> 这页停 2 分钟。市面同类那行让大家"对号入座"——他们用过 Cursor / Copilot 就秒懂 CodeBuddy 是什么。记忆机制差异是这堂课的暗线，后面 P12 会再展开 WB 三件套。</aside>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是 Ch2 心智锚点。强调"自家两主角"的概念 · 区别于第 3 章会讲的"内网工具生态"（20+ 工具）。同事问"那 Claude Code 呢"——答 "下章讲 · 它属于内网 CLI 三剑客之一"。</aside>
   </div>
 </section>
 
@@ -654,40 +656,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 13 · CC 速览 -->
-<section class="slide">
-  <div class="content">
-    <div class="eyebrow">第 2 章 · CC</div>
-    <h1 class="title"><span class="grad">Claude Code</span> · 速览</h1>
-    <p class="subtitle">Anthropic 官方 CLI · 终端里的"动手干活"工程师</p>
-    <div class="grid grid-2" style="margin-top:var(--s4)">
-      <div class="card"><h3 style="color:#1a7f37">✅ 强项</h3><ul><li>读写本地文件、跑 shell 命令</li><li>跨多文件批改、git 操作</li><li>能"读图"（截图直接发它）</li><li>支持 <span class="term" data-tip="Hook：在写完文件、运行命令等时机自动触发后续脚本">hook</span>：写完文件自动触发后续动作</li><li>支持 <span class="term" data-tip="Skill：把可复用工作流封装成模板，下次一句话调用">skill</span>：把工作流封装成模板</li></ul></div>
-      <div class="card"><h3 style="color:#9a6700">⚠ 局限</h3><ul><li>跨会话失忆（除非你写 <code>CLAUDE.md</code>）</li><li>没有日历 / 邮件 / 业务历史</li><li>不擅长跨日叙事（"我们三个月在做的事"）</li><li>计费按量 token，长上下文成本快速上升</li></ul></div>
-    </div>
-    <h2 class="section-h">什么时候叫它</h2>
-    <p>"我需要在我电脑上动手做一件具体的事" —— 改代码 / 整理一批文件 / 跑脚本 / debug / 出 HTML 单页。</p>
-    <div class="callout"><div class="callout-tag">一句话定位</div><div class="callout-lead">CC = "我的实习工程师"</div><div class="callout-body">给具体任务、给路径、给约束 · 它直接动手。</div></div>
-    <aside class="notes"><b>讲师备注 ·</b> 强调 "终端" 这个词业务同事可能怕。安抚 "你只要会输入中文就行，就像微信打字"。</aside>
-  </div>
-</section>
-
-<!-- 14 · CC Demo -->
-<section class="slide">
-  <div class="content">
-    <div class="eyebrow">第 2 章 · CC Demo</div>
-    <h1 class="title">CC Demo · 你的 <span class="grad">token</span> 花哪了</h1>
-    <p class="subtitle">真实截图 · "本月用量 + 任务分布" 单页面板</p>
-    <div class="grid grid-2" style="grid-template-columns:1.4fr 1fr;align-items:start">
-      <div class="shot"><img src="../../assets/ai-coding-tools-explained/demo-cc-usage.png" alt="CC token 用量看板"><div class="shot-cap">CC 一句话生成 · 本机 ccusage 数据 · 单 HTML 文件可分享</div></div>
-      <div><h3>怎么做的</h3>
-        <ul><li>跟 CC 说："读 <code>~/.claude/usage.json</code>，生成单页面板"</li><li>CC 自动：读文件 → 算分布 → 写 HTML → 起本地 server</li><li>调一轮颜色和字号 → 截图 → 发群</li></ul>
-        <h3>耗时</h3><p>从开口到出图，约 15 分钟。换我手写要 1 小时。</p>
-        <div class="callout good"><div class="callout-tag">关键点</div><div class="callout-lead">"读本机文件 → 算 → 出页面"的活 · CC 是首选</div><div class="callout-body">能直接动手 · 不需要你来回粘贴数据。</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- 15 · WorkBuddy 速览 -->
+<!-- 13 · WorkBuddy 速览 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · WorkBuddy</div>
@@ -703,7 +672,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 16 · WorkBuddy 三件套人格（详解版） -->
+<!-- 14 · WorkBuddy 三件套人格（详解版） -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · WorkBuddy</div>
@@ -759,7 +728,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 17 · WorkBuddy Demo -->
+<!-- 15 · WorkBuddy Demo -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · WorkBuddy Demo</div>
@@ -774,7 +743,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 18 · CodeBuddy 速览（含 vs WB 对位差异） -->
+<!-- 16 · CodeBuddy 速览（含 vs WB 对位差异） -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · CodeBuddy</div>
@@ -818,7 +787,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 19 · CodeBuddy 三种用法 -->
+<!-- 17 · CodeBuddy 三种用法 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · CodeBuddy</div>
@@ -836,27 +805,265 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 20 · 章扉 3 -->
+<!-- 18 · Ch3 章扉 -->
 <section class="slide dark chapter-slide">
   <div class="ch-chip g3"></div>
   <div class="ch-num">Chapter 03</div>
-  <div class="ch-title">该用谁</div>
-  <div class="ch-sub">三个同事不是替代关系。每个任务都有最适合的那一个。</div>
+  <div class="ch-title">内网工具生态</div>
+  <div class="ch-sub">4 大分类 · 20+ 工具全景 · 销售真用的 7 个深讲 · 其他知道在哪查就行。</div>
 </section>
 
-<!-- 21 · 横向对比 + 插件矩阵融合 -->
+<!-- 19 · 全景图 4 大分类 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 2 章 · 横向对比 + 插件外挂</div>
+    <div class="eyebrow">第 3 章 · 内网工具生态 · 全景</div>
+    <h1 class="title">内网 AI 工具 · <span class="grad">4 大分类</span> · 20+ 工具</h1>
+    <p class="subtitle">按用途分类 · 销售真用的标蓝 · 其他工具知道在哪查就行</p>
+
+    <div class="grid grid-2" style="margin-top:var(--s3);gap:14px">
+      <div class="card-grad g-purple">
+        <h3>🦞 全能助手 · 对话式干活</h3>
+        <p class="one-line">8 个 · 通用对话型 AI agent</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+          <span class="pill" style="background:#dbeafe;color:#1e40af">WorkBuddy</span>
+          <span class="pill" style="background:#dbeafe;color:#1e40af">OpenClaw 内网版</span>
+          <span class="pill" style="background:#dbeafe;color:#1e40af">KnotBot</span>
+          <span class="pill muted">QClaw</span>
+          <span class="pill muted">Vedas Agent</span>
+          <span class="pill muted">Agent Studio</span>
+          <span class="pill muted">Lighthouse 版</span>
+          <span class="pill muted">BOX AI</span>
+        </div>
+      </div>
+
+      <div class="card-grad g-warm">
+        <h3>💻 代码助手 · 帮你写代码</h3>
+        <p class="one-line">7 个 · IDE 助理 + CLI agent</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+          <span class="pill" style="background:#dbeafe;color:#1e40af">CodeBuddy</span>
+          <span class="pill muted">With</span>
+          <span class="pill muted">无极 AI</span>
+          <span class="pill muted">Claude Code Internal</span>
+          <span class="pill muted">Gemini CLI Internal</span>
+          <span class="pill muted">Codex CLI Internal</span>
+          <span class="pill muted">Hapi 内网版</span>
+        </div>
+      </div>
+
+      <div class="card-grad g-mint">
+        <h3>📚 AI 知识库 · 沉淀检索</h3>
+        <p class="one-line">4 个 · 给 AI 装外脑</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+          <span class="pill" style="background:#dbeafe;color:#1e40af">IMA Skills</span>
+          <span class="pill" style="background:#dbeafe;color:#1e40af">乐享知识库</span>
+          <span class="pill" style="background:#dbeafe;color:#1e40af">腾讯文档 Skills</span>
+          <span class="pill muted">狍子 AI</span>
+        </div>
+      </div>
+
+      <div class="card-grad g-blue">
+        <h3>🎨 设计创作</h3>
+        <p class="one-line">1+ 个 · AI 原生创意工作室</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+          <span class="pill muted">Miora</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-tag">销售视角阅读法</div>
+      <div class="callout-lead">蓝色标记 = 销售真常用的 7 个 · 其他知道在哪查就行</div>
+      <div class="callout-body">下一页深讲 7 个常用工具的适合场景 + 关键卖点 + 入口。CLI 三剑客单独一页讲。设计创作 / 全网衍生工具暂不展开。</div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是 Ch3 心智锚点。强调"4 大分类 + 销售常用 7 个"的双层视角。20+ 工具不是要全装全用，是让大家知道"这个生态有什么 · 自己缺什么时去哪找"。</aside>
+  </div>
+</section>
+
+<!-- 20 · 销售常用 7 个深讲 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 3 章 · 内网工具生态 · 销售常用 7 个</div>
+    <h1 class="title">销售真用的 <span class="grad">7 个工具</span> · 一张表说清</h1>
+    <p class="subtitle">适合场景 + 关键卖点 + 入口 · 截图发群保存</p>
+
+    <table style="margin-top:var(--s2)">
+      <thead><tr>
+        <th style="width:140px">工具</th>
+        <th style="width:180px">适合场景</th>
+        <th>关键卖点</th>
+        <th style="width:240px">入口</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="k"><strong>WorkBuddy</strong></td>
+          <td>跨日策略 / 复盘 / 长期顾问</td>
+          <td>1M context · 自动 daily memory · 三件套人格</td>
+          <td><code>codebuddy.cn/work/</code></td>
+        </tr>
+        <tr>
+          <td class="k"><strong>CodeBuddy</strong></td>
+          <td>IDE 内补全 / 单页报告 / 文档主力</td>
+          <td>MCP 接腾讯文档 / IMA · 内网可控 · 网页端 + 插件双形态</td>
+          <td><code>codebuddy.woa.com</code></td>
+        </tr>
+        <tr>
+          <td class="k"><strong>OpenClaw 内网版</strong></td>
+          <td>多渠道聊天聚合</td>
+          <td>Skill 生态丰富 · 支持 AnyDev / Windows 云桌面</td>
+          <td><code>openclaw.woa.com/my/</code></td>
+        </tr>
+        <tr>
+          <td class="k"><strong>KnotBot</strong></td>
+          <td>数据查询场景</td>
+          <td>接 Venus / US / WeData · 装到现有服务器 · 自研框架</td>
+          <td><code>knot.woa.com</code></td>
+        </tr>
+        <tr>
+          <td class="k"><strong>IMA Skills</strong></td>
+          <td>个人知识库外脑</td>
+          <td>笔记即上下文 · 搜读写一体 · 给 AI 装云端外脑</td>
+          <td><code>ima.qq.com</code></td>
+        </tr>
+        <tr>
+          <td class="k"><strong>乐享知识库</strong></td>
+          <td>团队 RAG 问答</td>
+          <td>企业文档检索 · 接 AI 后秒查团队沉淀知识</td>
+          <td><code>csig.lexiangla.com</code></td>
+        </tr>
+        <tr>
+          <td class="k"><strong>腾讯文档 Skills</strong></td>
+          <td>跨文档检索 / 统计 / 归档</td>
+          <td>AI 直接读写腾讯文档（仅个人微信账号）</td>
+          <td><code>docs.qq.com/scenario/open-claw.html</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout good">
+      <div class="callout-tag">销售一天的搭配建议</div>
+      <div class="callout-lead">主力 WB+CB · 数据查询接 KnotBot · 知识沉淀走 IMA / 乐享 · 文档统计走腾讯文档 Skills</div>
+      <div class="callout-body">不需要七个工具全装全用。先把 WB + CB 两位主角用顺手 · 遇到具体场景再按需启用其他 5 个。</div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是 Ch3 重头戏。让听众"对号入座"：你最近在做的事属于哪一行？哪个工具能帮上？强调"先掌握主力两位 · 其他按场景启用"。</aside>
+  </div>
+</section>
+
+<!-- 21 · CLI 三剑客 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 3 章 · 内网工具生态 · CLI 三剑客</div>
+    <h1 class="title">CLI <span class="grad-warm">三剑客</span> · 写代码 / 跑命令</h1>
+    <p class="subtitle">销售一般不用 · 知道有就行 · 必要时让 IT 帮配 · 三家共用 AGENTS.md 规约</p>
+
+    <div class="grid grid-3" style="margin-top:var(--s3)">
+      <div class="card-grad g-warm">
+        <h3>Claude Code Internal</h3>
+        <p class="one-line">Anthropic CC 内网安全封装</p>
+        <div class="row"><span>底座</span><b>Claude Code（开源版）</b></div>
+        <div class="row"><span>核心优势</span><b>Opus 可用 · Skill / Hook 生态</b></div>
+        <div class="row"><span>适合场景</span><b>多 agent 并行 · 复杂工程</b></div>
+        <div class="row"><span>入口</span><b>iwiki <code>4015845000</code></b></div>
+      </div>
+
+      <div class="card-grad g-mint">
+        <h3>Gemini CLI Internal</h3>
+        <p class="one-line">Google Gemini CLI 内网封装</p>
+        <div class="row"><span>底座</span><b>Gemini CLI</b></div>
+        <div class="row"><span>核心优势</span><b>超长 context（百万 token）</b></div>
+        <div class="row"><span>适合场景</span><b>大规模代码库分析</b></div>
+        <div class="row"><span>入口</span><b>iwiki <code>4015783463</code></b></div>
+      </div>
+
+      <div class="card-grad g-blue">
+        <h3>Codex CLI Internal</h3>
+        <p class="one-line">OpenAI Codex CLI 内网封装</p>
+        <div class="row"><span>底座</span><b>Codex CLI（OpenAI 系）</b></div>
+        <div class="row"><span>核心优势</span><b>支持 GPT 模型</b></div>
+        <div class="row"><span>适合场景</span><b>需要 GPT 路线对比</b></div>
+        <div class="row"><span>入口</span><b>iwiki <code>4017410955</code></b></div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-tag">销售场景视角</div>
+      <div class="callout-lead">三剑客都是"在终端动手干活"工具 · 适合工程师 / 数据分析师 · 销售不主动用</div>
+      <div class="callout-body">销售如需用：① 让 IT 配好对应的 internal 版 ② 写一份项目级 <code>AGENTS.md</code> · 三家共吃 ③ 核心场景如批量改文件 / 跑分析脚本可考虑用 Claude Code Internal。</div>
+      <div class="callout-meta">下一页讲 Internal 封装版 vs 官方版的 5 条核心差异。</div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 强调"销售可以不会但要知道"。同事问"我也想试试" → 答 "先把 WB + CB 用熟，工程类场景需要再让 IT 帮配 CC Internal"。</aside>
+  </div>
+</section>
+
+<!-- 22 · Internal 封装版 vs 官方版 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 3 章 · 内网工具生态 · Internal 封装版</div>
+    <h1 class="title">Internal 封装版 · <span class="grad-mint">5 条核心差异</span></h1>
+    <p class="subtitle">为什么"Claude Code Internal" ≠ 直接装外网 Claude Code · 也是其他 Internal 工具的共性</p>
+
+    <table style="margin-top:var(--s3)">
+      <thead><tr><th style="width:60px">#</th><th style="width:200px">差异维度</th><th>具体内容</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="k">1</td>
+          <td class="k">司内直接使用</td>
+          <td>无需代理 · 无需 VPN · 网络环境对内开放（外网原版需要科学上网 / 翻墙）</td>
+        </tr>
+        <tr>
+          <td class="k">2</td>
+          <td class="k">OA 身份打通</td>
+          <td>一键登录员工身份 · 不需要单独注册账号 · 工号即身份（外网原版要单独注册付费）</td>
+        </tr>
+        <tr>
+          <td class="k">3</td>
+          <td class="k">模型路由二选一</td>
+          <td><strong>内部部署模型</strong>（混元 / 内部 Claude / GLM 等）<strong>+ 外部 Claude/Gemini/Codex 旗舰</strong> · 看任务敏感度切换</td>
+        </tr>
+        <tr>
+          <td class="k">4</td>
+          <td class="k">工蜂代码仓库打通</td>
+          <td>与代码仓库安全等级配置打通 · 敏感业务<strong>自动脱敏</strong>不外传 · 用量看板可查</td>
+        </tr>
+        <tr>
+          <td class="k">5</td>
+          <td class="k">每周与官方版同步</td>
+          <td>跟进 Anthropic / Google / OpenAI 官方版功能 · 最多滞后 1-3 周 · 不会"封装一次就过时"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-tag">业务感知</div>
+      <div class="callout-lead">业务同事日常感知不到差异 · 但"合规和速度"是关键</div>
+      <div class="callout-body">合规：敏感数据不出公司 · 模型走内部路由 · 工蜂代码自动脱敏。速度：滞后官方版 1-3 周 · 但全员能用 · 不需要自己配代理。</div>
+      <div class="callout-meta">同事问"为什么不能直接装外网原版" → 答"内网安全合规要求 + 公司账号统一计费 + 内部模型路由"。</div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页强调"Internal 封装版的 5 条规约"。所有 Internal 工具（CC / Gemini / Codex / 其他）都遵循这 5 条。让同事理解"为什么这是必须的封装" —— 不是简单二次包装，是合规与体验的根本差异。</aside>
+  </div>
+</section>
+
+
+<!-- 23 · 章扉 4 -->
+<section class="slide dark chapter-slide">
+  <div class="ch-chip g4"></div>
+  <div class="ch-num">Chapter 04</div>
+  <div class="ch-title">该用谁</div>
+  <div class="ch-sub">两主角 + 内网 CLI 不是替代关系。每个任务都有最适合的搭配。</div>
+</section>
+
+<!-- 24 · 横向对比 + 插件矩阵融合 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 4 章 · 横向对比 + 插件外挂</div>
     <h1 class="title">能力对比表 + <span class="grad">扩展生态</span></h1>
     <p class="subtitle">同一张表把"内置能力"和"外挂方式"全部说清</p>
 
     <table style="margin-top:var(--s2)">
-      <thead><tr><th style="width:110px">维度</th><th>CodeBuddy</th><th>Claude Code (CC)</th><th>WorkBuddy</th></tr></thead>
+      <thead><tr><th style="width:110px">维度</th><th>CodeBuddy</th><th>内网 CLI（CC/Gemini/Codex Internal）</th><th>WorkBuddy</th></tr></thead>
       <tbody>
-        <tr><td class="k">载体</td><td>IDE 插件</td><td>命令行 CLI</td><td>独立 agent 实例</td></tr>
+        <tr><td class="k">载体</td><td>IDE 插件 + 网页端</td><td>命令行 CLI（CC/Gemini/Codex Internal）</td><td>独立 agent 实例</td></tr>
         <tr><td class="k">最强场景</td><td>编辑器内补全 / 解释</td><td>批量改文件 / git</td><td>跨日策略 / 业务记忆</td></tr>
-        <tr><td class="k">记忆能力</td><td>项目文件 + User Rules</td><td><code>CLAUDE.md</code> 手动维护</td><td><strong>自动持续沉淀（最强）</strong></td></tr>
+        <tr><td class="k">记忆能力</td><td>项目文件 + User Rules</td><td><code>AGENTS.md</code> 项目级共享</td><td><strong>自动持续沉淀（最强）</strong></td></tr>
         <tr><td class="k">能否跑 bash</td><td>不直接</td><td><strong>可以（核心能力）</strong></td><td>不擅长</td></tr>
         <tr><td class="k">公司合规</td><td><span class="pill good">内网可控</span></td><td><span class="pill warn">视模型而定</span></td><td><span class="pill warn">视模型而定</span></td></tr>
         <tr><td class="k">速度</td><td>快（IDE 即时）</td><td>中</td><td>较慢（深思考）</td></tr>
@@ -901,10 +1108,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 22 · 决策矩阵（升级版） -->
+<!-- 25 · 决策矩阵（升级版） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 2 章 · 决策</div>
+    <div class="eyebrow">第 4 章 · 决策</div>
     <h1 class="title">"我该用谁" · <span class="grad-mint">决策矩阵</span></h1>
     <p class="subtitle">4 维需求 × 利弊分析 · 比单一决策树更全面</p>
 
@@ -918,7 +1125,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       <tbody>
         <tr>
           <td class="k">📁 批量改文件 / git 操作</td>
-          <td><span class="pill info">CC</span></td>
+          <td><span class="pill info">内网 CLI</span></td>
           <td>能直接读写本地 + 跑 shell · 跨多文件批改最快</td>
           <td><strong>CodeBuddy</strong>：可生成命令但要你自己跑 · <strong>WB</strong>：不擅长动手</td>
         </tr>
@@ -926,17 +1133,17 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
           <td class="k">📊 跨日策略 / 季度复盘</td>
           <td><span class="pill" style="background:#f3e8ff;color:#6b21a8">WorkBuddy</span></td>
           <td>1M context + 自动记忆 · 记得住半年事</td>
-          <td><strong>CC</strong>：手写 CLAUDE.md 模拟 · 累 · <strong>CodeBuddy</strong>：项目级记忆够浅</td>
+          <td><strong>内网 CLI</strong>：手写 AGENTS.md 模拟 · 累 · <strong>CodeBuddy</strong>：项目级记忆够浅</td>
         </tr>
         <tr>
           <td class="k">⚡ IDE 内即时补全</td>
           <td><span class="pill good">CodeBuddy</span></td>
           <td>原生 IDE 集成 · 秒级响应 · 不打断流</td>
-          <td><strong>Cursor</strong>：体验类似但非内网 · <strong>CC</strong>：要切到终端，太重</td>
+          <td><strong>Cursor</strong>：内网未通 · <strong>内网 CLI</strong>：要切到终端，太重</td>
         </tr>
         <tr>
           <td class="k">📝 业务文档单页报告</td>
-          <td><span class="pill info">CC</span> 或 <span class="pill good">CodeBuddy</span></td>
+          <td><span class="pill info">内网 CLI</span> 或 <span class="pill good">CodeBuddy</span></td>
           <td>CC 能直接出 HTML + 起 server · CB 能边写文档边改</td>
           <td><strong>WB</strong>：可以但贵 · 用它做"内容深度"，让 CC/CB 出"形式"</td>
         </tr>
@@ -950,32 +1157,32 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
           <td class="k">🔌 接 Notion / 腾讯文档</td>
           <td><span class="pill good">CodeBuddy</span></td>
           <td>MCP 生态最丰富 · 装一次复用</td>
-          <td><strong>Claude Desktop</strong>：装 MCP 也行但脱离 IDE · <strong>CC</strong>：可装但要 CLI 配置</td>
+          <td><strong>Claude Desktop</strong>：装 MCP 也行但脱离 IDE · <strong>内网 CLI</strong>：可装但要配置</td>
         </tr>
         <tr>
           <td class="k">🎯 需要<strong>长期业务记忆</strong>的反复工作流（双周会/客户复盘）</td>
           <td><span class="pill" style="background:#f3e8ff;color:#6b21a8">WorkBuddy</span></td>
           <td>自动 daily memory 累积 · Skill 模板能调用历史口径填充</td>
-          <td><strong>CC</strong>：能写 skill 但每次需手动喂背景 · <strong>CB</strong>：能调 skill 但跨项目记忆浅</td>
+          <td><strong>内网 CLI</strong>：能写 skill 但每次需手动喂背景 · <strong>CodeBuddy</strong>：能调 skill 但跨项目记忆浅</td>
         </tr>
         <tr>
           <td class="k">💸 成本敏感批量任务</td>
-          <td><span class="pill info">CC</span> + Haiku 模型</td>
+          <td><span class="pill info">内网 CLI</span> + Haiku 模型</td>
           <td>按量计费 · Haiku 极便宜 · 适合分类/格式化</td>
           <td><strong>CB</strong>：默认 Sonnet 也便宜 · <strong>WB</strong>：默认 Opus 太贵不要</td>
         </tr>
       </tbody>
     </table>
 
-    <div class="callout warn"><div class="callout-tag">兜底原则</div><div class="callout-lead">从轻到重升级 · 不要反向</div><div class="callout-body"><span class="callout-prefix">升级路径</span> · CodeBuddy → 不行升 CC → 还不行升 WorkBuddy。</div><div class="callout-meta"><span class="callout-prefix">反例</span> · 用 WB 做"翻译一句文案" = 100 倍成本干 1× 的活。</div></div>
+    <div class="callout warn"><div class="callout-tag">兜底原则</div><div class="callout-lead">从轻到重升级 · 不要反向</div><div class="callout-body"><span class="callout-prefix">升级路径</span> · CodeBuddy → 不行升内网 CLI → 还不行升 WorkBuddy。</div><div class="callout-meta"><span class="callout-prefix">反例</span> · 用 WB 做"翻译一句文案" = 100 倍成本干 1× 的活。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页代替原决策树。优势：每个场景都列了"替代方案 + 利弊"，让听众理解"为什么这个不那个"。可以让大家挑 2-3 行自己最常碰到的场景对号入座。</aside>
   </div>
 </section>
 
-<!-- 23 · 销售一天工作流（重构 · 竖向故事卡片流） -->
+<!-- 26 · 销售一天工作流（重构 · 竖向故事卡片流） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 2 章 · 实战 · 一天工作流</div>
+    <div class="eyebrow">第 4 章 · 实战 · 一天工作流</div>
     <h1 class="title">销售一天工作流 · <span class="grad">9:00 → 19:00</span></h1>
     <p class="subtitle">每个时间点 · 一张卡 · 工具 + 怎么做 + 省多少 · 从上读到下就是叙事</p>
 
@@ -1003,7 +1210,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
             <h3 class="tl-title" style="color:var(--fg)">📚 客户调研 · 行业政策查询</h3>
             <span class="tl-save">省 30 分钟</span>
           </div>
-          <div class="tl-tools"><span class="pill info">CC</span><span class="pill muted">+ WebFetch</span></div>
+          <div class="tl-tools"><span class="pill info">内网 CLI</span><span class="pill muted">+ WebFetch</span></div>
           <p class="tl-desc"><span class="quote">"查最新债权催收合规要求 + 整理 1 页要点"</span> · CC 自动多源抓取 · 不用切浏览器。</p>
         </div>
       </div>
@@ -1031,7 +1238,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
             <h3 class="tl-title" style="color:var(--fg)">🎨 提案出图 · HTML 单页报告</h3>
             <span class="tl-save">省 45 分钟</span>
           </div>
-          <div class="tl-tools"><span class="pill info">CC</span></div>
+          <div class="tl-tools"><span class="pill info">内网 CLI</span></div>
           <p class="tl-desc"><span class="quote">"基于这份 markdown 出 Apple 风单页 · 客户周五要看"</span> · 一次出图比 PPT 快 · 截图发群直接走。</p>
         </div>
       </div>
@@ -1085,10 +1292,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 </section>
 
 
-<!-- 24 · 完整客户提案项目工作流（重构 · 横向 5 阶段卡片流） -->
+<!-- 27 · 完整客户提案项目工作流（重构 · 横向 5 阶段卡片流） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 2 章 · 实战 · 完整客户提案项目</div>
+    <div class="eyebrow">第 4 章 · 实战 · 完整客户提案项目</div>
     <h1 class="title">客户提案 · <span class="grad-purple">5 阶段</span> 全流程</h1>
     <p class="subtitle">从立项到交付 · 每阶段一个舱段 · 工具 + ✅做 + ❌别 · 项目级才是 ROI 最高的尺度</p>
 
@@ -1111,11 +1318,11 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       <div class="card-grad g-purple" style="flex:1;padding:14px;display:flex;flex-direction:column">
         <div style="font-size:11px;font-weight:700;color:#bf5af2;letter-spacing:.15em">DAY 2-3</div>
         <h3 style="margin:4px 0 0">🔍 调研</h3>
-        <div style="margin-top:8px"><span class="pill info">CC + WebFetch</span></div>
+        <div style="margin-top:8px"><span class="pill info">CC Internal + WebFetch</span></div>
         <div style="margin-top:10px;font-size:11px;color:#1a7f37;font-weight:600">✅ 做</div>
         <ul style="margin:4px 0 0 18px;line-height:1.5;color:var(--fg-2)"><li>行业政策</li><li>竞品分析</li><li>数据抓取</li></ul>
         <div style="margin-top:10px;font-size:11px;color:#cf222e;font-weight:600">❌ 别</div>
-        <p style="margin:4px 0 0;color:var(--fg-2)">手动搜——CC 一次出 10 页</p>
+        <p style="margin:4px 0 0;color:var(--fg-2)">手动搜——内网 CLI 一次出 10 页</p>
       </div>
 
       <!-- 箭头 2 -->
@@ -1139,7 +1346,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       <div class="card-grad g-mint" style="flex:1;padding:14px;display:flex;flex-direction:column">
         <div style="font-size:11px;font-weight:700;color:#30d158;letter-spacing:.15em">DAY 5-7</div>
         <h3 style="margin:4px 0 0">🤝 对齐</h3>
-        <div style="margin-top:8px"><span class="pill info">CC</span> + <span class="pill" style="background:#f3e8ff;color:#6b21a8">WB</span></div>
+        <div style="margin-top:8px"><span class="pill info">内网 CLI</span> + <span class="pill" style="background:#f3e8ff;color:#6b21a8">WB</span></div>
         <div style="margin-top:10px;font-size:11px;color:#1a7f37;font-weight:600">✅ 做</div>
         <ul style="margin:4px 0 0 18px;line-height:1.5;color:var(--fg-2)"><li>内部审核</li><li>客户首轮反馈</li><li>多 agent 并行</li></ul>
         <div style="margin-top:10px;font-size:11px;color:#cf222e;font-weight:600">❌ 别</div>
@@ -1167,10 +1374,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 </section>
 
 
-<!-- 25 · 多 agent 并行 落地版 -->
+<!-- 28 · 多 agent 并行 落地版 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 2 章 · 高阶 · 多 agent 并行 · 落地</div>
+    <div class="eyebrow">第 4 章 · 高阶 · 多 agent 并行 · 落地</div>
     <h1 class="title">多 Agent 并行 · <span class="grad-mint">今天就能用</span></h1>
     <p class="subtitle">用上一页"对齐阶段"做 demo · 4 个 agent 并行 30 分钟 = 单线 2 小时</p>
     <div class="grid grid-2" style="margin-top:var(--s3)">
@@ -1179,8 +1386,8 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
         <table style="margin-top:8px">
           <thead><tr><th>Agent</th><th>做什么</th><th>工具</th></tr></thead>
           <tbody>
-            <tr><td class="k">Agent A</td><td>写提案正文 v2</td><td>CC</td></tr>
-            <tr><td class="k">Agent B</td><td>检索最新行业政策</td><td>CC + WebFetch</td></tr>
+            <tr><td class="k">Agent A</td><td>写提案正文 v2</td><td>Claude Code Internal</td></tr>
+            <tr><td class="k">Agent B</td><td>检索最新行业政策</td><td>Gemini CLI Internal（长 context）</td></tr>
             <tr><td class="k">Agent C</td><td>整理客户历史合作</td><td>WorkBuddy</td></tr>
             <tr><td class="k">Agent D</td><td>生成 HTML 可视化版</td><td>CodeBuddy</td></tr>
           </tbody>
@@ -1204,10 +1411,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 26 · AI 工厂愿景 · 手机指挥 agent 飞轮 -->
+<!-- 29 · AI 工厂愿景 · 手机指挥 agent 飞轮 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 2 章 · 高阶 · AI 工厂愿景 · 手机 × Agent 飞轮</div>
+    <div class="eyebrow">第 4 章 · 高阶 · AI 工厂愿景 · 手机 × Agent 飞轮</div>
     <h1 class="title">从 AI 助手 → <span class="grad-warm">AI 工厂</span></h1>
     <p class="subtitle">"每晚数千个 agent 在深度开发" —— Boris Cherny, Claude Code 作者, <a href="https://www.sequoiacap.com/podcast/" target="_blank">红杉资本访谈 2026.05.14</a></p>
     <div class="grid grid-2" style="margin-top:var(--s3)">
@@ -1254,24 +1461,24 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
         <path d="M760 130 L190 100" stroke="#0071e3" stroke-width="1.5" marker-end="url(#fw)"/>
       </svg>
     </div>
-    <div class="callout"><div class="callout-tag">对我们的意义</div><div class="callout-lead">今天先掌握"三同事 + 工作流 + 多 agent 并行"</div><div class="callout-body">但要知道：<strong>明天一定会到"手机指挥上千 agent 自转飞轮"的状态</strong>。这不是科幻 —— Boris Cherny 已经在这么干了。适应"指挥 AI 团队"的工作姿势，是未来 1-2 年最重要的职业技能升级。</div><div class="callout-meta">看完愿景，回到地面 —— 不管是 4 个还是 4000 个 agent，每个都要回答：用什么模型？这就是下一章。</div></div>
+    <div class="callout"><div class="callout-tag">对我们的意义</div><div class="callout-lead">今天先掌握"三同事 + 工作流 + 多 agent 并行"</div><div class="callout-body">但要知道：<strong>明天一定会到"手机指挥上千 agent 自转飞轮"的状态</strong>。这不是科幻 —— Boris Cherny 已经在这么干了。适应"指挥 AI 团队"的工作姿势，是未来 1-2 年最重要的职业技能升级。</div><div class="callout-meta">内网 Claude Code Internal 同源 · 每周与官方版同步 —— 看完愿景，回到地面，每个 agent 都要回答：用什么模型？下一章。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页是全场"远景震撼"。读 Boris Cherny 的原话（"每晚数千 agent 深度开发 · 这对我来说只是日常"）时可以顿 3 秒让听众消化。强调"不是科幻 · 是已发生"。收尾回到"今天先做好 P24 落地的事"，不让听众焦虑。</aside>
   </div>
 </section>
 
 
-<!-- 27 · 章扉 4 -->
+<!-- 30 · 章扉 5 -->
 <section class="slide dark chapter-slide">
-  <div class="ch-chip g4"></div>
-  <div class="ch-num">Chapter 04</div>
+  <div class="ch-chip g5"></div>
+  <div class="ch-num">Chapter 05</div>
   <div class="ch-title">模型与上下文</div>
   <div class="ch-sub">模型选型 = 在"够聪明"和"不烧钱"之间找平衡。<br>这一章学会按需求挑同事。</div>
 </section>
 
-<!-- 28 · 模型家族 -->
+<!-- 31 · 模型家族 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 3 章 · 模型与 Context</div>
+    <div class="eyebrow">第 5 章 · 模型与 Context</div>
     <h1 class="title">模型家族 · 用<span class="grad-warm">同事类比</span>记一辈子</h1>
     <p class="subtitle"><a href="https://www.anthropic.com/claude" target="_blank">Claude</a> 主流三档 · 选型不需要懂技术参数</p>
     <div class="grid grid-3">
@@ -1283,14 +1490,14 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
         <div class="row"><span>用在</span><b>分类 / 摘要 / 格式化</b></div><div class="row"><span>速度</span><b>快（&lt;2 秒/轮）</b></div><div class="row"><span>成本量级</span><b>1/50（极便宜）</b></div><div class="row"><span>不要用</span><b>需要思考的复杂任务</b></div></div>
     </div>
     <div class="callout"><div class="callout-tag">实操建议</div><div class="callout-grid"><div class="item"><b>日常 80%</b>Sonnet</div><div class="item"><b>关键决策 / 卡住</b>换 Opus</div><div class="item"><b>批量低难度</b>Haiku</div><div class="item"><b>WorkBuddy 为什么贵</b>默认 Opus + 1M context</div></div></div>
-    <aside class="notes"><b>讲师备注 ·</b> "1× / 1/5 / 1/50" 是量级，不是精确数字。CC 和 CodeBuddy 默认 Sonnet，WorkBuddy 默认 Opus —— 这是为什么 WorkBuddy 体感更聪明也更贵。</aside>
+    <aside class="notes"><b>讲师备注 ·</b> "1× / 1/5 / 1/50" 是量级，不是精确数字。CLI 三剑客（CC/Gemini/Codex Internal）和 CodeBuddy 默认 Sonnet，WorkBuddy 默认 Opus —— 这是为什么 WorkBuddy 体感更聪明也更贵。</aside>
   </div>
 </section>
 
-<!-- 29 · Context + 价格直觉 -->
+<!-- 32 · Context + 价格直觉 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 3 章 · 模型与 Context</div>
+    <div class="eyebrow">第 5 章 · 模型与 Context</div>
     <h1 class="title"><span class="term" data-tip="模型一次能装在脑子里的信息量。摊不下的就放抽屉里它看不到">Context Window</span> + 价格直觉</h1>
     <p class="subtitle">"AI 同事一次能装在脑子里的信息量" · 决定能跨多深的事</p>
     <div class="grid grid-2" style="grid-template-columns:1fr 1.2fr">
@@ -1314,10 +1521,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 30 · 模型选型 · 销售视角速查（合并 原 P30 非 Anthropic + P31 销售场景速查） -->
+<!-- 33 · 模型选型 · 销售视角速查（合并 原 P30 非 Anthropic + P31 销售场景速查） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 3 章 · 模型与 Context · 销售视角速查</div>
+    <div class="eyebrow">第 5 章 · 模型与 Context · 销售视角速查</div>
     <h1 class="title">模型选型 · <span class="grad">销售视角速查</span></h1>
     <p class="subtitle">非 Anthropic 模型怎么进 + 销售场景对应表 · 截图发群保存</p>
 
@@ -1345,7 +1552,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       <div class="card"><h3 style="margin-top:0">🔧 怎么切模型</h3>
         <ul>
           <li><strong>CodeBuddy</strong>：右上角 / 设置下拉</li>
-          <li><strong>Claude Code</strong>：<code>/model</code> 切</li>
+          <li><strong>CLI 三剑客</strong>：<code>/model</code> 切</li>
           <li><strong>WorkBuddy</strong>：默认 Opus + 1M · 一般不换</li>
         </ul>
       </div>
@@ -1370,18 +1577,18 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 </section>
 
 
-<!-- 31 · 章扉 5 -->
+<!-- 34 · 章扉 6 -->
 <section class="slide dark chapter-slide">
-  <div class="ch-chip g5"></div>
-  <div class="ch-num">Chapter 05</div>
+  <div class="ch-chip g1"></div>
+  <div class="ch-num">Chapter 06</div>
   <div class="ch-title">配置即记忆</div>
   <div class="ch-sub">给 AI 装三层记忆 + 一桥模板。<br>项目规则 → 工作流模板 → 自动接力。</div>
 </section>
 
-<!-- 32 · Ch4 三层记忆概览（插入到章扉 5 后 / AGENTS.md why 前） -->
+<!-- 35 · Ch4 三层记忆概览（插入到章扉 5 后 / AGENTS.md why 前） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 配置即记忆 · 概览</div>
+    <div class="eyebrow">第 6 章 · 配置即记忆 · 概览</div>
     <h1 class="title">三层记忆 + 一桥 · <span class="grad-purple">配置全景</span></h1>
     <p class="subtitle">先看全景 · 再看每层 · 不要把它们当孤立功能</p>
 
@@ -1441,17 +1648,17 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 </section>
 
 
-<!-- 33 · AGENTS.md · Why -->
+<!-- 36 · AGENTS.md · Why -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 第 1 层 · 项目规则 · AGENTS.md Why</div>
+    <div class="eyebrow">第 6 章 · 第 1 层 · 项目规则 · AGENTS.md Why</div>
     <h1 class="title"><span class="term" data-tip="项目级配置文件，OpenAI/Cursor/CodeBuddy 共享格式。一份文件三家共吃">AGENTS.md</span> · <span class="grad-warm">Why</span> 为什么是它</h1>
     <p class="subtitle">不是 README · 不是 CLAUDE.md · 不是 CodeBuddy User Rules · 是跨家共用的"项目身份证"</p>
 
     <div class="grid grid-2" style="margin-top:var(--s3)">
       <div class="card"><h3 style="margin-top:0;color:#cf222e">❌ 没有 AGENTS.md 时</h3>
         <ul>
-          <li><strong>每个 agent 写一份配置</strong>：CC 写 CLAUDE.md · CodeBuddy 写 User Rules · Cursor 写 .cursorrules</li>
+          <li><strong>每个 agent 写一份配置</strong>：CC Internal 写 CLAUDE.md · CodeBuddy 写 User Rules · Cursor 写 .cursorrules</li>
           <li><strong>规则漂移</strong>：改了 CLAUDE.md 忘了同步 .cursorrules → 同一个项目两个 agent 行为不一致</li>
           <li><strong>新人接手</strong>：不知道哪份是真规则</li>
           <li><strong>README 不顶用</strong>：README 是给"人"看的（介绍项目），AI 看了不会按它执行</li>
@@ -1459,7 +1666,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       </div>
       <div class="card"><h3 style="margin-top:0;color:#1a7f37">✅ AGENTS.md 解决</h3>
         <ul>
-          <li><strong>单一来源</strong>：一份文件，CC + CodeBuddy + Cursor + Codex 全部自动加载</li>
+          <li><strong>单一来源</strong>：一份文件，Claude Code Internal / Gemini CLI Internal / Codex CLI Internal + CodeBuddy + Cursor 全部自动加载</li>
           <li><strong>开放标准</strong>：OpenAI 推动，Anthropic / Cursor 跟进，事实上的"agent 项目规约"</li>
           <li><strong>给 AI 看的</strong>：用命令式语言（"用 X 不用 Y"），不像 README 是叙述</li>
           <li><strong>规则集中</strong>：项目身份 / 数据 schema / 反模式 / 部署流程 / 跨 agent 注意事项</li>
@@ -1471,8 +1678,8 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
     <table>
       <thead><tr><th style="width:130px">层级</th><th>位置</th><th>谁吃</th><th>写什么</th></tr></thead>
       <tbody>
-        <tr><td class="k">全局偏好</td><td><code>~/.claude/CLAUDE.md</code> + CodeBuddy User Rules</td><td>CC + CodeBuddy（手动同步）</td><td>身份 / 语气 / 输出格式偏好 / 反模式</td></tr>
-        <tr><td class="k">项目规则</td><td><code>项目根/AGENTS.md</code></td><td>CC + CodeBuddy + Cursor + Codex 共吃</td><td>项目身份 · 文件地图 · schema · 部署 · 反例</td></tr>
+        <tr><td class="k">全局偏好</td><td><code>项目根/AGENTS.md</code> + CodeBuddy User Rules</td><td>CLI 三剑客 + CodeBuddy（手动同步）</td><td>身份 / 语气 / 输出格式偏好 / 反模式</td></tr>
+        <tr><td class="k">项目规则</td><td><code>项目根/AGENTS.md</code></td><td>CLI 三剑客 + CodeBuddy + Cursor 共吃</td><td>项目身份 · 文件地图 · schema · 部署 · 反例</td></tr>
         <tr><td class="k">业务记忆</td><td><code>~/.workbuddy/memory/</code></td><td>WorkBuddy 自动维护</td><td>对话沉淀 · 客户故事 · 决策历史（不要手写）</td></tr>
       </tbody>
     </table>
@@ -1480,10 +1687,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 34 · AGENTS.md · How（新增） -->
+<!-- 37 · AGENTS.md · How（新增） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 第 1 层 · 项目规则 · AGENTS.md How</div>
+    <div class="eyebrow">第 6 章 · 第 1 层 · 项目规则 · AGENTS.md How</div>
     <h1 class="title">AGENTS.md · <span class="grad-mint">How</span> 怎么写</h1>
     <p class="subtitle">球鞋站项目实例 · 88 行 / 6 个章节 / 三家 agent 共吃</p>
 
@@ -1519,10 +1726,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 35 · Skill + Hook · 概念对照（合并 原 P36 Skill + P37 Hook） -->
+<!-- 38 · Skill + Hook · 概念对照（合并 原 P36 Skill + P37 Hook） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 第 2 + 3 层 · 工作流模板 + 自动接力</div>
+    <div class="eyebrow">第 6 章 · 第 2 + 3 层 · 工作流模板 + 自动接力</div>
     <h1 class="title"><span class="term" data-tip="Skill：把可复用工作流封装成 SKILL.md，下次一句话调用">Skill</span> + <span class="term" data-tip="Hook：写完文件、运行命令等时机，自动触发后续脚本">Hook</span> · <span class="grad">一对配套机制</span></h1>
     <p class="subtitle">Skill 解决"主动让 AI 做什么" · Hook 解决"AI 做完后自动做什么"</p>
 
@@ -1571,10 +1778,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 36 · Skill / Hook 最小可执行模板 -->
+<!-- 39 · Skill / Hook 最小可执行模板 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 桥 · 三层模板 · 复制即用</div>
+    <div class="eyebrow">第 6 章 · 桥 · 三层模板 · 复制即用</div>
     <h1 class="title">Skill / Hook · <span class="grad-mint">最小可执行模板</span></h1>
     <p class="subtitle">复制即用 · 三步替换占位符 · 第二天就能用上</p>
 
@@ -1629,10 +1836,18 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
   </div>
 </section>
 
-<!-- 37 · 辟谣 + 起步 + 场景 -->
+<!-- 40 · 章扉 7 -->
+<section class="slide dark chapter-slide">
+  <div class="ch-chip g3"></div>
+  <div class="ch-num">Chapter 07</div>
+  <div class="ch-title">起步路径</div>
+  <div class="ch-sub">先用 · 再调 · 再扩。<br>不是装备党，是用了之后省了多少时间驱动你下一步。</div>
+</section>
+
+<!-- 41 · 辟谣 + 起步 + 场景 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 5 章 · 起步</div>
+    <div class="eyebrow">第 7 章 · 起步</div>
     <h1 class="title">5 条<span class="grad-warm">误解辟谣</span> + <span class="grad">场景速查</span></h1>
     <p class="subtitle">现场可问可答 · 截图发群保存</p>
     <div class="grid grid-2" style="margin-top:var(--s4)">
@@ -1648,10 +1863,10 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
         <ul>
           <li><strong>客户邮件初稿</strong>→CodeBuddy</li>
           <li><strong>季度复盘</strong>→WorkBuddy</li>
-          <li><strong>批量改文件名</strong>→CC</li>
+          <li><strong>批量改文件名</strong>→内网 CLI</li>
           <li><strong>查腾讯文档</strong>→CodeBuddy + MCP</li>
           <li><strong>跨周策略思考</strong>→WorkBuddy</li>
-          <li><strong>HTML 单页报告</strong>→CC 或 CodeBuddy</li>
+          <li><strong>HTML 单页报告</strong>→CodeBuddy 为主 · 内网 CLI 为辅</li>
         </ul></div>
     </div>
     <div class="callout good"><div class="callout-tag">第一性原则</div><div class="callout-lead">先用 · 再调 · 再扩</div><div class="callout-body">不要一上来就追求完美配置。让"用了之后省了多少时间"驱动你下一步装什么。</div></div>
@@ -1659,10 +1874,10 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
   </div>
 </section>
 
-<!-- 38 · 成长路径 4 阶段 -->
+<!-- 42 · 成长路径 4 阶段 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 5 章 · 起步 · 成长路径</div>
+    <div class="eyebrow">第 7 章 · 起步 · 成长路径</div>
     <h1 class="title">成长路径 · <span class="grad">Day 1</span> → <span class="grad-purple">Week 1</span> → <span class="grad-warm">Month 1</span> → <span class="grad-mint">Quarter 1</span></h1>
     <p class="subtitle">四阶段曲线 · 不要跳级 · 上一阶段没跑通别上下一级</p>
 
@@ -1699,7 +1914,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
         <div style="margin-top:8px;font-size:12px;line-height:1.6">
           <div><b>主要工具</b> · CodeBuddy</div>
           <div><b>关键产出</b> · 跑通 1 次补全 · 写 1 条 User Rules</div>
-          <div><b>别做</b> · 还别装 CC / 别碰 WorkBuddy</div>
+          <div><b>别做</b> · 还别碰内网 CLI / 别碰 WorkBuddy</div>
         </div>
       </div>
 
@@ -1717,7 +1932,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
         <h3>Month 1 · 沉淀</h3>
         <p style="color:var(--muted);margin-top:2px">投入 半天 / 周</p>
         <div style="margin-top:8px;font-size:12px;line-height:1.6">
-          <div><b>主要工具</b> · + CC + AGENTS.md</div>
+          <div><b>主要工具</b> · + 内网 CLI + AGENTS.md</div>
           <div><b>关键产出</b> · 项目 AGENTS.md · 自己写 1 个 Skill · 加 1 个 Hook 自动归档</div>
           <div><b>别做</b> · 别想着把所有人都拉上 WorkBuddy</div>
         </div>
@@ -1727,7 +1942,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
         <h3>Quarter 1 · 驾驭</h3>
         <p style="color:var(--muted);margin-top:2px">已成日常</p>
         <div style="margin-top:8px;font-size:12px;line-height:1.6">
-          <div><b>主要工具</b> · CC + WB 多 agent 协作</div>
+          <div><b>主要工具</b> · 内网 CLI + WB 多 agent 协作</div>
           <div><b>关键产出</b> · 团队级 AGENTS.md · 跨工具记忆共享 · 算清 ROI</div>
           <div><b>别做</b> · 别"装备党"——工具够用，重点是产出</div>
         </div>
@@ -1740,7 +1955,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
   </div>
 </section>
 
-<!-- 39 · 收尾（Apple 风升级） -->
+<!-- 43 · 收尾（Apple 风升级） -->
 <section class="slide dark hero-slide hero-end">
   <div class="blob b1" style="background:var(--grad-purple);opacity:.32"></div>
   <div class="blob b2" style="background:var(--grad-blue);opacity:.22"></div>
