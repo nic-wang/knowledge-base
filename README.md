@@ -10,8 +10,8 @@
 
 ### 🤖 [AI Agents](./docs/ai-agents/)
 AI Agent 产品研究、对比、使用心得。
-- [AI 编程协作工具讲解](./docs/ai-agents/ai-coding-tools-explained.html) · 2026-05-14
-  34 页可翻页讲解 deck（Apple 风）· CodeBuddy · Claude Code · WorkBuddy · OpenClaw · Hermes · MCP · Skill · Hook · 模型选型 · AGENTS.md · 合规边界 · 成长路径 · [📄 PDF](./docs/ai-agents/ai-coding-tools-explained.pdf)
+- [AI 编程协作工具讲解](./docs/ai-agents/ai-coding-tools-explained.html) · 2026-05-18
+  39 页 Apple 风内训 deck · CodeBuddy / Claude Code / WorkBuddy / OpenClaw / Hermes / MCP / Skill / Hook / 多 agent / AI 工厂愿景
 - [五款 AI Agent 全景对比 v4](./docs/ai-agents/tencent-agents-comparison.html) · 2026-04-30
   OpenClaw · WorkBuddy · CodeBuddy · Hermes Agent · Claude Code CLI 的能力矩阵、场景路由、接入路径
 
@@ -30,7 +30,7 @@ AI Agent 产品研究、对比、使用心得。
 
 | 日期 | 变更 |
 |---|---|
-| 2026-05-14 | 📚 新增 AI Agents「AI 编程协作工具讲解」34 页 deck（含 PDF） |
+| 2026-05-18 | ✨ 新增「AI 编程协作工具讲解」39 页 Apple 风内训 deck |
 | 2026-04-30 | 🚀 仓库初始化 + 首发文档「五款 AI Agent 全景对比 v4」 |
 
 ---

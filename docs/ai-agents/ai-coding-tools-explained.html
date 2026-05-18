@@ -94,16 +94,71 @@ thead th{background:var(--bg-alt);text-align:left;padding:12px 14px;font-weight:
 tbody td{padding:12px 14px;border-bottom:1px solid var(--hairline);color:var(--fg-2);vertical-align:top}
 tbody tr:last-child td{border-bottom:0}
 td.k{font-weight:600;color:var(--fg);width:120px}
-td .pill{display:inline-block;padding:2px 9px;border-radius:var(--r-pill);font-size:12px;font-weight:600}
+.pill{display:inline-block;padding:3px 10px;border-radius:var(--r-pill);font-size:12px;font-weight:600;line-height:1.3;letter-spacing:.01em;vertical-align:middle}
+td .pill{font-size:12px}
 .pill.good{background:#e8f5e9;color:#1a7f37}
 .pill.warn{background:#fff8c5;color:#9a6700}
 .pill.bad{background:#ffebee;color:#cf222e}
 .pill.info{background:#e3f2fd;color:#0550ae}
-.callout{background:linear-gradient(135deg,#f5f5f7 0%,#fbfbfd 100%);border-left:3px solid var(--accent);border-radius:var(--r-md);padding:var(--s3) var(--s4);margin-top:var(--s3);font-size:16px;color:var(--fg-2)}
-.callout strong{color:var(--fg)}
+.pill.muted{background:#f5f5f7;color:#6e6e73}
+/* inline note · 不打断阅读流的注释 */
+.note-inline{font-size:12px;color:var(--muted);font-style:italic;margin-left:6px;font-weight:400}
+/* 链接 · Apple 风极简 · hover 才显下划线 */
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+a:hover{border-bottom-color:var(--accent)}
+.dark a{color:#0a84ff}
+/* hairline 分隔 / 数据强调 */
+.kbd-key{display:inline-block;font-family:var(--font-mono);font-size:.78em;padding:1px 6px;border:1px solid var(--hairline);border-radius:5px;background:var(--bg-alt);color:var(--fg);margin:0 2px;vertical-align:1px}
+.num{font-feature-settings:"tnum";color:var(--fg);font-weight:600}
+mark{background:linear-gradient(180deg,transparent 60%,rgba(255,159,10,.32) 60%);color:inherit;padding:0 2px;font-weight:600}
+/* timeline · P23 销售一天工作流 */
+.tl{position:relative;margin-top:var(--s3)}
+.tl::before{content:"";position:absolute;left:62px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,#0070f3 0%,#bf5af2 50%,#ff9f0a 80%,#86868b 100%);border-radius:1px}
+.tl-row{display:flex;align-items:flex-start;gap:24px;padding:6px 0}
+.tl-time{width:48px;text-align:right;padding-top:14px;font-family:var(--font-mono);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.tl-dot{width:24px;display:flex;justify-content:center;padding-top:18px}
+.tl-dot::before{content:"";width:12px;height:12px;border-radius:50%;background:currentColor;border:3px solid #fff;box-shadow:0 0 0 1.5px currentColor;z-index:1}
+.tl-card{flex:1;padding:12px 18px;border-radius:var(--r-md);background:#fff;border:1px solid var(--hairline);position:relative;overflow:hidden}
+.tl-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:currentColor}
+.tl-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.tl-title{font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--fg);line-height:1.3;margin:0}
+.tl-tools{display:flex;gap:6px;align-items:center;margin-top:5px;flex-wrap:wrap}
+.tl-tools .pill{font-size:11px;padding:2px 9px}
+.tl-save{font-family:var(--font-mono);font-size:11px;color:#1a7f37;font-weight:600;background:#dafbe1;padding:2px 9px;border-radius:var(--r-pill);white-space:nowrap}
+.tl-desc{margin-top:8px;font-size:13px;color:var(--fg-2);line-height:1.5}
+.tl-desc .quote{color:var(--fg);font-weight:500}
+body.pdf-mode .tl{margin-top:10px}
+body.pdf-mode .tl-row{padding:4px 0;gap:18px}
+body.pdf-mode .tl-time{font-size:11px;width:40px;padding-top:11px}
+body.pdf-mode .tl-card{padding:9px 14px}
+body.pdf-mode .tl-title{font-size:13px}
+body.pdf-mode .tl-tools{margin-top:3px}
+body.pdf-mode .tl-tools .pill{font-size:9px;padding:1px 7px}
+body.pdf-mode .tl-save{font-size:9px;padding:1px 7px}
+body.pdf-mode .tl-desc{font-size:11px;line-height:1.4;margin-top:5px}
+.callout{background:linear-gradient(135deg,#f5f5f7 0%,#fbfbfd 100%);border-left:3px solid var(--accent);border-radius:var(--r-md);padding:18px 22px;margin-top:var(--s3);color:var(--fg-2);display:flex;flex-direction:column;gap:6px}
+.callout strong{color:var(--fg);font-weight:600}
 .callout.warn{border-left-color:#ff9f0a}
 .callout.good{border-left-color:#30d158}
 .dark .callout{background:#1d1d1f;color:#a1a1a6}
+.callout-tag{font-family:var(--font-text);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.callout.warn .callout-tag{color:#9a6700}
+.callout.good .callout-tag{color:#1a7f37}
+.callout-lead{font-size:17px;font-weight:600;color:var(--fg);line-height:1.4}
+.callout-body{font-size:14px;font-weight:400;color:var(--fg-2);line-height:1.55}
+.callout-body strong{color:var(--fg);font-weight:600}
+.callout-body code{font-size:.88em}
+.callout-meta{font-size:13px;font-weight:400;color:var(--muted);font-style:italic;line-height:1.45;margin-top:2px;border-top:1px dashed var(--hairline);padding-top:6px}
+.callout-meta strong{color:var(--fg);font-style:normal;font-weight:600}
+.callout-steps{margin:2px 0 0 18px;padding:0;list-style:decimal}
+.callout-steps li{font-size:14px;font-weight:500;color:var(--fg);line-height:1.5;margin:2px 0}
+.callout-steps li strong{color:#cf222e;font-weight:700}
+.callout-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 22px;margin-top:2px}
+.callout-grid .item{font-size:13px;color:var(--fg-2);line-height:1.5}
+.callout-grid .item b{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:2px}
+.callout-prefix{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--muted);background:rgba(0,0,0,.05);padding:2px 9px;border-radius:var(--r-pill);margin-right:6px;vertical-align:1px;line-height:1.4}
+.callout.warn .callout-prefix{background:rgba(255,159,10,.14);color:#9a6700}
+.callout.good .callout-prefix{background:rgba(48,209,88,.14);color:#1a7f37}
 .notes{margin-top:var(--s4);padding:var(--s3);background:#fffbe6;border:1px dashed #d4a72c;border-radius:var(--r-md);font-size:14px;color:#8b6914;display:none}
 .notes.show{display:block}
 .notes b{color:#5c4406}
@@ -170,7 +225,17 @@ body.pdf-mode .subtitle{font-size:17px;margin-bottom:20px}
 body.pdf-mode h2.section-h{font-size:18px;margin:12px 0 6px}
 body.pdf-mode h3{font-size:16px;margin:8px 0 4px}
 body.pdf-mode p,body.pdf-mode li{font-size:13px;line-height:1.45}
-body.pdf-mode .callout{padding:10px 14px;font-size:12px;margin-top:10px}
+body.pdf-mode .callout{padding:10px 14px;margin-top:10px;gap:3px}
+body.pdf-mode .callout-tag{font-size:9px;letter-spacing:.14em;margin-bottom:1px}
+body.pdf-mode .callout-lead{font-size:13px;line-height:1.35}
+body.pdf-mode .callout-body{font-size:11px;line-height:1.45}
+body.pdf-mode .callout-meta{font-size:10px;line-height:1.4;padding-top:4px;margin-top:1px}
+body.pdf-mode .callout-steps{margin:1px 0 0 16px}
+body.pdf-mode .callout-steps li{font-size:11px;line-height:1.4;margin:1px 0}
+body.pdf-mode .callout-grid{gap:4px 14px}
+body.pdf-mode .callout-grid .item{font-size:10px;line-height:1.4}
+body.pdf-mode .callout-grid .item b{font-size:9px}
+body.pdf-mode .callout-prefix{font-size:9px;padding:0 6px}
 body.pdf-mode .card,body.pdf-mode .card-grad{padding:16px}
 body.pdf-mode .grid{gap:12px}
 body.pdf-mode .card-grad .row{font-size:12px;padding:4px 0}
@@ -181,6 +246,9 @@ body.pdf-mode .shot img{max-height:240px;object-fit:contain}
 body.pdf-mode .svg-wrap{margin:6px 0}
 body.pdf-mode .svg-wrap svg{max-height:340px}
 body.pdf-mode table{font-size:11px}
+body.pdf-mode .pill{font-size:10px;padding:2px 7px}
+body.pdf-mode .note-inline{font-size:10px}
+body.pdf-mode mark{background:linear-gradient(180deg,transparent 65%,rgba(255,159,10,.32) 65%)}
 body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 @page{size:1400px 875px;margin:0}
 @media print{body{background:#fff!important;overflow:visible;-webkit-print-color-adjust:exact;print-color-adjust:exact;color-adjust:exact}.deck{height:auto;overflow:visible}.track{display:block;transform:none!important}.slide{page-break-after:always;break-after:page;break-inside:avoid;page-break-inside:avoid;width:1400px;height:875px;min-height:875px;max-height:875px;overflow:hidden;padding:42px 60px}.progress,.hud-num,.hud-hint{display:none!important}.term{text-decoration:none!important}.term::after{content:"（"attr(data-tip)"）";color:var(--muted);font-size:.78em}.notes{display:block!important;font-size:11px;padding:8px 12px;margin-top:10px}.chapter-slide{padding:48px 80px}.chapter-slide .ch-title{font-size:72px}.hero-slide h1.hero{font-size:80px}h1.title{font-size:40px;margin-bottom:10px}.subtitle{font-size:17px;margin-bottom:20px}h2.section-h{font-size:18px;margin:12px 0 6px}h3{font-size:16px;margin:8px 0 4px}p,li{font-size:13px;line-height:1.45}.callout{padding:10px 14px;font-size:12px;margin-top:10px}.card,.card-grad{padding:16px}.grid{gap:12px}.card-grad .row{font-size:12px;padding:4px 0}.plugin-row{padding:8px 0}.plugin-row .name{font-size:13px}.plugin-row .desc{font-size:12px}.shot img{max-height:260px;object-fit:contain}.svg-wrap{margin:8px 0}.svg-wrap svg{max-height:340px}table{font-size:12px}thead th,tbody td{padding:8px 10px}}
@@ -189,7 +257,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 <body>
 <div class="progress"><div id="bar"></div></div>
 <div class="hud-hint"><kbd>←</kbd><kbd>→</kbd> 翻页 · <kbd>P</kbd> 备注 · <kbd>F</kbd> 全屏</div>
-<div class="hud-num"><span id="cur">1</span>/<span id="total">34</span></div>
+<div class="hud-num"><span id="cur">1</span>/<span id="total">39</span></div>
 <div class="deck"><div class="track" id="track">
 <!-- 1 · 封面（Apple Intelligence 风 · 渐变大字 + 呼吸光斑 + scroll cue） -->
 <section class="slide dark hero-slide">
@@ -228,15 +296,15 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   <div class="content">
     <div class="eyebrow">导览</div>
     <h1 class="title">今天讲<span class="grad">什么</span></h1>
-    <p class="subtitle">5 章 · 34 页 · 30-40 分钟 · 有 demo · 可截图带走</p>
+    <p class="subtitle">5 章 · 41 页 · 30-40 分钟 · 有 demo · 可截图带走</p>
     <div class="grid grid-3" style="margin-top:var(--s5)">
-      <div class="card-grad g-blue"><h3>1 · 心智模型</h3><p style="font-size:15px;color:var(--muted)">心智 · 三层架构 · 名词速查 · Claw 家族 · Harness/Hermes · MCP 协议 · 合规边界</p></div>
-      <div class="card-grad g-purple"><h3>2 · 三同事详解</h3><p style="font-size:15px;color:var(--muted)">CC / WorkBuddy / CodeBuddy 速览 + 4 个真实 demo · 横向对比 · 决策矩阵</p></div>
-      <div class="card-grad g-warm"><h3>3 · 模型与 Context</h3><p style="font-size:15px;color:var(--muted)">Opus / Sonnet / Haiku 同事类比 · Context Window · 价格直觉 · 非 Anthropic 模型</p></div>
-      <div class="card-grad g-mint"><h3>4 · 配置即记忆</h3><p style="font-size:15px;color:var(--muted)">AGENTS.md why+how · Skill / Hook 最小模板</p></div>
-      <div class="card-grad g-gray"><h3>5 · 起步路径</h3><p style="font-size:15px;color:var(--muted)">5 条误解辟谣 · 场景速查 · 成长路径 Day 1 → Quarter 1</p></div>
+      <div class="card-grad g-blue"><h3>1 · 心智模型</h3><p style="color:var(--muted)">心智 · 三层架构 · 名词速查 · Claw 家族 · Harness 工程 · Hermes vs OpenClaw · MCP 协议 · 合规边界</p></div>
+      <div class="card-grad g-purple"><h3>2 · 三同事详解</h3><p style="color:var(--muted)">CC / WB / CB 速览 + demo · 横向对比 · 决策矩阵 · 一天工作流 · 项目全流程 · 多 agent 并行 · AI 工厂飞轮</p></div>
+      <div class="card-grad g-warm"><h3>3 · 模型与 Context</h3><p style="color:var(--muted)">Opus / Sonnet / Haiku 同事类比 · Context Window · 价格直觉 · 非 Anthropic 模型</p></div>
+      <div class="card-grad g-mint"><h3>4 · 配置即记忆</h3><p style="color:var(--muted)">三层记忆概览 · AGENTS.md · Skill · Hook（vs 多 agent）· 最小模板</p></div>
+      <div class="card-grad g-gray"><h3>5 · 起步路径</h3><p style="color:var(--muted)">5 条误解辟谣 · 场景速查 · 成长路径 Day 1 → Quarter 1</p></div>
     </div>
-    <div class="callout" style="margin-top:var(--s5)"><strong>预期：</strong>听完之后，你能说清楚自己手头的活该用哪个 agent，知道至少 1 处可以马上节省 30 分钟的具体落地点。</div>
+    <div class="callout" style="margin-top:var(--s5)"><div class="callout-tag">本场预期</div><div class="callout-lead">能说清自己手头的活该用哪个 agent</div><div class="callout-body">至少找到 1 处可以马上节省 30 分钟的具体落地点。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 开场 1 分钟。强调 "今天不会让你装东西，先听完再决定要不要上手"。</aside>
   </div>
 </section>
@@ -253,7 +321,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       <div class="card"><h3 style="color:#1a7f37">✅ 把 AI 当同事</h3>
         <ul><li>给身份："我是法律行业销售"</li><li>给偏好："HTML 我要 Apple 风"</li><li>给项目地图："这个客户的历史在 X 文件"</li><li>明确反模式："不要给我 5 个选项让我挑"</li><li>结果：1 小时投入 / 半年复利</li></ul></div>
     </div>
-    <div class="callout good"><strong>核心切换：</strong>从 "AI 帮我做 X" → 变成 "AI 知道我是谁、在哪、要去哪、之后再帮我做 X"。<br>这就是为什么"配置"和"记忆"是这堂课最重要的两个词。</div>
+    <div class="callout good"><div class="callout-tag">核心切换</div><div class="callout-lead">从"AI 帮我做 X" → "AI 知道我是谁、在哪、要去哪，再帮我做 X"</div><div class="callout-body">这就是为什么"配置"和"记忆"是这堂课最重要的两个词。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页是全场心智锚点。可以问听众"你最近一次用 AI 失望是什么时候？" 大概率答案都是把 AI 当工具的失败经历。</aside>
   </div>
 </section>
@@ -305,10 +373,14 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
         <tr><td class="k">记忆深度</td><td>会话级 + 项目级</td><td>项目级 + 全局偏好</td><td>跨日跨项目（最深）</td></tr>
       </tbody>
     </table>
-    <div class="callout"><strong>能不能共用一份记忆？</strong>—— 部分可以。
-      <strong>可共用</strong>：项目级 <code>AGENTS.md</code>（CC + CodeBuddy + Cursor 都吃）。
-      <strong>不要共用</strong>：WorkBuddy 的 daily memory 和 SOUL 人格——它是对话沉淀，强行喂给 CC 反而污染上下文。
-      <strong>建议</strong>：项目规则 → 一份 AGENTS.md 跨家共用；个人偏好 → CC 写 CLAUDE.md / CodeBuddy 写 User Rules（手动同步）；业务记忆 → WorkBuddy 独占。
+    <div class="callout">
+      <div class="callout-tag">能不能共用一份记忆</div>
+      <div class="callout-lead">部分可以 —— 共用层和私有层要分清</div>
+      <div class="callout-grid">
+        <div class="item"><b>可共用</b>项目级 <code>AGENTS.md</code> · CC + CodeBuddy + Cursor 都吃</div>
+        <div class="item"><b>不要共用</b>WB 的 daily memory · 强行喂 CC 反而污染上下文</div>
+      </div>
+      <div class="callout-body"><span class="callout-prefix">建议</span> · 项目规则 → 一份 AGENTS.md 跨家共用 · 个人偏好 → CC 写 CLAUDE.md / CodeBuddy 写 User Rules（手动同步）· 业务记忆 → WorkBuddy 独占。</div>
     </div>
     <aside class="notes"><b>讲师备注 ·</b> 这页停 2 分钟。市面同类那行让大家"对号入座"——他们用过 Cursor / Copilot 就秒懂 CodeBuddy 是什么。记忆机制差异是这堂课的暗线，后面 P12 会再展开 WB 三件套。</aside>
   </div>
@@ -408,67 +480,90 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
         </ul>
       </div>
       <div class="card"><h3 style="margin-top:0">为什么这么多 "Claw"</h3>
-        <p style="font-size:14px">"Claw" 是腾讯内部围绕 AI agent 体系搭建的一套品牌前缀，含义偏向"敏捷的、能动手的助手"。但它指代的<strong>不是单个产品</strong>——而是整个生态的不同部件。</p>
-        <p style="font-size:14px;margin-top:8px">类比：<strong>"水龙头"</strong>。OpenClaw 是水管总阀（路由）· Claw Code 是工厂里能拆能改的工业水龙头（CLI）· WorkBuddy Claw 是装在你家厨房的成品（桌面 agent）· CodeBuddy Claw 标签是水龙头开关上的一个挡位（插件特性）。</p>
-        <div class="callout warn" style="margin-top:8px;padding:10px 14px"><strong>记一句：</strong>OpenClaw ≠ Claw Code ≠ WorkBuddy Claw ≠ CodeBuddy 的 Claw 标签。下次听到先确认"哪一层"。</div>
+        <p >"Claw" 是腾讯内部围绕 AI agent 体系搭建的一套品牌前缀，含义偏向"敏捷的、能动手的助手"。但它指代的<strong>不是单个产品</strong>——而是整个生态的不同部件。</p>
+        <p style="margin-top:8px">类比：<strong>"水龙头"</strong>。OpenClaw 是水管总阀（路由）· Claw Code 是工厂里能拆能改的工业水龙头（CLI）· WorkBuddy Claw 是装在你家厨房的成品（桌面 agent）· CodeBuddy Claw 标签是水龙头开关上的一个挡位（插件特性）。</p>
+        <div class="callout warn" style="margin-top:8px"><div class="callout-tag">记一句</div><div class="callout-lead">OpenClaw ≠ Claw Code ≠ WorkBuddy Claw ≠ CodeBuddy 的 Claw 标签</div><div class="callout-body">下次听到先确认"哪一层"。</div></div>
       </div>
     </div>
     <aside class="notes"><b>讲师备注 ·</b> 这是核心 framing 页。同事最容易混的就是这几个 "Claw"。可以让 1 位听众复述一遍 4 类区别 —— 复述对了说明吃透了。</aside>
   </div>
 </section>
 
-<!-- 9 · Harness 工程 + Hermes 框架 · 行业视野 -->
+<!-- 9 · Harness 工程独立 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 1 章 · 心智模型 · 行业视野</div>
-    <h1 class="title"><span class="grad-warm">Harness</span> 工程 + <span class="grad-purple">Hermes</span> 框架</h1>
-    <p class="subtitle">两个"业内热词" · 听过别蒙 · 看完知道在哪一层</p>
-
+    <div class="eyebrow">第 1 章 · 心智模型 · Harness 工程</div>
+    <h1 class="title"><span class="grad-warm">Harness</span> 工程 · "怎么跑"的那层</h1>
+    <p class="subtitle">不是产品 · 是 framing · 业界讨论 AI agent 时的第三个工程维度</p>
     <div class="grid grid-2" style="margin-top:var(--s3)">
       <div class="card-grad g-warm">
-        <h3>Harness 工程 · "怎么跑"</h3>
-        <p style="font-size:14px;color:var(--muted);margin-top:4px">不是产品 · 是一套 framing</p>
-        <p style="font-size:15px;margin-top:10px">套在 AI agent 外面那层<strong>管理框架</strong>——决定 agent 如何被约束、如何运转、如何交付结果。</p>
-        <h3 style="margin-top:14px;font-size:14px">三件事的对照</h3>
-        <table style="margin-top:6px">
-          <thead><tr><th style="width:120px">工程</th><th>关注什么</th></tr></thead>
+        <h3>三件事的对照</h3>
+        <table style="margin-top:10px">
+          <thead><tr><th style="width:140px">工程类型</th><th>关注什么</th></tr></thead>
           <tbody>
             <tr><td class="k">Prompt 工程</td><td>怎么"说" · 写好 instruction</td></tr>
             <tr><td class="k">Context 工程</td><td>给"什么" · 管理 context 内容</td></tr>
             <tr><td class="k"><strong>Harness 工程</strong></td><td><strong>怎么"跑"</strong> · 编排 / 权限 / 多 agent / 反馈循环</td></tr>
           </tbody>
         </table>
-        <div class="callout" style="margin-top:10px;padding:10px 14px;font-size:13px"><strong>典型例子：</strong>Claude Code 的源码（46k 行 QueryEngine + 40 个 permission-gated tools + 多层 hook）就是个 Harness。CodeBuddy 内部也有 Harness 层管多 agent 协作。</div>
+        <div class="callout" style="margin-top:14px"><div class="callout-tag">Harness 定义</div><div class="callout-body">套在 AI agent 外面那层管理框架 —— 决定 agent 如何被约束、如何运转、如何交付结果。</div></div>
       </div>
-
-      <div class="card-grad g-purple">
-        <h3>Hermes Agent · 开源具体产品</h3>
-        <p style="font-size:14px;color:var(--muted);margin-top:4px">Nous Research · 2026.02 开源 · MIT 协议</p>
-        <p style="font-size:15px;margin-top:10px">"<strong>会学习、会沉淀的自进化 agent</strong>"—— 被誉为 OpenClaw 的开源替代方案。</p>
-        <h3 style="margin-top:14px;font-size:14px">核心特性</h3>
-        <ul style="margin-top:4px;font-size:13px;line-height:1.6">
-          <li><strong>持久记忆</strong>：本机 <code>~/.hermes/</code>，关机不丢，跨会话保留</li>
-          <li><strong>自我学习循环</strong>：从过去任务失败中学，下次自动调整</li>
-          <li><strong>40+ 内置工具</strong>：文件 / 浏览器 / shell / API 调用</li>
-          <li><strong>Skill 自动生成</strong>：完成任务后自动写可复用 skill 文档</li>
-          <li><strong>支持 MCP server 模式</strong>：和下一页要讲的 MCP 协议互通</li>
-          <li><strong>多平台接入</strong>：飞书 / 钉钉 / Telegram / QQ 等 12+ 平台</li>
+      <div class="card">
+        <h3 style="margin-top:0">典型 Harness 实例</h3>
+        <ul>
+          <li><strong>Claude Code</strong>：46k 行 QueryEngine + 40 个 permission-gated tools</li>
+          <li><strong>CodeBuddy</strong>：内部 Harness 层管多 agent 协作</li>
+          <li><strong>WorkBuddy</strong>：SOUL 注入 + daily memory 自动归档</li>
         </ul>
-        <div class="callout" style="margin-top:10px;padding:10px 14px;font-size:13px"><strong>对我们的意义：</strong>不一定要用，但要知道——业界正在把 "agent 自进化"做成标准能力。WorkBuddy 的 daily memory 就是这个方向的腾讯版。</div>
+        <h3 style="margin-top:14px">业务同事要不要关心？</h3>
+        <p style="color:var(--fg-2)">日常不用碰。但能区分"是 prompt 问题"还是"是 harness 问题"就够了。同事抱怨"AI 不听话" = prompt；"权限被拦" = harness。</p>
       </div>
     </div>
-
-    <div class="callout" style="margin-top:var(--s3)"><strong>记一句：</strong>Harness 是<strong>视角</strong>（怎么管 agent），Hermes 是<strong>产品</strong>（一个开源 agent 框架）。听到 "Harness" 想 "外壳"，听到 "Hermes" 想 "OpenClaw 的开源同行"。</div>
-    <aside class="notes"><b>讲师备注 ·</b> 这页是行业视野扩展。讲 30 秒带过即可。重点让听众对"Harness 工程"这个词有印象——以后看技术文章不蒙；对 Hermes 知道是 "OpenClaw 同类开源框架"即可。</aside>
+    <div class="callout"><div class="callout-tag">记一句</div><div class="callout-lead">Prompt = 怎么说 · Context = 给什么 · Harness = 怎么跑</div><div class="callout-body">三者合起来才是完整的 AI agent 系统。</div></div>
+    <aside class="notes"><b>讲师备注 ·</b> 30 秒带过。让大家对"Harness 工程"有印象即可。</aside>
   </div>
 </section>
 
-<!-- 10 · MCP 协议（从原 P14 移过来 · 改章节归属为第 1 章压轴） -->
+<!-- 10 · Hermes vs OpenClaw 哲学对决 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 1 章 · 心智模型 · Hermes vs OpenClaw</div>
+    <h1 class="title"><span class="grad-purple">Hermes</span> vs <span class="grad-warm">OpenClaw</span> · 哲学对决</h1>
+    <p class="subtitle">两种 AI agent 哲学的根本分歧 · 不是能不能用 · 是先解决什么</p>
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card-grad g-warm">
+        <h3><a href="https://github.com/sst/opencode" target="_blank">OpenClaw</a> · Gateway 优先</h3>
+        <p class="one-line">赌注：连通性 · 让 AI 能被叫到任何地方</p>
+        <div class="row"><span>核心定位</span><b>多渠道接入网关</b></div>
+        <div class="row"><span>记忆模型</span><b>Markdown · 透明 · 全量存</b></div>
+        <div class="row"><span>自我学习</span><b style="color:#cf222e">无 · 静态 skill</b></div>
+        <div class="row"><span>通讯渠道</span><b>24+（含微信/iMessage/飞书）</b></div>
+        <div class="row"><span>社区 Skill</span><b>5,400+</b></div>
+        <div class="row"><span>Stars</span><b>345K+（6 月）</b></div>
+      </div>
+      <div class="card-grad g-mint">
+        <h3><a href="https://github.com/HermesAgent/hermes" target="_blank">Hermes</a> · Runtime 优先</h3>
+        <p class="one-line">赌注：认知 / 学习 · 让 AI 越用越聪明</p>
+        <div class="row"><span>核心定位</span><b>自学习 AI agent 运行时</b></div>
+        <div class="row"><span>记忆模型</span><b>FTS5 多层 · 10K+ 条目 ~10ms</b></div>
+        <div class="row"><span>自我学习</span><b style="color:#1a7f37">闭环 · 自动 skill 生成</b></div>
+        <div class="row"><span>通讯渠道</span><b>6（Telegram/Discord/Slack）</b></div>
+        <div class="row"><span>内置 Skill</span><b>80+（自动生成）</b></div>
+        <div class="row"><span>Stars</span><b>61K+（2 月）</b></div>
+      </div>
+    </div>
+    <div class="callout"><div class="callout-tag">选谁</div><div class="callout-lead">多渠道聊天聚合 → OpenClaw · 长期自动化深度工作 → Hermes</div><div class="callout-body"><strong>WorkBuddy 更接近 Hermes 路线</strong>（记忆和自进化优先）。业务同事不用纠结，知道两条路线即可。</div></div>
+    <aside class="notes"><b>讲师备注 ·</b> 强调哲学分歧："接得到" vs "学得快"。同事问"WorkBuddy 像谁" → "Hermes 路线"。</aside>
+  </div>
+</section>
+
+
+<!-- 11 · MCP 协议（从原 P14 移过来 · 改章节归属为第 1 章压轴） -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 1 章 · 心智模型 · 协议层</div>
     <h1 class="title"><span class="grad-mint">MCP</span> · 让 AI 连上"外部世界"的协议</h1>
-    <p class="subtitle">Model Context Protocol · Anthropic 2024 年开放 · 现已成业界事实标准</p>
+    <p class="subtitle">Model Context Protocol · <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank">Anthropic 2024 年开放</a> · 现已成业界事实标准</p>
 
     <div class="grid grid-2" style="margin-top:var(--s3)">
       <div class="card"><h3 style="margin-top:0">问题：AI 默认是"封闭脑袋"</h3>
@@ -512,12 +607,12 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       </svg>
     </div>
 
-    <div class="callout"><strong>对业务同事的意义：</strong>装一个 Notion MCP，CodeBuddy 和 Claude Desktop 都能用，不用学两遍。<strong>对 IT 的意义：</strong>公司只要做一次 "腾讯文档 MCP Server"，全员所有 agent 受益。<strong>第 2 章插件矩阵</strong>会列出我们能直接用上的 MCP。</div>
+    <div class="callout"><div class="callout-tag">对我们的意义</div><div class="callout-grid"><div class="item"><b>对业务同事</b>装一个 Notion MCP · CodeBuddy + Claude Desktop 都能用 · 不用学两遍</div><div class="item"><b>对 IT</b>公司只做一次"腾讯文档 MCP Server" · 全员所有 agent 受益</div></div><div class="callout-meta">第 2 章插件矩阵会列出能直接用上的 MCP。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页放在第 1 章压轴。OpenClaw / Claw 家族 / Harness · Hermes / MCP 形成"基础设施 → 视野 → 协议"的递进。下一章直接讲三同事用法时，所有概念已就位。</aside>
   </div>
 </section>
 
-<!-- 11 · 安全合规边界 -->
+<!-- 12 · 安全合规边界 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 1 章 · 心智模型 · 合规边界</div>
@@ -553,13 +648,13 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       </tbody>
     </table>
 
-    <div class="callout warn" style="margin-top:var(--s3)"><strong>出事处理 SOP：</strong>① 立即停止使用当前会话 → ② 截图保留对话上下文 → ③ 报合规 / 法务团队 → ④ <strong>不要私自删数据</strong>（删了反而难追溯）。<span class="term" data-tip="数据存储和处理在哪个国家/地区，关系到管辖法律">数据驻留</span>问题不确定时，默认走内网模型最稳。</div>
+    <div class="callout warn"><div class="callout-tag">出事处理 SOP</div><ol class="callout-steps"><li>立即停止使用当前会话</li><li>截图保留对话上下文</li><li>报合规 / 法务团队</li><li><strong>不要私自删数据</strong>（删了反而难追溯）</li></ol><div class="callout-body"><span class="term" data-tip="数据存储和处理在哪个国家/地区，关系到管辖法律">数据驻留</span>问题不确定时，默认走内网模型最稳。</div></div>
 
     <aside class="notes"><b>讲师备注 ·</b> 这页是销售视角必备。可问 "上周谁把客户合同金额发给过 AI？" 大概率有人举手。强调"脱敏不难，A 公司 / B 客户即可"。能答清楚客户更信任。</aside>
   </div>
 </section>
 
-<!-- 12 · CC 速览 -->
+<!-- 13 · CC 速览 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · CC</div>
@@ -571,28 +666,28 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
     </div>
     <h2 class="section-h">什么时候叫它</h2>
     <p>"我需要在我电脑上动手做一件具体的事" —— 改代码 / 整理一批文件 / 跑脚本 / debug / 出 HTML 单页。</p>
-    <div class="callout"><strong>一句话定位：</strong>CC 是"我的实习工程师"，给具体任务、给路径、给约束，它直接动手。</div>
+    <div class="callout"><div class="callout-tag">一句话定位</div><div class="callout-lead">CC = "我的实习工程师"</div><div class="callout-body">给具体任务、给路径、给约束 · 它直接动手。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 强调 "终端" 这个词业务同事可能怕。安抚 "你只要会输入中文就行，就像微信打字"。</aside>
   </div>
 </section>
 
-<!-- 13 · CC Demo -->
+<!-- 14 · CC Demo -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · CC Demo</div>
     <h1 class="title">CC Demo · 你的 <span class="grad">token</span> 花哪了</h1>
     <p class="subtitle">真实截图 · "本月用量 + 任务分布" 单页面板</p>
     <div class="grid grid-2" style="grid-template-columns:1.4fr 1fr;align-items:start">
-      <div class="shot"><img src="assets/ai-coding-tools-explained/demo-cc-usage.png" alt="CC token 用量看板"><div class="shot-cap">CC 一句话生成 · 本机 ccusage 数据 · 单 HTML 文件可分享</div></div>
+      <div class="shot"><img src="../../assets/ai-coding-tools-explained/demo-cc-usage.png" alt="CC token 用量看板"><div class="shot-cap">CC 一句话生成 · 本机 ccusage 数据 · 单 HTML 文件可分享</div></div>
       <div><h3>怎么做的</h3>
         <ul><li>跟 CC 说："读 <code>~/.claude/usage.json</code>，生成单页面板"</li><li>CC 自动：读文件 → 算分布 → 写 HTML → 起本地 server</li><li>调一轮颜色和字号 → 截图 → 发群</li></ul>
         <h3>耗时</h3><p>从开口到出图，约 15 分钟。换我手写要 1 小时。</p>
-        <div class="callout good"><strong>关键点：</strong>这种"读本机文件 → 算 → 出页面"的活，CC 是首选。它能直接动手，不需要你来回粘贴数据。</div></div>
+        <div class="callout good"><div class="callout-tag">关键点</div><div class="callout-lead">"读本机文件 → 算 → 出页面"的活 · CC 是首选</div><div class="callout-body">能直接动手 · 不需要你来回粘贴数据。</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- 14 · WorkBuddy 速览 -->
+<!-- 15 · WorkBuddy 速览 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · WorkBuddy</div>
@@ -604,11 +699,11 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
     </div>
     <h2 class="section-h">什么时候叫它</h2>
     <p>需要"想得深、连得上、记得住"的活。复盘、季度规划、客户故事重组、跨多个项目找规律。</p>
-    <div class="callout"><strong>一句话定位：</strong>WorkBuddy 是"我的长期顾问"，要给它喂背景、喂偏好、喂历史，它给你跨周/跨月的洞察。</div>
+    <div class="callout"><div class="callout-tag">一句话定位</div><div class="callout-lead">WorkBuddy = "我的长期顾问"</div><div class="callout-body">给它喂背景、偏好、历史 · 它给你跨周 / 跨月的洞察。</div></div>
   </div>
 </section>
 
-<!-- 15 · WorkBuddy 三件套人格（详解版） -->
+<!-- 16 · WorkBuddy 三件套人格（详解版） -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · WorkBuddy</div>
@@ -649,7 +744,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
           <li><strong>IDENTITY = 自我认知</strong> · 改它 = 改名/改人设</li>
           <li><strong>USER = 对方档案</strong> · 改它 = 换服务对象</li>
         </ul>
-        <p style="font-size:14px;color:var(--muted);margin-top:8px">三个文件分开写而不是合一，是为了"局部修改不影响整体"——比如你换工作只改 USER.md，性格不变。</p>
+        <p style="color:var(--muted);margin-top:8px">三个文件分开写而不是合一，是为了"局部修改不影响整体"——比如你换工作只改 USER.md，性格不变。</p>
       </div>
       <div class="card"><h3 style="margin-top:0;color:#cf222e">为什么 CC / CodeBuddy 没有？</h3>
         <ul>
@@ -664,22 +759,22 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 16 · WorkBuddy Demo -->
+<!-- 17 · WorkBuddy Demo -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · WorkBuddy Demo</div>
     <h1 class="title">WorkBuddy Demo · 客户复盘 <span class="grad-purple">半小时出 v0</span></h1>
     <p class="subtitle">同一个客户 · 两个视角 · 同一份数据 · 不同呈现</p>
     <div class="grid grid-2">
-      <div class="shot"><img src="assets/ai-coding-tools-explained/demo-customer-review-external.png" alt="对外客户复盘"><div class="shot-cap">对外版 · 给客户看 · 突出价值 · 留白多 · 数字克制</div></div>
-      <div class="shot"><img src="assets/ai-coding-tools-explained/demo-customer-review-internal.png" alt="对内复盘"><div class="shot-cap">对内版 · 给 Leader 看 · 突出问题 · 数据密集 · 直接打分</div></div>
+      <div class="shot"><img src="../../assets/ai-coding-tools-explained/demo-customer-review-external.png" alt="对外客户复盘"><div class="shot-cap">对外版 · 给客户看 · 突出价值 · 留白多 · 数字克制</div></div>
+      <div class="shot"><img src="../../assets/ai-coding-tools-explained/demo-customer-review-internal.png" alt="对内复盘"><div class="shot-cap">对内版 · 给 Leader 看 · 突出问题 · 数据密集 · 直接打分</div></div>
     </div>
-    <div class="callout"><strong>关键差异：</strong>WorkBuddy 知道 "对外/对内" 不只是"换个标题"——是整套语气、详略、数据敏感度都要换。这种"懂场景"的能力靠的是它持续读你过去 10 个版本的复盘。</div>
+    <div class="callout"><div class="callout-tag">关键差异</div><div class="callout-lead">"对外 / 对内"不只是"换个标题"</div><div class="callout-body">是整套语气、详略、数据敏感度都要换。这种"懂场景"的能力靠的是它持续读你过去 10 个版本的复盘。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页停 1 分钟让大家对比看。这是 WorkBuddy 价值最直观的 demo。</aside>
   </div>
 </section>
 
-<!-- 17 · CodeBuddy 速览（含 vs WB 对位差异） -->
+<!-- 18 · CodeBuddy 速览（含 vs WB 对位差异） -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · CodeBuddy</div>
@@ -718,30 +813,30 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       </tbody>
     </table>
 
-    <div class="callout"><strong>什么时候用谁的判定：</strong>"我在写代码/文档中途突然要问一下" → CodeBuddy；"我要专门花 30 分钟想一件大事" → WorkBuddy。两个不冲突，可以同时开着。</div>
+    <div class="callout"><div class="callout-tag">什么时候用谁</div><div class="callout-grid"><div class="item"><b>写代码 / 文档中途随手问</b>→ CodeBuddy</div><div class="item"><b>专门花 30 分钟想一件大事</b>→ WorkBuddy</div></div><div class="callout-body">两个不冲突 · 可以同时开着。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页核心是消除"它俩看起来差不多"的误解。强调"打不打断当前流"——这是体感上最直接的差别。</aside>
   </div>
 </section>
 
-<!-- 18 · CodeBuddy 三种用法 -->
+<!-- 19 · CodeBuddy 三种用法 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · CodeBuddy</div>
     <h1 class="title">CodeBuddy · 三种<span class="grad-mint">典型用法</span></h1>
     <p class="subtitle">不止补全 · 也不只是写代码</p>
     <div class="grid grid-3">
-      <div class="card-grad g-blue"><h3>① 补全 / 解释</h3><p style="color:var(--muted);font-size:14px">最入门用法</p>
+      <div class="card-grad g-blue"><h3>① 补全 / 解释</h3><p style="color:var(--muted)">最入门用法</p>
         <ul><li>写一半自动补</li><li>选中按 explain</li><li>翻译注释为中文</li><li>3 秒搞定一个 if</li></ul></div>
-      <div class="card-grad g-purple"><h3>② Chat + MCP</h3><p style="color:var(--muted);font-size:14px">进阶用法</p>
+      <div class="card-grad g-purple"><h3>② Chat + MCP</h3><p style="color:var(--muted)">进阶用法</p>
         <ul><li>"帮我查腾讯文档里 X 文件"</li><li>"在 GitHub 提个 issue"</li><li>"读 Notion 里的产品文档"</li><li>外部数据直接进 chat</li></ul></div>
-      <div class="card-grad g-warm"><h3>③ 单页文档</h3><p style="color:var(--muted);font-size:14px">业务同事最实用</p>
+      <div class="card-grad g-warm"><h3>③ 单页文档</h3><p style="color:var(--muted)">业务同事最实用</p>
         <ul><li>对话生成 HTML 单页</li><li>素材提炼成可视化报告</li><li>"做一个法律行业拓展指引"</li><li>导出 PDF / 截图发群</li></ul></div>
     </div>
-    <div class="callout"><strong>实操路径：</strong>第一周只用 ① 补全 / 解释；第二周加 ② MCP 接腾讯文档 / 知识库；第三周开始用 ③ 出单页文档。三周见明显效率差异。</div>
+    <div class="callout"><div class="callout-tag">三周实操路径</div><ol class="callout-steps"><li>第一周 · 只用 ① 补全 / 解释</li><li>第二周 · 加 ② MCP 接腾讯文档 / 知识库</li><li>第三周 · 开始用 ③ 出单页文档</li></ol><div class="callout-body">三周见明显效率差异。</div></div>
   </div>
 </section>
 
-<!-- 19 · 章扉 3 -->
+<!-- 20 · 章扉 3 -->
 <section class="slide dark chapter-slide">
   <div class="ch-chip g3"></div>
   <div class="ch-num">Chapter 03</div>
@@ -749,7 +844,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   <div class="ch-sub">三个同事不是替代关系。每个任务都有最适合的那一个。</div>
 </section>
 
-<!-- 20 · 横向对比 + 插件矩阵融合 -->
+<!-- 21 · 横向对比 + 插件矩阵融合 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · 横向对比 + 插件外挂</div>
@@ -772,7 +867,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
 
     <h2 class="section-h" style="margin-top:var(--s3)">外挂矩阵 · "它能做的事远超内置"</h2>
     <div class="grid grid-2" style="margin-top:6px">
-      <div class="card" style="padding:18px"><h3 style="margin-top:0;font-size:15px">CodeBuddy · MCP 生态（连"外部服务"）</h3>
+      <div class="card" style="padding:18px"><h3 style="margin-top:0">CodeBuddy · MCP 生态（连"外部服务"）</h3>
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
           <span style="background:#e3f2fd;color:#0550ae;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">Notion</span>
           <span style="background:#f0f0f0;color:#1d1d1f;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">GitHub</span>
@@ -783,9 +878,9 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
           <span style="background:#ffebee;color:#cf222e;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">腾讯会议</span>
           <span style="background:#f5f5f7;color:#6e6e73;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">+ N 持续扩</span>
         </div>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px">机制：协议层接外部数据 · 装一次全 agent 受益</p>
+        <p style="color:var(--muted);margin-top:10px">机制：协议层接外部数据 · 装一次全 agent 受益</p>
       </div>
-      <div class="card" style="padding:18px"><h3 style="margin-top:0;font-size:15px">WorkBuddy · Skill 体系（封"工作流"）</h3>
+      <div class="card" style="padding:18px"><h3 style="margin-top:0">WorkBuddy · Skill 体系（封"工作流"）</h3>
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
           <span style="background:#e3f2fd;color:#0550ae;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">pdf</span>
           <span style="background:#f3e8ff;color:#6b21a8;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">pptx</span>
@@ -798,15 +893,15 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
           <span style="background:#fff8c5;color:#9a6700;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">bs-ads-biweekly</span>
           <span style="background:#fff8c5;color:#9a6700;padding:3px 9px;border-radius:980px;font-size:11px;font-weight:600">客户复盘</span>
         </div>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px">机制：SKILL.md 文档化工作流 · 一句话调用</p>
+        <p style="color:var(--muted);margin-top:10px">机制：SKILL.md 文档化工作流 · 一句话调用</p>
       </div>
     </div>
-    <div class="callout"><strong>核心区分：</strong>MCP 解决"AI 能拿到什么数据"（外部连接），Skill 解决"AI 按什么流程做"（内部工作流）。两者互补 —— 双周会用 Skill 套模板，但模板里要的数据通过 MCP 拉。</div>
+    <div class="callout"><div class="callout-tag">MCP vs Skill · 核心区分</div><div class="callout-grid"><div class="item"><b>MCP</b>AI 能拿到什么<strong>数据</strong>（外部连接）</div><div class="item"><b>Skill</b>AI 按什么<strong>流程</strong>做（内部工作流）</div></div><div class="callout-body">两者互补 —— 双周会用 Skill 套模板，模板里要的数据通过 MCP 拉。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页是 P16 + P18 融合版。把"对比表"和"插件矩阵"合到一页，避免重复。强调最后那句"互补"。</aside>
   </div>
 </section>
 
-<!-- 21 · 决策矩阵（升级版） -->
+<!-- 22 · 决策矩阵（升级版） -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 2 章 · 决策</div>
@@ -848,8 +943,8 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
         <tr>
           <td class="k">🔐 涉敏感客户数据</td>
           <td><span class="pill good">CodeBuddy</span></td>
-          <td>内网可控 · 合规审批走通 · 默认走内部模型</td>
-          <td><strong>CC/WB</strong>：视模型而定 · 走 OpenClaw 内部模型 OK · 走 Claude API 不行</td>
+          <td>默认走公司内部模型 · 内网可控 · 合规审批最直接</td>
+          <td><strong>CC/WB</strong>：走 OpenClaw 内部线也合规 · 但要确认模型路由 · 别走外网 Claude API</td>
         </tr>
         <tr>
           <td class="k">🔌 接 Notion / 腾讯文档</td>
@@ -858,10 +953,10 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
           <td><strong>Claude Desktop</strong>：装 MCP 也行但脱离 IDE · <strong>CC</strong>：可装但要 CLI 配置</td>
         </tr>
         <tr>
-          <td class="k">🎯 反复做的工作流（双周会/复盘）</td>
+          <td class="k">🎯 需要<strong>长期业务记忆</strong>的反复工作流（双周会/客户复盘）</td>
           <td><span class="pill" style="background:#f3e8ff;color:#6b21a8">WorkBuddy</span></td>
-          <td>Skill 沉淀 · 一句话调用 · 自带历史口径</td>
-          <td><strong>CC</strong>：能写 skill 但不带业务记忆 · <strong>CB</strong>：可调用 skill 但不沉淀</td>
+          <td>自动 daily memory 累积 · Skill 模板能调用历史口径填充</td>
+          <td><strong>CC</strong>：能写 skill 但每次需手动喂背景 · <strong>CB</strong>：能调 skill 但跨项目记忆浅</td>
         </tr>
         <tr>
           <td class="k">💸 成本敏感批量任务</td>
@@ -872,25 +967,313 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       </tbody>
     </table>
 
-    <div class="callout warn"><strong>兜底原则：</strong>从轻到重升级。先 CodeBuddy → 不行升 CC → 还不行升 WorkBuddy。<strong>反过来不要</strong>：用 WB 做"翻译一句文案" = 100 倍成本干 1× 的活。</div>
+    <div class="callout warn"><div class="callout-tag">兜底原则</div><div class="callout-lead">从轻到重升级 · 不要反向</div><div class="callout-body"><span class="callout-prefix">升级路径</span> · CodeBuddy → 不行升 CC → 还不行升 WorkBuddy。</div><div class="callout-meta"><span class="callout-prefix">反例</span> · 用 WB 做"翻译一句文案" = 100 倍成本干 1× 的活。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页代替原决策树。优势：每个场景都列了"替代方案 + 利弊"，让听众理解"为什么这个不那个"。可以让大家挑 2-3 行自己最常碰到的场景对号入座。</aside>
   </div>
 </section>
 
-<!-- 22 · 章扉 4 -->
+<!-- 23 · 销售一天工作流（重构 · 竖向故事卡片流） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · 实战 · 一天工作流</div>
+    <h1 class="title">销售一天工作流 · <span class="grad">9:00 → 19:00</span></h1>
+    <p class="subtitle">每个时间点 · 一张卡 · 工具 + 怎么做 + 省多少 · 从上读到下就是叙事</p>
+
+    <div class="tl">
+      <!-- 9:00 -->
+      <div class="tl-row">
+        <div class="tl-time" style="color:#0070f3">9:00</div>
+        <div class="tl-dot" style="color:#0070f3"></div>
+        <div class="tl-card" style="color:#0070f3">
+          <div class="tl-head">
+            <h3 class="tl-title" style="color:var(--fg)">🌅 早会前 · 客户邮件初稿</h3>
+            <span class="tl-save">省 12 分钟</span>
+          </div>
+          <div class="tl-tools"><span class="pill good">CodeBuddy</span></div>
+          <p class="tl-desc"><span class="quote">"改成法律行业冠领客户语气"</span> → 选中模板 · 3 分钟出稿 · 比手写快 4 倍且语气更稳。</p>
+        </div>
+      </div>
+
+      <!-- 10:30 -->
+      <div class="tl-row">
+        <div class="tl-time" style="color:#06b6d4">10:30</div>
+        <div class="tl-dot" style="color:#06b6d4"></div>
+        <div class="tl-card" style="color:#06b6d4">
+          <div class="tl-head">
+            <h3 class="tl-title" style="color:var(--fg)">📚 客户调研 · 行业政策查询</h3>
+            <span class="tl-save">省 30 分钟</span>
+          </div>
+          <div class="tl-tools"><span class="pill info">CC</span><span class="pill muted">+ WebFetch</span></div>
+          <p class="tl-desc"><span class="quote">"查最新债权催收合规要求 + 整理 1 页要点"</span> · CC 自动多源抓取 · 不用切浏览器。</p>
+        </div>
+      </div>
+
+      <!-- 12:00 -->
+      <div class="tl-row">
+        <div class="tl-time" style="color:#bf5af2">12:00</div>
+        <div class="tl-dot" style="color:#bf5af2"></div>
+        <div class="tl-card" style="color:#bf5af2">
+          <div class="tl-head">
+            <h3 class="tl-title" style="color:var(--fg)">🍱 午前梳理 · 上周客户复盘</h3>
+            <span class="tl-save">省 25 分钟</span>
+          </div>
+          <div class="tl-tools"><span class="pill" style="background:#f3e8ff;color:#6b21a8">WorkBuddy</span></div>
+          <p class="tl-desc"><span class="quote">"参考过去 3 次复盘 · 帮我梳理空格集团本周进展"</span> · WB 自带历史口径，不用重新喂背景。</p>
+        </div>
+      </div>
+
+      <!-- 14:00 -->
+      <div class="tl-row">
+        <div class="tl-time" style="color:#ff375f">14:00</div>
+        <div class="tl-dot" style="color:#ff375f"></div>
+        <div class="tl-card" style="color:#ff375f">
+          <div class="tl-head">
+            <h3 class="tl-title" style="color:var(--fg)">🎨 提案出图 · HTML 单页报告</h3>
+            <span class="tl-save">省 45 分钟</span>
+          </div>
+          <div class="tl-tools"><span class="pill info">CC</span></div>
+          <p class="tl-desc"><span class="quote">"基于这份 markdown 出 Apple 风单页 · 客户周五要看"</span> · 一次出图比 PPT 快 · 截图发群直接走。</p>
+        </div>
+      </div>
+
+      <!-- 15:30 -->
+      <div class="tl-row">
+        <div class="tl-time" style="color:#ff9f0a">15:30</div>
+        <div class="tl-dot" style="color:#ff9f0a"></div>
+        <div class="tl-card" style="color:#ff9f0a">
+          <div class="tl-head">
+            <h3 class="tl-title" style="color:var(--fg)">📤 内部对齐 · 同步腾讯文档</h3>
+            <span class="tl-save">省 8 分钟</span>
+          </div>
+          <div class="tl-tools"><span class="pill good">CodeBuddy</span><span class="pill muted">+ MCP</span></div>
+          <p class="tl-desc">MCP 直接推到对应空间 · 不用切窗口手动上传 · 团队内同事秒可见。</p>
+        </div>
+      </div>
+
+      <!-- 17:00 -->
+      <div class="tl-row">
+        <div class="tl-time" style="color:#30d158">17:00</div>
+        <div class="tl-dot" style="color:#30d158"></div>
+        <div class="tl-card" style="color:#30d158">
+          <div class="tl-head">
+            <h3 class="tl-title" style="color:var(--fg)">💬 客户对接 · 异议应答</h3>
+            <span class="tl-save">省 15 分钟</span>
+          </div>
+          <div class="tl-tools"><span class="pill good">CodeBuddy</span><span class="pill" style="background:#f3e8ff;color:#6b21a8">WorkBuddy</span></div>
+          <p class="tl-desc">即时回复用 <strong>CodeBuddy</strong>（秒响应）· 复杂策略问题转 <strong>WorkBuddy</strong> 深思考（用历史合作底牌）。</p>
+        </div>
+      </div>
+
+      <!-- 18:30 -->
+      <div class="tl-row">
+        <div class="tl-time" style="color:#86868b">18:30</div>
+        <div class="tl-dot" style="color:#86868b"></div>
+        <div class="tl-card" style="color:#86868b">
+          <div class="tl-head">
+            <h3 class="tl-title" style="color:var(--fg)">📦 收工归档 · daily 自动同步</h3>
+            <span class="tl-save">省 10 分钟</span>
+          </div>
+          <div class="tl-tools"><span class="pill warn">Hook</span><span class="pill" style="background:#f3e8ff;color:#6b21a8">WorkBuddy</span></div>
+          <p class="tl-desc">写完日报 → Hook 自动跑（lint / 同步）→ WB 沉淀到 daily memory · 明天 WB 已记得今天。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout good"><div class="callout-tag">累计省时</div><div class="callout-lead">≈ 145 分钟 / 天（约 2.5 小时）</div><div class="callout-body">原本花在切工具 / 重复说明 / 手动粘贴上 · 工作流跑顺后这部分时间归零。</div><div class="callout-meta">关键不是单点效率 · <mark>是工具组合的化学反应</mark>。</div></div>
+    <aside class="notes"><b>讲师备注 ·</b> 让听众对号入座："你一天里哪个环节最耗时？" 大概率是调研+提案。强调"这不是理论，是真实流"——每个时间点都能现场拉人 demo。</aside>
+  </div>
+</section>
+
+
+<!-- 24 · 完整客户提案项目工作流（重构 · 横向 5 阶段卡片流） -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · 实战 · 完整客户提案项目</div>
+    <h1 class="title">客户提案 · <span class="grad-purple">5 阶段</span> 全流程</h1>
+    <p class="subtitle">从立项到交付 · 每阶段一个舱段 · 工具 + ✅做 + ❌别 · 项目级才是 ROI 最高的尺度</p>
+
+    <div style="display:flex;gap:10px;margin-top:var(--s3);align-items:stretch">
+      <!-- 阶段 1: 立项 -->
+      <div class="card-grad g-blue" style="flex:1;padding:14px;display:flex;flex-direction:column">
+        <div style="font-size:11px;font-weight:700;color:#0070f3;letter-spacing:.15em">DAY 1</div>
+        <h3 style="margin:4px 0 0">🎯 立项</h3>
+        <div style="margin-top:8px"><span class="pill" style="background:#f3e8ff;color:#6b21a8">WB</span></div>
+        <div style="margin-top:10px;font-size:11px;color:#1a7f37;font-weight:600">✅ 做</div>
+        <ul style="margin:4px 0 0 18px;line-height:1.5;color:var(--fg-2)"><li>客户背景</li><li>历史合作</li><li>目标定义</li></ul>
+        <div style="margin-top:10px;font-size:11px;color:#cf222e;font-weight:600">❌ 别</div>
+        <p style="margin:4px 0 0;color:var(--fg-2)">用 CB 做——记忆深度浅</p>
+      </div>
+
+      <!-- 箭头 1 -->
+      <div style="display:flex;align-items:center;color:#86868b;font-size:18px;font-weight:300;padding:0 2px">▶</div>
+
+      <!-- 阶段 2: 调研 -->
+      <div class="card-grad g-purple" style="flex:1;padding:14px;display:flex;flex-direction:column">
+        <div style="font-size:11px;font-weight:700;color:#bf5af2;letter-spacing:.15em">DAY 2-3</div>
+        <h3 style="margin:4px 0 0">🔍 调研</h3>
+        <div style="margin-top:8px"><span class="pill info">CC + WebFetch</span></div>
+        <div style="margin-top:10px;font-size:11px;color:#1a7f37;font-weight:600">✅ 做</div>
+        <ul style="margin:4px 0 0 18px;line-height:1.5;color:var(--fg-2)"><li>行业政策</li><li>竞品分析</li><li>数据抓取</li></ul>
+        <div style="margin-top:10px;font-size:11px;color:#cf222e;font-weight:600">❌ 别</div>
+        <p style="margin:4px 0 0;color:var(--fg-2)">手动搜——CC 一次出 10 页</p>
+      </div>
+
+      <!-- 箭头 2 -->
+      <div style="display:flex;align-items:center;color:#86868b;font-size:18px;font-weight:300;padding:0 2px">▶</div>
+
+      <!-- 阶段 3: 产出 v0 -->
+      <div class="card-grad g-warm" style="flex:1;padding:14px;display:flex;flex-direction:column">
+        <div style="font-size:11px;font-weight:700;color:#ff9f0a;letter-spacing:.15em">DAY 3-5</div>
+        <h3 style="margin:4px 0 0">📝 产出 v0</h3>
+        <div style="margin-top:8px"><span class="pill good">CB + Skill</span></div>
+        <div style="margin-top:10px;font-size:11px;color:#1a7f37;font-weight:600">✅ 做</div>
+        <ul style="margin:4px 0 0 18px;line-height:1.5;color:var(--fg-2)"><li>提案 PPT/HTML</li><li>数据可视化</li><li>文案润色</li></ul>
+        <div style="margin-top:10px;font-size:11px;color:#cf222e;font-weight:600">❌ 别</div>
+        <p style="margin:4px 0 0;color:var(--fg-2)">从零写——Skill 套模板</p>
+      </div>
+
+      <!-- 箭头 3 -->
+      <div style="display:flex;align-items:center;color:#86868b;font-size:18px;font-weight:300;padding:0 2px">▶</div>
+
+      <!-- 阶段 4: 对齐 -->
+      <div class="card-grad g-mint" style="flex:1;padding:14px;display:flex;flex-direction:column">
+        <div style="font-size:11px;font-weight:700;color:#30d158;letter-spacing:.15em">DAY 5-7</div>
+        <h3 style="margin:4px 0 0">🤝 对齐</h3>
+        <div style="margin-top:8px"><span class="pill info">CC</span> + <span class="pill" style="background:#f3e8ff;color:#6b21a8">WB</span></div>
+        <div style="margin-top:10px;font-size:11px;color:#1a7f37;font-weight:600">✅ 做</div>
+        <ul style="margin:4px 0 0 18px;line-height:1.5;color:var(--fg-2)"><li>内部审核</li><li>客户首轮反馈</li><li>多 agent 并行</li></ul>
+        <div style="margin-top:10px;font-size:11px;color:#cf222e;font-weight:600">❌ 别</div>
+        <p style="margin:4px 0 0;color:var(--fg-2)">一个人改——让 agent 并行</p>
+      </div>
+
+      <!-- 箭头 4 -->
+      <div style="display:flex;align-items:center;color:#86868b;font-size:18px;font-weight:300;padding:0 2px">▶</div>
+
+      <!-- 阶段 5: 交付 -->
+      <div class="card-grad g-gray" style="flex:1;padding:14px;display:flex;flex-direction:column">
+        <div style="font-size:11px;font-weight:700;color:#1d1d1f;letter-spacing:.15em">DAY 8-10</div>
+        <h3 style="margin:4px 0 0">🚀 交付</h3>
+        <div style="margin-top:8px"><span class="pill warn">Hook + WB</span></div>
+        <div style="margin-top:10px;font-size:11px;color:#1a7f37;font-weight:600">✅ 做</div>
+        <ul style="margin:4px 0 0 18px;line-height:1.5;color:var(--fg-2)"><li>终版交付</li><li>自动归档</li><li>WB 复盘沉淀</li></ul>
+        <div style="margin-top:10px;font-size:11px;color:#cf222e;font-weight:600">❌ 别</div>
+        <p style="margin:4px 0 0;color:var(--fg-2)">忘复盘——飞轮启动点</p>
+      </div>
+    </div>
+
+    <div class="callout good" style="background:linear-gradient(135deg,#dafbe1 0%,#fbfbfd 100%)"><div class="callout-tag">🔄 飞轮启动</div><div class="callout-lead">Day 10 交付时 WB 已沉淀完整复盘 → 第二次提案直接复用</div><div class="callout-body">下次 Day 1 立项时 · WB 已有"上次被客户 challenge 的点 / 这家客户的偏好节奏 / 你常用的话术口径"。</div><div class="callout-meta">原本 10 天的提案，第二次只要 5-7 天，且质量更高。</div></div>
+    <aside class="notes"><b>讲师备注 ·</b> 强调"别做"列——很多人用错工具会事倍功半。"对齐阶段"自然铺垫下页多 agent。"飞轮启动"是这页的灵魂——项目级才是 AI 投入 ROI 最高的尺度。</aside>
+  </div>
+</section>
+
+
+<!-- 25 · 多 agent 并行 落地版 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · 高阶 · 多 agent 并行 · 落地</div>
+    <h1 class="title">多 Agent 并行 · <span class="grad-mint">今天就能用</span></h1>
+    <p class="subtitle">用上一页"对齐阶段"做 demo · 4 个 agent 并行 30 分钟 = 单线 2 小时</p>
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card">
+        <h3 style="margin-top:0">销售场景 · 提案对齐并行版</h3>
+        <table style="margin-top:8px">
+          <thead><tr><th>Agent</th><th>做什么</th><th>工具</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Agent A</td><td>写提案正文 v2</td><td>CC</td></tr>
+            <tr><td class="k">Agent B</td><td>检索最新行业政策</td><td>CC + WebFetch</td></tr>
+            <tr><td class="k">Agent C</td><td>整理客户历史合作</td><td>WorkBuddy</td></tr>
+            <tr><td class="k">Agent D</td><td>生成 HTML 可视化版</td><td>CodeBuddy</td></tr>
+          </tbody>
+        </table>
+        <p style="color:var(--fg-2);margin-top:10px"><strong>Orchestrator（你）</strong>：下达 4 条指令 → 喝咖啡 30 分钟 → 收 4 份结果 → 合并 → 给客户 v0。</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">业界支撑 · Claude Code Agent Teams</h3>
+        <ul>
+          <li><strong>Anthropic 2026.03 正式推出</strong>（Opus 4.6 起）</li>
+          <li>1 Orchestrator + 最多 <strong>10 sub-agent</strong> 并行</li>
+          <li>共享 task list + 文件级锁防冲突</li>
+          <li>实测 <strong>3-5× wall-clock 加速</strong>（token 同比例增加）</li>
+          <li>4 种模式：parallel dispatch / orchestrator-worker / worktree isolation / SendMessage</li>
+        </ul>
+        <div class="callout" style="margin-top:10px"><div class="callout-tag">适合场景</div><div class="callout-body">全栈拆分（前端 / 后端 / 测试 / 审查）· 大规模重构 · 多线 bug 排查 · 文档 sprint</div></div>
+      </div>
+    </div>
+    <div class="callout warn"><div class="callout-tag">准入门槛</div><div class="callout-lead">先掌握三同事 + 工作流，再上多 agent</div><div class="callout-body">不要一上来就追求并行 —— 单个 agent 不听话，10 个一起更乱。</div></div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是"今天能做"。下一页才是"未来必然"。先落地再远景，听众不会觉得空中楼阁。</aside>
+  </div>
+</section>
+
+<!-- 26 · AI 工厂愿景 · 手机指挥 agent 飞轮 -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 2 章 · 高阶 · AI 工厂愿景 · 手机 × Agent 飞轮</div>
+    <h1 class="title">从 AI 助手 → <span class="grad-warm">AI 工厂</span></h1>
+    <p class="subtitle">"每晚数千个 agent 在深度开发" —— Boris Cherny, Claude Code 作者, <a href="https://www.sequoiacap.com/podcast/" target="_blank">红杉资本访谈 2026.05.14</a></p>
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card-grad g-warm">
+        <h3>当前已发生 · 有据可查</h3>
+        <ul style="line-height:1.7">
+          <li><strong>手机 Claude 应用</strong> · 5-10 任务会话 × 每会话多 agent · 一人同时控上百 agent</li>
+          <li><strong>Claude Dispatch</strong>（2026.03）· 手机 → 桌面远程指挥 · 你在地铁，Mac 在家干活</li>
+          <li><strong>Remote Control</strong>（2026.02）· QR 配对 · session 持久 · 合上电脑 agent 继续跑</li>
+          <li><strong>Schedule / Routine Tasks</strong> · 自然语言 cron · "每天 9 点检查 PR + 更新文档 + Slack 推送"</li>
+          <li><strong>4% 全球公开 GitHub commits</strong> 已由 Claude Code 写 · <strong>$2.5B ARR</strong></li>
+          <li><strong>29M VS Code 日装机</strong> · Claude Code "ChatGPT moment"</li>
+        </ul>
+      </div>
+      <div class="card-grad g-mint">
+        <h3>未来必然方向 · 已有苗头</h3>
+        <ul style="line-height:1.7">
+          <li><strong>飞轮模型</strong> · 你睡觉 → agent 跑 cron/routine → 醒来收结果 → 调整指令 → 继续轮转 · 24×7</li>
+          <li><strong>"数字员工"形态</strong> · 永远不下班 / 不请假 / 不抱怨 · 一条 Schedule 命令 = 雇一个全年无休的执行者</li>
+          <li><strong>Phone Use 即将发布</strong> · Anthropic 内部代号 Orbit · 已泄露 <code>phone_use</code> / <code>phone_call_completed</code> 工具字段</li>
+          <li><strong>三家路线交汇</strong> · Anthropic 接管电脑 / OpenAI Code Red 聚焦 coding / 英伟达 NemoClaw 造硬件沙盒</li>
+          <li><strong>一人公司成为可能</strong> · 一个人 + 一部手机 + 上千 agent = 原来需要 50 人团队的产出量</li>
+        </ul>
+      </div>
+    </div>
+    <div class="svg-wrap" style="background:var(--bg-alt);padding:var(--s3);margin-top:var(--s3)">
+      <svg viewBox="0 0 1180 160" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="fw" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0071e3"/></marker></defs>
+        <!-- 飞轮循环 -->
+        <ellipse cx="590" cy="80" rx="460" ry="55" fill="none" stroke="#0071e3" stroke-width="2" stroke-dasharray="8,4"/>
+        <!-- 节点 -->
+        <rect x="50" y="55" width="140" height="50" rx="14" fill="#1d1d1f"/><text x="120" y="84" font-family="SF Pro Text" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">📱 手机下指令</text>
+        <rect x="280" y="15" width="140" height="50" rx="14" fill="#0070f3"/><text x="350" y="44" font-family="SF Pro Text" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">🖥 桌面执行</text>
+        <rect x="520" y="5" width="140" height="50" rx="14" fill="#bf5af2"/><text x="590" y="34" font-family="SF Pro Text" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">☁️ Cloud Cron</text>
+        <rect x="760" y="15" width="160" height="50" rx="14" fill="#ff9f0a"/><text x="840" y="44" font-family="SF Pro Text" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">🤖×N Agent 并行</text>
+        <rect x="990" y="55" width="140" height="50" rx="14" fill="#30d158"/><text x="1060" y="84" font-family="SF Pro Text" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">📊 结果汇总</text>
+        <rect x="760" y="105" width="160" height="50" rx="14" fill="#86868b"/><text x="840" y="134" font-family="SF Pro Text" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">🔄 调整 → 再循环</text>
+        <!-- 箭头连接 -->
+        <path d="M190 72 L280 52" stroke="#0071e3" stroke-width="1.5" marker-end="url(#fw)"/>
+        <path d="M420 32 L520 25" stroke="#0071e3" stroke-width="1.5" marker-end="url(#fw)"/>
+        <path d="M660 25 L760 32" stroke="#0071e3" stroke-width="1.5" marker-end="url(#fw)"/>
+        <path d="M920 52 L990 72" stroke="#0071e3" stroke-width="1.5" marker-end="url(#fw)"/>
+        <path d="M1060 105 L920 120" stroke="#0071e3" stroke-width="1.5" marker-end="url(#fw)"/>
+        <path d="M760 130 L190 100" stroke="#0071e3" stroke-width="1.5" marker-end="url(#fw)"/>
+      </svg>
+    </div>
+    <div class="callout"><div class="callout-tag">对我们的意义</div><div class="callout-lead">今天先掌握"三同事 + 工作流 + 多 agent 并行"</div><div class="callout-body">但要知道：<strong>明天一定会到"手机指挥上千 agent 自转飞轮"的状态</strong>。这不是科幻 —— Boris Cherny 已经在这么干了。适应"指挥 AI 团队"的工作姿势，是未来 1-2 年最重要的职业技能升级。</div><div class="callout-meta">看完愿景，回到地面 —— 不管是 4 个还是 4000 个 agent，每个都要回答：用什么模型？这就是下一章。</div></div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是全场"远景震撼"。读 Boris Cherny 的原话（"每晚数千 agent 深度开发 · 这对我来说只是日常"）时可以顿 3 秒让听众消化。强调"不是科幻 · 是已发生"。收尾回到"今天先做好 P24 落地的事"，不让听众焦虑。</aside>
+  </div>
+</section>
+
+
+<!-- 27 · 章扉 4 -->
 <section class="slide dark chapter-slide">
   <div class="ch-chip g4"></div>
   <div class="ch-num">Chapter 04</div>
   <div class="ch-title">模型与上下文</div>
-  <div class="ch-sub">Opus 是顾问 · Sonnet 是员工 · Haiku 是实习生。Context 是脑子大小。</div>
+  <div class="ch-sub">模型选型 = 在"够聪明"和"不烧钱"之间找平衡。<br>这一章学会按需求挑同事。</div>
 </section>
 
-<!-- 23 · 模型家族 -->
+<!-- 28 · 模型家族 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 3 章 · 模型与 Context</div>
     <h1 class="title">模型家族 · 用<span class="grad-warm">同事类比</span>记一辈子</h1>
-    <p class="subtitle">Claude 主流三档 · 选型不需要懂技术参数</p>
+    <p class="subtitle"><a href="https://www.anthropic.com/claude" target="_blank">Claude</a> 主流三档 · 选型不需要懂技术参数</p>
     <div class="grid grid-3">
       <div class="card-grad g-warm"><h3><span class="term" data-tip="Anthropic 旗舰模型，最强推理力，最贵">Opus</span></h3><p class="one-line">高级顾问 · 最贵 · 最稳</p>
         <div class="row"><span>用在</span><b>策略 / 复盘 / 关键文档</b></div><div class="row"><span>速度</span><b>慢（5-30 秒/轮）</b></div><div class="row"><span>成本量级</span><b>1×（基准）</b></div><div class="row"><span>不要用</span><b>简单查询、补全</b></div></div>
@@ -899,12 +1282,12 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       <div class="card-grad g-mint"><h3><span class="term" data-tip="Anthropic 轻量模型，速度极快价格极低">Haiku</span></h3><p class="one-line">实习生 · 快 · 便宜</p>
         <div class="row"><span>用在</span><b>分类 / 摘要 / 格式化</b></div><div class="row"><span>速度</span><b>快（&lt;2 秒/轮）</b></div><div class="row"><span>成本量级</span><b>1/50（极便宜）</b></div><div class="row"><span>不要用</span><b>需要思考的复杂任务</b></div></div>
     </div>
-    <div class="callout"><strong>实操建议：</strong>日常用 Sonnet；卡住或要做关键决策时换 Opus；批量低难度任务用 Haiku。WorkBuddy 之所以贵是因为它默认 Opus + 1M context。</div>
+    <div class="callout"><div class="callout-tag">实操建议</div><div class="callout-grid"><div class="item"><b>日常 80%</b>Sonnet</div><div class="item"><b>关键决策 / 卡住</b>换 Opus</div><div class="item"><b>批量低难度</b>Haiku</div><div class="item"><b>WorkBuddy 为什么贵</b>默认 Opus + 1M context</div></div></div>
     <aside class="notes"><b>讲师备注 ·</b> "1× / 1/5 / 1/50" 是量级，不是精确数字。CC 和 CodeBuddy 默认 Sonnet，WorkBuddy 默认 Opus —— 这是为什么 WorkBuddy 体感更聪明也更贵。</aside>
   </div>
 </section>
 
-<!-- 24 · Context + 价格直觉 -->
+<!-- 29 · Context + 价格直觉 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 3 章 · 模型与 Context</div>
@@ -914,7 +1297,7 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
       <div class="card"><h3 style="margin-top:0">类比：办公桌</h3>
         <p>Context window = AI 桌上能摊开的资料量。摊不下的就放抽屉里，它看不到。</p>
         <ul><li><strong>200K context</strong>（普通版）≈ 一本 300 页书</li><li><strong>1M context</strong>（WorkBuddy 用的）≈ 5 本书 / 一个项目半年的对话</li></ul>
-        <div class="callout warn" style="margin-top:var(--s2)"><strong>权衡：</strong>1M 适合"长期顾问"角色；不适合"一次性任务"——杀鸡用牛刀。</div></div>
+        <div class="callout warn"><div class="callout-tag">权衡</div><div class="callout-body">1M 适合"长期顾问"角色 · 不适合"一次性任务" —— 杀鸡用牛刀。</div></div></div>
       <div class="card"><h3 style="margin-top:0">价格直觉表</h3>
         <table style="margin-top:0">
           <thead><tr><th style="width:120px">任务类型</th><th>建议模型</th><th>相对成本</th></tr></thead>
@@ -925,41 +1308,143 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
             <tr><td class="k">长期顾问</td><td><strong>Opus + 1M</strong></td><td>~100×</td></tr>
           </tbody>
         </table>
-        <div class="callout" style="margin-top:var(--s2)"><strong>典型踩坑：</strong>用 Opus 1M 跑"翻译一句文案"——100 倍成本干 1× 的活。反过来用 Haiku 跑季度复盘也亏，质量崩盘要重做。</div></div>
+        <div class="callout"><div class="callout-tag">典型踩坑</div><div class="callout-grid"><div class="item"><b>过度</b>用 Opus 1M 跑"翻译一句文案" · 100× 成本干 1× 活</div><div class="item"><b>不足</b>用 Haiku 跑季度复盘 · 质量崩盘要重做</div></div></div></div>
     </div>
     <aside class="notes"><b>讲师备注 ·</b> 不要给精确数字（合规问题 + plan 不同价格不同）。"量级"是关键词。同事问"我用 CodeBuddy 要不要担心成本"→答"公司给买的，你随便用，但别用 Opus 写补全代码这种事"。</aside>
   </div>
 </section>
 
-<!-- 25 · 非 Anthropic -->
+<!-- 30 · 模型选型 · 销售视角速查（合并 原 P30 非 Anthropic + P31 销售场景速查） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 3 章 · 模型与 Context</div>
-    <h1 class="title">非 <span class="grad-purple">Anthropic</span> 模型怎么用</h1>
-    <p class="subtitle">GLM / DeepSeek / 混元 / GPT 都能进 · 但路径不一样</p>
-    <div class="grid grid-2">
-      <div class="card"><h3 style="margin-top:0">通过 OpenClaw 网关接入</h3>
-        <ul><li>智谱 GLM 4.7 · 国内合规可用</li><li>DeepSeek 3.2 · 价格便宜、推理强</li><li>OpenAI GPT 系列 · 通用</li><li>混元 / 自研模型 · 公司内场景</li></ul>
-        <div class="callout"><strong>实战经验：</strong>同一个 agent 可挂多个模型，按任务切换。中文密集任务有时 GLM 比 Claude 体感更顺。</div></div>
-      <div class="card"><h3 style="margin-top:0;color:#cf222e">⚠ 选模型的常见误区</h3>
-        <ul><li><strong>不是越新越好</strong>：GPT 5.4 发布不代表你的任务该换</li><li><strong>不是越大越好</strong>：72B 参数模型未必比 7B 适合分类</li><li><strong>中英文表现不同</strong>：Claude 中文略弱于国产模型</li><li><strong>合规优先</strong>：内部数据要走内网模型</li></ul></div>
+    <div class="eyebrow">第 3 章 · 模型与 Context · 销售视角速查</div>
+    <h1 class="title">模型选型 · <span class="grad">销售视角速查</span></h1>
+    <p class="subtitle">非 Anthropic 模型怎么进 + 销售场景对应表 · 截图发群保存</p>
+
+    <table style="margin-top:var(--s2)">
+      <thead><tr><th style="width:200px">销售任务</th><th style="width:160px">推荐模型</th><th style="width:90px">量级</th><th>为什么</th></tr></thead>
+      <tbody>
+        <tr><td class="k">📋 客户名单批量分类 / 标签化</td><td><span class="pill" style="background:#dafbe1;color:#1a7f37">Haiku</span></td><td><span class="pill good">1×</span></td><td>简单分类不用思考 · 量大要省 · 100 条客户秒出</td></tr>
+        <tr><td class="k">✉️ 日常邮件 / 复盘 / 单页报告</td><td><span class="pill info">Sonnet</span></td><td><span class="pill info">~10×</span></td><td>主力模型 · 性价比最高 · 80% 任务都用它</td></tr>
+        <tr><td class="k">🎯 客户提案 / 关键决策</td><td><span class="pill warn">Opus</span></td><td><span class="pill warn">~50×</span></td><td>要深思考 + 创意 + 准确 · 一次出对省一轮返工</td></tr>
+        <tr><td class="k">📊 跨周策略（半年记忆）</td><td><span class="pill bad">Opus + 1M</span></td><td><span class="pill bad">~100×</span></td><td>长期顾问角色 · 跨日叙事 · WB 默认就是这个</td></tr>
+        <tr><td class="k">🌏 中文密集 / 政策解读</td><td><span class="pill" style="background:#f3e8ff;color:#6b21a8">GLM / DeepSeek</span></td><td>视模型</td><td>Claude 中文略弱 · 国产模型对法律 / 政策语言更顺</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid grid-3" style="margin-top:var(--s3)">
+      <div class="card"><h3 style="margin-top:0">🔌 非 Anthropic 怎么进</h3>
+        <ul>
+          <li><strong>OpenClaw 网关</strong>统一接入</li>
+          <li>智谱 GLM 4.7 · 国内合规</li>
+          <li>DeepSeek 3.2 · 便宜推理强</li>
+          <li>OpenAI GPT 系列 · 通用</li>
+          <li>混元 / 自研 · 公司内场景</li>
+        </ul>
+      </div>
+      <div class="card"><h3 style="margin-top:0">🔧 怎么切模型</h3>
+        <ul>
+          <li><strong>CodeBuddy</strong>：右上角 / 设置下拉</li>
+          <li><strong>Claude Code</strong>：<code>/model</code> 切</li>
+          <li><strong>WorkBuddy</strong>：默认 Opus + 1M · 一般不换</li>
+        </ul>
+      </div>
+      <div class="card"><h3 style="margin-top:0;color:#cf222e">⚠ 选型四个误区</h3>
+        <ul>
+          <li><strong>不是越新越好</strong>：GPT 5.4 不代表你的任务该换</li>
+          <li><strong>不是越大越好</strong>：72B 未必比 7B 适合分类</li>
+          <li><strong>中英文表现不同</strong>：Claude 中文略弱</li>
+          <li><strong>合规优先</strong>：内部数据走内网模型</li>
+        </ul>
+      </div>
     </div>
-    <aside class="notes"><b>讲师备注 ·</b> 这页可以快过。重点是"模型 ≠ 智能"这个心智 —— 选对场景比追新更重要。</aside>
+
+    <div class="callout good">
+      <div class="callout-tag">下一步</div>
+      <div class="callout-lead">对照自己一周任务，估算月成本量级</div>
+      <div class="callout-body">心里有数 = 不被"AI 烧钱"焦虑 · 一周参考配比 80% Sonnet · 15% Opus · 5% Haiku。</div>
+      <div class="callout-meta">选好模型只是起点 —— 下一章讲让它<mark>记住你</mark>。</div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是 Ch3 的"销售视角钩子"。让听众"对照自己一周任务对号入座"。强调"用错模型 &lt; 用错工具" —— 选 Sonnet 跑分类只是慢，不会出错。原 P30 + P31 合并，保留所有信息。</aside>
   </div>
 </section>
 
-<!-- 26 · 章扉 5 -->
+
+<!-- 31 · 章扉 5 -->
 <section class="slide dark chapter-slide">
   <div class="ch-chip g5"></div>
   <div class="ch-num">Chapter 05</div>
   <div class="ch-title">配置即记忆</div>
-  <div class="ch-sub">写一份 Markdown，每次会话自动注入。一小时投入，半年复利。</div>
+  <div class="ch-sub">给 AI 装三层记忆 + 一桥模板。<br>项目规则 → 工作流模板 → 自动接力。</div>
 </section>
 
-<!-- 27 · AGENTS.md · Why -->
+<!-- 32 · Ch4 三层记忆概览（插入到章扉 5 后 / AGENTS.md why 前） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 配置即记忆</div>
+    <div class="eyebrow">第 4 章 · 配置即记忆 · 概览</div>
+    <h1 class="title">三层记忆 + 一桥 · <span class="grad-purple">配置全景</span></h1>
+    <p class="subtitle">先看全景 · 再看每层 · 不要把它们当孤立功能</p>
+
+    <div class="svg-wrap" style="background:var(--bg-alt);padding:var(--s3);margin-top:var(--s3)">
+      <svg viewBox="0 0 1180 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="l1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0070f3"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient>
+          <linearGradient id="l2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bf5af2"/><stop offset="100%" stop-color="#ff375f"/></linearGradient>
+          <linearGradient id="l3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff9f0a"/><stop offset="100%" stop-color="#ff375f"/></linearGradient>
+          <linearGradient id="lb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#30d158"/><stop offset="100%" stop-color="#0071e3"/></linearGradient>
+        </defs>
+        <!-- 第 1 层 -->
+        <rect x="40" y="20" width="260" height="180" rx="18" fill="#fff" stroke="#d2d2d7" stroke-width="1.5"/>
+        <rect x="40" y="20" width="260" height="6" rx="3" fill="url(#l1)"/>
+        <text x="170" y="55" font-family="SF Pro Display" font-size="13" font-weight="700" fill="#0070f3" letter-spacing="2" text-anchor="middle">第 1 层</text>
+        <text x="170" y="82" font-family="SF Pro Display" font-size="20" font-weight="700" fill="#1d1d1f" text-anchor="middle">AGENTS.md</text>
+        <text x="170" y="106" font-family="SF Pro Text" font-size="13" fill="#424245" text-anchor="middle">项目规则</text>
+        <text x="170" y="135" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">一份多家共吃</text>
+        <text x="170" y="155" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">CC + CB + Cursor + Codex</text>
+        <text x="170" y="183" font-family="SF Pro Text" font-size="11" font-weight="600" fill="#0070f3" text-anchor="middle">让 AI 知道"在哪"</text>
+
+        <!-- 第 2 层 -->
+        <rect x="320" y="20" width="260" height="180" rx="18" fill="#fff" stroke="#d2d2d7" stroke-width="1.5"/>
+        <rect x="320" y="20" width="260" height="6" rx="3" fill="url(#l2)"/>
+        <text x="450" y="55" font-family="SF Pro Display" font-size="13" font-weight="700" fill="#bf5af2" letter-spacing="2" text-anchor="middle">第 2 层</text>
+        <text x="450" y="82" font-family="SF Pro Display" font-size="20" font-weight="700" fill="#1d1d1f" text-anchor="middle">Skill</text>
+        <text x="450" y="106" font-family="SF Pro Text" font-size="13" fill="#424245" text-anchor="middle">工作流模板</text>
+        <text x="450" y="135" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">一句话调用</text>
+        <text x="450" y="155" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">SKILL.md 文档化</text>
+        <text x="450" y="183" font-family="SF Pro Text" font-size="11" font-weight="600" fill="#bf5af2" text-anchor="middle">让 AI 知道"怎么做"</text>
+
+        <!-- 第 3 层 -->
+        <rect x="600" y="20" width="260" height="180" rx="18" fill="#fff" stroke="#d2d2d7" stroke-width="1.5"/>
+        <rect x="600" y="20" width="260" height="6" rx="3" fill="url(#l3)"/>
+        <text x="730" y="55" font-family="SF Pro Display" font-size="13" font-weight="700" fill="#ff9f0a" letter-spacing="2" text-anchor="middle">第 3 层</text>
+        <text x="730" y="82" font-family="SF Pro Display" font-size="20" font-weight="700" fill="#1d1d1f" text-anchor="middle">Hook</text>
+        <text x="730" y="106" font-family="SF Pro Text" font-size="13" fill="#424245" text-anchor="middle">自动接力</text>
+        <text x="730" y="135" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">写完自动跑下一步</text>
+        <text x="730" y="155" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">事件触发器（不思考）</text>
+        <text x="730" y="183" font-family="SF Pro Text" font-size="11" font-weight="600" fill="#ff9f0a" text-anchor="middle">让 AI 知道"做完干嘛"</text>
+
+        <!-- 桥 · 模板 -->
+        <rect x="880" y="20" width="260" height="180" rx="18" fill="#fff" stroke="#d2d2d7" stroke-width="1.5"/>
+        <rect x="880" y="20" width="260" height="6" rx="3" fill="url(#lb)"/>
+        <text x="1010" y="55" font-family="SF Pro Display" font-size="13" font-weight="700" fill="#30d158" letter-spacing="2" text-anchor="middle">桥</text>
+        <text x="1010" y="82" font-family="SF Pro Display" font-size="20" font-weight="700" fill="#1d1d1f" text-anchor="middle">模板</text>
+        <text x="1010" y="106" font-family="SF Pro Text" font-size="13" fill="#424245" text-anchor="middle">复制即用</text>
+        <text x="1010" y="135" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">三步替换占位符</text>
+        <text x="1010" y="155" font-family="SF Pro Text" font-size="11" fill="#6e6e73" text-anchor="middle">第二天就能上手</text>
+        <text x="1010" y="183" font-family="SF Pro Text" font-size="11" font-weight="600" fill="#30d158" text-anchor="middle">让你"今天就动手"</text>
+      </svg>
+    </div>
+
+    <div class="callout"><div class="callout-tag">三层 · 记一句</div><div class="callout-grid"><div class="item"><b>AGENTS.md</b>让 AI 知道"<strong>在哪</strong>"（项目规则）</div><div class="item"><b>Skill</b>让 AI 知道"<strong>怎么做</strong>"（工作流）</div><div class="item"><b>Hook</b>让 AI 知道"<strong>做完干嘛</strong>"（自动接力）</div><div class="item"><b>分批上</b>第一周 AGENTS.md · 第二周 Skill · Hook 后置</div></div></div>
+    <aside class="notes"><b>讲师备注 ·</b> 这页是 Ch4 心智锚点。后面 5 页都回到这张图就不会迷路。同事最容易问"我先学哪个" → 答 "AGENTS.md 第一周最有用 · Skill 第二周加 · Hook 一个月后再考虑"。</aside>
+  </div>
+</section>
+
+
+<!-- 33 · AGENTS.md · Why -->
+<section class="slide">
+  <div class="content">
+    <div class="eyebrow">第 4 章 · 第 1 层 · 项目规则 · AGENTS.md Why</div>
     <h1 class="title"><span class="term" data-tip="项目级配置文件，OpenAI/Cursor/CodeBuddy 共享格式。一份文件三家共吃">AGENTS.md</span> · <span class="grad-warm">Why</span> 为什么是它</h1>
     <p class="subtitle">不是 README · 不是 CLAUDE.md · 不是 CodeBuddy User Rules · 是跨家共用的"项目身份证"</p>
 
@@ -995,15 +1480,15 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
   </div>
 </section>
 
-<!-- 28 · AGENTS.md · How（新增） -->
+<!-- 34 · AGENTS.md · How（新增） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 配置即记忆</div>
+    <div class="eyebrow">第 4 章 · 第 1 层 · 项目规则 · AGENTS.md How</div>
     <h1 class="title">AGENTS.md · <span class="grad-mint">How</span> 怎么写</h1>
     <p class="subtitle">球鞋站项目实例 · 88 行 / 6 个章节 / 三家 agent 共吃</p>
 
     <div class="grid grid-2" style="grid-template-columns:1fr 1.2fr;margin-top:var(--s3)">
-      <div class="shot"><img src="assets/ai-coding-tools-explained/demo-sneakers.png" alt="sneakers 站"><div class="shot-cap">nic-wang.github.io/sneakers-collection · 一份 AGENTS.md 维护半年</div></div>
+      <div class="shot"><img src="../../assets/ai-coding-tools-explained/demo-sneakers.png" alt="sneakers 站"><div class="shot-cap"><a href="https://nic-wang.github.io/sneakers-collection" target="_blank">nic-wang.github.io/sneakers-collection</a> · 一份 AGENTS.md 维护半年</div></div>
       <div><h3 style="margin-top:0">推荐章节骨架</h3>
         <ol style="margin-left:18px">
           <li><strong>项目身份</strong>：是什么、给谁用、技术栈、不变量（"纯静态站、无构建"）</li>
@@ -1023,73 +1508,79 @@ body.pdf-mode thead th,body.pdf-mode tbody td{padding:7px 10px}
     </div>
 
     <div class="grid grid-2" style="margin-top:var(--s3)">
-      <div class="card" style="background:#fffbe6;border-left:3px solid #d4a72c"><h3 style="margin-top:0;color:#8b6914;font-size:14px">✅ 好句式（命令式 · 给 AI 看）</h3>
-        <ul style="font-size:12px;line-height:1.5"><li>"加新鞋款时 MUST 同时更新 data/aj.json 和 sitemap"</li><li>"图片必须走 DuckDuckGo 抓取脚本，禁止手动下载"</li><li>"金额字段保留 ¥ 符号，不要换成 RMB"</li></ul>
+      <div class="card" style="background:#fffbe6;border-left:3px solid #d4a72c"><h3 style="margin-top:0;color:#8b6914">✅ 好句式（命令式 · 给 AI 看）</h3>
+        <ul style="line-height:1.5"><li>"加新鞋款时 MUST 同时更新 data/aj.json 和 sitemap"</li><li>"图片必须走 DuckDuckGo 抓取脚本，禁止手动下载"</li><li>"金额字段保留 ¥ 符号，不要换成 RMB"</li></ul>
       </div>
-      <div class="card" style="background:#ffebee;border-left:3px solid #cf222e"><h3 style="margin-top:0;color:#cf222e;font-size:14px">❌ 坏句式（叙述式 · 不像规则）</h3>
-        <ul style="font-size:12px;line-height:1.5"><li>"这个项目主要做的是球鞋数据展示" → README 内容，AI 不需要</li><li>"我们之前讨论过用 React，但后来改了" → 历史叙事，无用</li><li>"如果可能的话最好不要..." → 模糊，AI 不知道是不是要遵守</li></ul>
+      <div class="card" style="background:#ffebee;border-left:3px solid #cf222e"><h3 style="margin-top:0;color:#cf222e">❌ 坏句式（叙述式 · 不像规则）</h3>
+        <ul style="line-height:1.5"><li>"这个项目主要做的是球鞋数据展示" → README 内容，AI 不需要</li><li>"我们之前讨论过用 React，但后来改了" → 历史叙事，无用</li><li>"如果可能的话最好不要..." → 模糊，AI 不知道是不是要遵守</li></ul>
       </div>
     </div>
     <aside class="notes"><b>讲师备注 ·</b> 这页讲 how。强调"命令式 vs 叙述式"——这是同事最容易写错的点。带一份 88 行的实例，给同事看完整结构。</aside>
   </div>
 </section>
 
-<!-- 29 · Skill -->
+<!-- 35 · Skill + Hook · 概念对照（合并 原 P36 Skill + P37 Hook） -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 配置即记忆</div>
-    <h1 class="title"><span class="term" data-tip="Skill：把可复用工作流封装成 SKILL.md，下次一句话调用">Skill</span> · 把<span class="grad">反复工作</span>变模板</h1>
-    <p class="subtitle">每周双周会汇总 / 客户复盘 / 报告排版 · 都可以一句话触发</p>
-    <div class="grid grid-2">
-      <div class="card"><h3 style="margin-top:0">已有 Skill 示例</h3>
+    <div class="eyebrow">第 4 章 · 第 2 + 3 层 · 工作流模板 + 自动接力</div>
+    <h1 class="title"><span class="term" data-tip="Skill：把可复用工作流封装成 SKILL.md，下次一句话调用">Skill</span> + <span class="term" data-tip="Hook：写完文件、运行命令等时机，自动触发后续脚本">Hook</span> · <span class="grad">一对配套机制</span></h1>
+    <p class="subtitle">Skill 解决"主动让 AI 做什么" · Hook 解决"AI 做完后自动做什么"</p>
+
+    <div class="grid grid-2" style="margin-top:var(--s3)">
+      <div class="card-grad g-purple">
+        <h3>Skill · 主动快捷方式</h3>
+        <p class="one-line">一句话调用预定义工作流</p>
+        <h3 style="margin-top:14px">已有 5 个销售实例</h3>
         <ul>
-          <li><strong>bs-ads-biweekly-review</strong> · 部门双周会汇总规约</li>
-          <li><strong>bs-ads-quarterly-client-review</strong> · 客户季度复盘（对外/对内双模板）</li>
-          <li><strong>tencent-docs-precise-docx</strong> · 精确排版上传腾讯文档</li>
-          <li><strong>qq-email</strong> · QQ 邮箱收发自动化</li>
-          <li><strong>luckcraft-to-frontend</strong> · 命理算法纯前端化</li>
+          <li><strong>bs-ads-biweekly-review</strong> 部门双周会规约</li>
+          <li><strong>bs-ads-quarterly-client-review</strong> 客户复盘（对外 / 对内双模板）</li>
+          <li><strong>tencent-docs-precise-docx</strong> 精排上腾讯文档</li>
+          <li><strong>qq-email</strong> QQ 邮箱收发</li>
+          <li><strong>luckcraft-to-frontend</strong> 命理算法前端化</li>
         </ul>
-        <p style="color:var(--muted);font-size:14px;margin-top:var(--s2)">每个 Skill 一份 SKILL.md，描述触发词、流程步骤、踩坑备忘。</p></div>
-      <div class="card"><h3 style="margin-top:0">用法对比</h3>
-        <p style="color:#cf222e"><strong>❌ 没 Skill 时</strong>：每次双周会都要重新解释"用什么格式、强调什么、跳过什么"——5 分钟过去了。</p>
-        <p style="color:#1a7f37;margin-top:var(--s2)"><strong>✅ 有 Skill 后</strong>：一句"双周会"或"客户复盘"，AI 自动加载规约、套模板、按口径输出 v0。</p>
-        <div class="callout good"><strong>关键洞察：</strong>Skill 是"工作流的快捷方式"。如果某件事你一年要做 5 次以上，就值得 Skill 化。</div></div>
+        <h3 style="margin-top:14px">用法对比</h3>
+        <p style="color:#cf222e"><strong>❌ 没 Skill</strong>：每次解释"什么格式 / 强调什么 / 跳过什么" · 5 分钟过去</p>
+        <p style="color:#1a7f37"><strong>✅ 有 Skill</strong>：一句"双周会"AI 自动加载规约 + 套模板</p>
+      </div>
+
+      <div class="card-grad g-warm">
+        <h3>Hook · 自动接力</h3>
+        <p class="one-line">事件触发器 · 脚本不思考</p>
+        <h3 style="margin-top:14px">三类常用</h3>
+        <ul>
+          <li><strong>PostWriteFile</strong> 写完文件跑 lint / 测试 / 格式化</li>
+          <li><strong>PreCommit</strong> 提交前自动检查规范</li>
+          <li><strong>OnSessionEnd</strong> 会话结束自动归档 daily memory</li>
+        </ul>
+        <h3 style="margin-top:14px">我的实例</h3>
+        <p>WB 写完工作记忆 → Hook 自动推 Obsidian + 同步 iCloud · 手动一次都不用动。</p>
+        <p style="margin-top:8px;color:var(--muted)"><strong>判定标准</strong>：一年做 5 次以上的活值得 Skill 化 · 反复重复的"做完就要执行的动作"值得 Hook 化。</p>
+      </div>
     </div>
-    <aside class="notes"><b>讲师备注 ·</b> 强调 Skill 不是技术活——本质是把口头规约写成 markdown，AI 自动按它执行。任何一个销售都能写。</aside>
+
+    <div class="callout warn">
+      <div class="callout-tag">Hook vs 多 agent 并行 · 别混</div>
+      <div class="callout-grid">
+        <div class="item"><b>多 agent</b>分头干同一件大事 · 每个都是完整智能体（能推理 / 调工具）</div>
+        <div class="item"><b>Hook</b>干完顺手再做一步 · 自动化触发器（脚本不思考）</div>
+      </div>
+      <div class="callout-body"><span class="callout-prefix">联用</span> · 4 agent 并行写报告 → 文件落盘 → Hook 自动 prettier + 推腾讯文档 + WB 归档。</div>
+      <div class="callout-meta">一句话：多 agent 是"团队" · Hook 是"自动门"。</div>
+    </div>
+    <aside class="notes"><b>讲师备注 ·</b> 强调 Skill 不是技术活 —— 把口头规约写成 markdown，AI 自动按它执行。任何一个销售都能写。Hook 进阶但只是 JSON 配置。原 P36 + P37 合并版。</aside>
   </div>
 </section>
 
-<!-- 30 · Hook -->
+<!-- 36 · Skill / Hook 最小可执行模板 -->
 <section class="slide">
   <div class="content">
-    <div class="eyebrow">第 4 章 · 配置即记忆</div>
-    <h1 class="title"><span class="term" data-tip="Hook：写完文件、运行命令等时机，自动触发后续脚本">Hook</span> · 让 AI 写完<span class="grad-mint">自动接力</span></h1>
-    <p class="subtitle">"AI 写完代码 → 自动跑测试" · "AI 写完 markdown → 自动同步到知识库"</p>
-    <div class="grid grid-2">
-      <div class="card"><h3 style="margin-top:0">三类常用 Hook</h3>
-        <ul>
-          <li><strong>PostWriteFile</strong>：写完文件后跑 lint / 测试 / 格式化</li>
-          <li><strong>PreCommit</strong>：提交前自动检查规范</li>
-          <li><strong>OnSessionEnd</strong>：会话结束自动归档 daily memory</li>
-        </ul>
-        <p style="color:var(--muted);font-size:14px;margin-top:var(--s2)">Hook 用配置 JSON 写，CC 和 WorkBuddy 都支持。</p></div>
-      <div class="card"><h3 style="margin-top:0">为什么重要</h3>
-        <p>Skill 解决"主动让 AI 做什么"，Hook 解决"AI 做完后自动做什么"。两者配合 → AI 真正接近"同事"——你给个起点，它自己跑完整条流水线。</p>
-        <div class="callout"><strong>我的实例：</strong>WorkBuddy 写完工作记忆后，hook 自动把它推送到 Obsidian 仓库 + 同步 iCloud。我手动一次也不用动。</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- 31 · Skill / Hook 最小可执行模板 -->
-<section class="slide">
-  <div class="content">
-    <div class="eyebrow">第 4 章 · 配置即记忆 · 上手模板</div>
+    <div class="eyebrow">第 4 章 · 桥 · 三层模板 · 复制即用</div>
     <h1 class="title">Skill / Hook · <span class="grad-mint">最小可执行模板</span></h1>
     <p class="subtitle">复制即用 · 三步替换占位符 · 第二天就能用上</p>
 
     <div class="grid grid-2" style="margin-top:var(--s3)">
       <div class="card" style="background:#0d1117;color:#c9d1d9;padding:18px;border-radius:18px">
-        <h3 style="margin-top:0;color:#7ee787;font-size:14px;font-family:var(--font-mono)">SKILL.md · 最小模板</h3>
+        <h3 style="margin-top:0;color:#7ee787;font-family:var(--font-mono)">SKILL.md · 最小模板</h3>
         <pre style="margin:8px 0 0;font-family:var(--font-mono);font-size:11px;line-height:1.55;color:#c9d1d9;white-space:pre-wrap;word-break:break-word"><code>---
 name: customer-email-draft
 description: 客户邮件初稿生成器
@@ -1113,7 +1604,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
       </div>
 
       <div class="card" style="background:#0d1117;color:#c9d1d9;padding:18px;border-radius:18px">
-        <h3 style="margin-top:0;color:#79c0ff;font-size:14px;font-family:var(--font-mono)">hooks.json · 写完自动同步</h3>
+        <h3 style="margin-top:0;color:#79c0ff;font-family:var(--font-mono)">hooks.json · 写完自动同步</h3>
         <pre style="margin:8px 0 0;font-family:var(--font-mono);font-size:11px;line-height:1.55;color:#c9d1d9;white-space:pre-wrap;word-break:break-word"><code>{
   "hooks": [
     {
@@ -1128,17 +1619,17 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
     }
   ]
 }</code></pre>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.4">写完 <code>reports/daily/*.md</code> 自动跑 prettier 格式化 + 推到腾讯文档"双周会"空间。再也不用手动同步。</p>
+        <p style="color:var(--muted);margin-top:10px;line-height:1.4">写完 <code>reports/daily/*.md</code> 自动跑 prettier 格式化 + 推到腾讯文档"双周会"空间。再也不用手动同步。</p>
       </div>
     </div>
 
-    <div class="callout good" style="margin-top:var(--s3)"><strong>三步替换占位符即可上手：</strong>① 把 <code>customer-email-draft</code> 改成你的场景名 · ② <code>triggers</code> 改成你会说的中文触发词 · ③ <code>Steps</code> 写成你的实际工作流。<strong>Hook 同理</strong>：改 <code>match</code> 匹配你的文件路径，改 <code>actions</code> 写要跑什么命令。</div>
+    <div class="callout good"><div class="callout-tag">三步替换占位符即可上手</div><ol class="callout-steps"><li>把 <code>customer-email-draft</code> 改成你的场景名</li><li><code>triggers</code> 改成你会说的中文触发词</li><li><code>Steps</code> 写成你的实际工作流</li></ol><div class="callout-meta"><span class="callout-prefix">Hook 同理</span> · 改 <code>match</code> 匹配文件路径 · 改 <code>actions</code> 写要跑的命令。</div></div>
 
     <aside class="notes"><b>讲师备注 ·</b> 这页建议现场打开 IDE 改一行让大家看。强调"不是技术活，是把口头规约写成 markdown"。任何一个销售都能写 Skill；Hook 稍微进阶但也只是 JSON。</aside>
   </div>
 </section>
 
-<!-- 32 · 辟谣 + 起步 + 场景 -->
+<!-- 37 · 辟谣 + 起步 + 场景 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 5 章 · 起步</div>
@@ -1154,7 +1645,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
           <li>"装一个就够"→三个 agent 对应不同场景</li>
         </ol></div>
       <div class="card"><h3 style="margin-top:0">场景速查</h3>
-        <ul style="margin-left:18px">
+        <ul>
           <li><strong>客户邮件初稿</strong>→CodeBuddy</li>
           <li><strong>季度复盘</strong>→WorkBuddy</li>
           <li><strong>批量改文件名</strong>→CC</li>
@@ -1163,12 +1654,12 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
           <li><strong>HTML 单页报告</strong>→CC 或 CodeBuddy</li>
         </ul></div>
     </div>
-    <div class="callout good"><strong>第一性原则：</strong>先用，再调，再扩。不要一上来就追求完美配置。让"用了之后省了多少时间"驱动你下一步装什么。</div>
+    <div class="callout good"><div class="callout-tag">第一性原则</div><div class="callout-lead">先用 · 再调 · 再扩</div><div class="callout-body">不要一上来就追求完美配置。让"用了之后省了多少时间"驱动你下一步装什么。</div></div>
     <aside class="notes"><b>讲师备注 ·</b> 这页给同事截图带走。下一页讲完整成长路径（Day 1 → Quarter 1）。</aside>
   </div>
 </section>
 
-<!-- 33 · 成长路径 4 阶段 -->
+<!-- 38 · 成长路径 4 阶段 -->
 <section class="slide">
   <div class="content">
     <div class="eyebrow">第 5 章 · 起步 · 成长路径</div>
@@ -1204,7 +1695,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
     <div class="grid grid-4" style="margin-top:var(--s3);gap:12px">
       <div class="card-grad g-blue">
         <h3>Day 1 · 起手</h3>
-        <p style="font-size:12px;color:var(--muted);margin-top:2px">投入 30 分钟</p>
+        <p style="color:var(--muted);margin-top:2px">投入 30 分钟</p>
         <div style="margin-top:8px;font-size:12px;line-height:1.6">
           <div><b>主要工具</b> · CodeBuddy</div>
           <div><b>关键产出</b> · 跑通 1 次补全 · 写 1 条 User Rules</div>
@@ -1214,7 +1705,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
 
       <div class="card-grad g-purple">
         <h3>Week 1 · 试水</h3>
-        <p style="font-size:12px;color:var(--muted);margin-top:2px">投入 2-3 小时</p>
+        <p style="color:var(--muted);margin-top:2px">投入 2-3 小时</p>
         <div style="margin-top:8px;font-size:12px;line-height:1.6">
           <div><b>主要工具</b> · CodeBuddy + MCP</div>
           <div><b>关键产出</b> · 接腾讯文档 MCP · 用 1 次客户复盘 · 出 1 份单页报告</div>
@@ -1224,7 +1715,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
 
       <div class="card-grad g-warm">
         <h3>Month 1 · 沉淀</h3>
-        <p style="font-size:12px;color:var(--muted);margin-top:2px">投入 半天 / 周</p>
+        <p style="color:var(--muted);margin-top:2px">投入 半天 / 周</p>
         <div style="margin-top:8px;font-size:12px;line-height:1.6">
           <div><b>主要工具</b> · + CC + AGENTS.md</div>
           <div><b>关键产出</b> · 项目 AGENTS.md · 自己写 1 个 Skill · 加 1 个 Hook 自动归档</div>
@@ -1234,7 +1725,7 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
 
       <div class="card-grad g-mint">
         <h3>Quarter 1 · 驾驭</h3>
-        <p style="font-size:12px;color:var(--muted);margin-top:2px">已成日常</p>
+        <p style="color:var(--muted);margin-top:2px">已成日常</p>
         <div style="margin-top:8px;font-size:12px;line-height:1.6">
           <div><b>主要工具</b> · CC + WB 多 agent 协作</div>
           <div><b>关键产出</b> · 团队级 AGENTS.md · 跨工具记忆共享 · 算清 ROI</div>
@@ -1243,13 +1734,13 @@ triggers: ["写邮件", "回复客户", "邮件初稿"]
       </div>
     </div>
 
-    <div class="callout good" style="margin-top:var(--s3)"><strong>不跳级原则：</strong>Day 1 没跑通别上 Week 1。Week 1 还在抗拒 MCP 就别想 Month 1 的 AGENTS.md。投入是<strong>复利</strong>的——前一阶段做扎实，后一阶段才省时间。我的实际曲线：Month 1 末才开始用 WorkBuddy，到 Quarter 1 才形成跨工具记忆。</div>
+    <div class="callout good"><div class="callout-tag">不跳级原则</div><div class="callout-lead">投入是<strong>复利</strong> · 前一阶段扎实 · 后一阶段才省时间</div><div class="callout-body">Day 1 没跑通别上 Week 1 · Week 1 还在抗拒 MCP 就别想 Month 1 的 AGENTS.md。</div><div class="callout-meta">我的实际曲线：Month 1 末才开始用 WB · 到 Quarter 1 才形成跨工具记忆。</div></div>
 
     <aside class="notes"><b>讲师备注 ·</b> 这页是全场"行动召唤"。建议每个听众散场前自己写一句"我的 Day 1 是什么"。强调"不跳级"——很多人栽在第一周就上 WorkBuddy，结果太贵太慢就放弃了。</aside>
   </div>
 </section>
 
-<!-- 34 · 收尾（Apple 风升级） -->
+<!-- 39 · 收尾（Apple 风升级） -->
 <section class="slide dark hero-slide hero-end">
   <div class="blob b1" style="background:var(--grad-purple);opacity:.32"></div>
   <div class="blob b2" style="background:var(--grad-blue);opacity:.22"></div>
