@@ -375,18 +375,36 @@
 
   /* Mobile */
   @media (max-width: 720px) {
-    .container { padding: 36px 20px 56px; }
-    .hero { padding-bottom: 40px; margin-bottom: 32px; }
-    .hero h1 { font-size: 36px; }
-    .hero-sub { font-size: 16px; }
-    .hero-meta { flex-direction: column; align-items: flex-start; padding: 4px; border-radius: 16px; width: 100%; }
-    .hero-meta span { border-right: none; border-bottom: 1px solid var(--md-outline-var); width: 100%; }
+    body { font-size: 14px; }
+    .container { padding: 32px 18px 56px; }
+    .hero { padding: 16px 0 32px; margin-bottom: 28px; }
+    .hero-eyebrow { margin-bottom: 20px; padding: 5px 12px; font-size: 11px; }
+    .hero h1 { font-size: 34px; line-height: 1.1; margin-bottom: 16px; }
+    .hero-sub { font-size: 15px; line-height: 1.55; margin-bottom: 24px; }
+    .hero-sub br { display: none; }
+    .hero-meta { flex-direction: column; align-items: stretch; padding: 4px; border-radius: 14px; width: 100%; font-size: 12.5px; }
+    .hero-meta span { border-right: none; border-bottom: 1px solid var(--md-outline-var); justify-content: flex-start; padding: 8px 14px; }
     .hero-meta span:last-child { border-bottom: none; }
     section { margin-bottom: 48px; }
-    section h2 { font-size: 22px; }
+    section h2 { font-size: 22px; margin-bottom: 18px; }
     .card-grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { padding: 20px; border-radius: 14px; }
+    .card-title { font-size: 17px; }
+    .card-title .icon { width: 34px; height: 34px; font-size: 16px; }
+    .card-desc { font-size: 11px; padding-bottom: 12px; margin-bottom: 14px; }
+    .card-list a { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .card-list .date { font-size: 10.5px; }
+    .card-list li { padding: 11px 0; font-size: 14.5px; }
+    .timeline { padding-left: 20px; margin-left: 6px; }
+    .timeline-item::before { left: -28px; width: 12px; height: 12px; }
+    .timeline-title { font-size: 14px; }
+    .timeline-tag { font-size: 10.5px; padding: 1px 7px; margin-right: 6px; vertical-align: 1px; }
+    .timeline-detail { font-size: 12.5px; margin-top: 5px; }
     .tech-grid { grid-template-columns: 1fr; }
-    .tech-grid > div:nth-child(odd) { border-bottom: 1px solid var(--md-outline-var); }
+    .tech-grid > div { padding: 12px 16px; font-size: 13.5px; }
+    .tech-grid > div:nth-child(odd) { border-bottom: 1px solid var(--md-outline-var); padding-bottom: 4px; }
+    .tech-grid > div:nth-child(even) { padding-top: 6px; }
+    footer { margin-top: 56px; font-size: 12.5px; }
   }
 </style>
 </head>
