@@ -3,212 +3,492 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nic's Knowledge Base · 🦜</title>
-<meta name="description" content="Nic 的公开知识站 · AI Agents / Sales / Tech / Life">
+<title>Knowledge Base · by nic</title>
+<meta name="description" content="Nic 的公开知识站 · AI Agents / Finance / Sales / Tech / Life · 把研究和复盘沉淀成可追溯的公开文档">
+<meta property="og:title" content="Knowledge Base · by nic">
+<meta property="og:description" content="把研究和复盘沉淀成可追溯的公开文档 · 结论前置 · 证据后置 · 关键信息附来源">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nic-wang.github.io/knowledge-base/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Display:wght@400;500;700&family=Google+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  :root {
+    /* Material 3 light · Google Blue */
+    --md-primary: #0b57d0;
+    --md-on-primary: #ffffff;
+    --md-primary-container: #d3e3fd;
+    --md-on-primary-container: #001b3f;
+    --md-secondary: #565f71;
+    --md-secondary-container: #dae2f9;
+    --md-tertiary: #006a6a;
+    --md-tertiary-container: #6ff7f7;
+    --md-error-container: #ffdad6;
+    --md-warning-container: #fddcbe;
+    --md-surface: #fdfcff;
+    --md-surface-1: #f3f3f8;
+    --md-surface-container: #ffffff;
+    --md-on-surface: #1a1c1e;
+    --md-on-surface-var: #44474e;
+    --md-outline-var: #c4c6d0;
+    --md-shadow-sm: 0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.08);
+    --md-shadow-md: 0 2px 4px rgba(0,0,0,0.06), 0 4px 8px rgba(0,0,0,0.08);
+    /* Google 4 色 */
+    --g-blue: #4285f4;
+    --g-red: #ea4335;
+    --g-yellow: #fbbc04;
+    --g-green: #34a853;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background: #ffffff; color: #1f2328;
-    line-height: 1.6; font-size: 14px;
-    padding: 40px 24px; max-width: 1000px; margin: 0 auto;
+    font-family: 'Google Sans', 'Roboto', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  header {
-    padding-bottom: 16px;
-    border-bottom: 1px solid #d1d9e0;
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 24px 0 56px;
+    border-bottom: 1px solid var(--md-outline-var);
+    margin-bottom: 48px;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 18px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    font-family: 'Google Sans', sans-serif;
+  }
+  .hero h1 {
+    font-family: 'Google Sans Display', 'Google Sans', sans-serif;
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--md-on-surface);
+    margin-bottom: 20px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(90deg, var(--g-blue) 0%, var(--g-red) 50%, var(--g-yellow) 75%, var(--g-green) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--md-on-surface-var);
+    max-width: 720px;
+    line-height: 1.55;
+    margin-bottom: 32px;
+  }
+  .hero-meta {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-outline-var);
+    border-radius: 999px;
+    padding: 6px;
+    box-shadow: var(--md-shadow-sm);
+    font-size: 13px;
+    color: var(--md-on-surface-var);
+  }
+  .hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-right: 1px solid var(--md-outline-var);
+    font-weight: 500;
+  }
+  .hero-meta span:last-child { border-right: none; }
+  .hero-meta i { color: var(--md-primary); }
+
+  /* Section */
+  section { margin-bottom: 64px; }
+  section h2 {
+    font-family: 'Google Sans Display', 'Google Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.012em;
     margin-bottom: 24px;
-  }
-  h1 { font-size: 28px; font-weight: 600; margin-bottom: 6px; }
-  .sub { color: #59636e; font-size: 14px; }
-  .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-  .label {
-    display: inline-block; padding: 2px 8px; border-radius: 10px;
-    font-size: 11px; font-weight: 500;
-    border: 1px solid #d1d9e0; background: #f6f8fa; color: #1f2328;
-  }
-  .label-blue { background: #ddf4ff; border-color: #54aeff66; color: #0969da; }
-  .label-green { background: #dafbe1; border-color: #6fd78766; color: #1a7f37; }
-  .label-purple { background: #fbefff; border-color: #c297ff66; color: #8250df; }
-  .label-orange { background: #fff1e5; border-color: #ffb77c66; color: #bc4c00; }
-
-  h2 {
-    font-size: 18px; font-weight: 600;
-    margin-top: 32px; margin-bottom: 12px;
-    padding-bottom: 6px; border-bottom: 1px solid #d1d9e0;
+    color: var(--md-on-surface);
   }
 
+  /* Card grid */
   .card-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    margin-top: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
   }
   .card {
-    border: 1px solid #d1d9e0; border-radius: 6px;
-    padding: 16px 18px; background: #ffffff;
-    transition: background 0.1s;
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-outline-var);
+    border-radius: 16px;
+    padding: 24px;
+    transition: box-shadow 0.24s ease, transform 0.18s ease, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
   }
-  .card:hover { background: #f6f8fa; }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-color, var(--g-blue));
+  }
+  .card:hover {
+    box-shadow: var(--md-shadow-md);
+    transform: translateY(-2px);
+    border-color: transparent;
+  }
+  .card.coming { opacity: 0.55; }
+  .card.coming:hover { transform: none; box-shadow: var(--md-shadow-sm); }
+
   .card-head {
-    display: flex; justify-content: space-between; align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--md-on-surface);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-title .icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--card-bg, var(--md-primary-container));
+    color: var(--card-fg, var(--md-on-primary-container));
+    font-size: 18px;
+  }
+  .card-count {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--md-on-surface-var);
+    background: var(--md-surface-1);
+    padding: 4px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.02em;
+  }
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--md-on-surface-var);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .card-list {
+    list-style: none;
+  }
+  .card-list li {
+    padding: 10px 0;
+    border-top: 1px solid var(--md-outline-var);
+    font-size: 14px;
+  }
+  .card-list li:first-child { border-top: none; padding-top: 0; }
+  .card-list li:last-child { padding-bottom: 0; }
+  .card-list a {
+    color: var(--md-on-surface);
+    text-decoration: none;
+    transition: color 0.15s;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .card-list a:hover { color: var(--md-primary); }
+  .card-list .date {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--md-on-surface-var);
+    flex-shrink: 0;
+  }
+  .empty {
+    color: var(--md-on-surface-var);
+    font-style: italic;
+    font-size: 13px;
+    padding: 8px 0;
+  }
+
+  /* Card colors · Google 4 + tertiary */
+  .card.ai { --card-color: var(--g-blue); --card-bg: #d3e3fd; --card-fg: #001b3f; }
+  .card.finance { --card-color: var(--g-green); --card-bg: #d6f4dc; --card-fg: #0a3d18; }
+  .card.sales { --card-color: var(--g-yellow); --card-bg: #fddcbe; --card-fg: #885200; }
+  .card.tech { --card-color: var(--g-red); --card-bg: #ffdad6; --card-fg: #410002; }
+  .card.life { --card-color: var(--md-tertiary); --card-bg: #6ff7f7; --card-fg: #002020; }
+
+  /* Timeline */
+  .timeline {
+    border-left: 2px solid var(--md-outline-var);
+    padding-left: 24px;
+    margin-left: 8px;
+  }
+  .timeline-item {
+    position: relative;
+    padding: 12px 0;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -34px;
+    top: 18px;
+    width: 14px;
+    height: 14px;
+    background: var(--md-primary);
+    border: 3px solid var(--md-surface);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--md-outline-var);
+  }
+  .timeline-item:first-child::before {
+    background: linear-gradient(135deg, var(--g-blue), var(--g-green));
+  }
+  .timeline-date {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--md-on-surface-var);
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+  }
+  .timeline-text {
+    font-size: 14px;
+    color: var(--md-on-surface);
+    line-height: 1.55;
+  }
+
+  /* Tech stack table */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    border: 1px solid var(--md-outline-var);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .tech-grid > div {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--md-outline-var);
+    font-size: 14px;
+  }
+  .tech-grid > div:nth-child(odd) {
+    background: var(--md-surface-1);
+    font-weight: 500;
+  }
+  .tech-grid > div:nth-last-child(-n+2) { border-bottom: none; }
+  .tech-grid code {
+    font-family: 'Roboto Mono', monospace;
+    background: var(--md-surface-1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .tech-grid a { color: var(--md-primary); text-decoration: none; }
+  .tech-grid a:hover { text-decoration: underline; }
+
+  /* Footer */
+  footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--md-outline-var);
+    color: var(--md-on-surface-var);
+    font-size: 13px;
+  }
+  footer a {
+    color: var(--md-primary);
+    text-decoration: none;
+  }
+  footer a:hover { text-decoration: underline; }
+  footer .footer-line {
     margin-bottom: 6px;
   }
-  .card-title { font-size: 15px; font-weight: 600; color: #0969da; }
-  .card-count { font-size: 11px; color: #59636e; }
-  .card-sub { font-size: 12px; color: #59636e; margin-bottom: 10px; }
-  .card ul { list-style: none; padding: 0; }
-  .card li { padding: 4px 0; font-size: 13px; }
-  .card li a { color: #1f2328; text-decoration: none; }
-  .card li a:hover { color: #0969da; text-decoration: underline; }
-  .card li .date { color: #8c959f; font-size: 11px; margin-left: 6px; }
-  .empty { color: #8c959f; font-style: italic; font-size: 13px; }
 
-  table {
-    width: 100%; border-collapse: collapse;
-    border: 1px solid #d1d9e0;
-    margin: 12px 0; font-size: 13px;
-  }
-  th, td { text-align: left; padding: 8px 12px; border: 1px solid #d1d9e0; }
-  th { background: #f6f8fa; font-weight: 600; }
-
-  .callout {
-    border-left: 3px solid #0969da; background: #ddf4ff;
-    padding: 10px 14px; border-radius: 0 6px 6px 0;
-    font-size: 13px; margin: 12px 0;
-  }
-
-  footer {
-    margin-top: 48px; padding-top: 20px;
-    border-top: 1px solid #d1d9e0;
-    color: #59636e; font-size: 12px;
-  }
-  a { color: #0969da; }
-
-  @media (max-width: 700px) {
-    .card-grid { grid-template-columns: 1fr; }
+  /* Mobile */
+  @media (max-width: 720px) {
+    .container { padding: 36px 20px 56px; }
+    .hero { padding-bottom: 40px; margin-bottom: 32px; }
+    .hero h1 { font-size: 36px; }
+    .hero-sub { font-size: 16px; }
+    .hero-meta { flex-direction: column; align-items: flex-start; padding: 4px; border-radius: 16px; width: 100%; }
+    .hero-meta span { border-right: none; border-bottom: 1px solid var(--md-outline-var); width: 100%; }
+    .hero-meta span:last-child { border-bottom: none; }
+    section { margin-bottom: 48px; }
+    section h2 { font-size: 22px; }
+    .card-grid { grid-template-columns: 1fr; gap: 14px; }
+    .tech-grid { grid-template-columns: 1fr; }
+    .tech-grid > div:nth-child(odd) { border-bottom: 1px solid var(--md-outline-var); }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>🦜 Nic's Knowledge Base</h1>
-  <div class="sub">Nic 的公开知识站 — AI Agent 研究 · 销售复盘 · 技术探索 · 生活记录</div>
-  <div class="meta">
-    <span class="label label-blue">公开</span>
-    <span class="label label-green">持续更新</span>
-    <span class="label label-purple">GitHub 风格</span>
-    <span class="label label-orange">糯米鸡出品</span>
+<div class="container">
+
+<header class="hero">
+  <div class="hero-eyebrow">🦜 By 糯米鸡 · 持续更新</div>
+  <h1>Knowledge Base · <span class="grad">by nic</span></h1>
+  <p class="hero-sub">把研究、复盘、笔记沉淀成可反复调用的公开文档。<br>结论前置，证据后置 · 关键信息附来源 —— 可追溯，可复用。</p>
+  <div class="hero-meta">
+    <span>📚 3 篇文档</span>
+    <span>🗂️ 5 个分区</span>
+    <span>🔄 持续更新</span>
   </div>
 </header>
 
-<div class="callout">
-  <b>🎯 站点定位</b>：把平常的研究、复盘、笔记沉淀成可反复调用的公开文档。
-  结论前置、证据后置，关键信息附来源 —— 可追溯，可复用。
-</div>
+<section>
+  <h2>📂 内容分区</h2>
+  <div class="card-grid">
 
-<h2>📂 内容分区</h2>
-<div class="card-grid">
-
-  <div class="card">
-    <div class="card-head">
-      <div class="card-title">🤖 AI Agents</div>
-      <div class="card-count">2 篇</div>
+    <div class="card ai">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="icon">🤖</span>
+          AI Agents
+        </div>
+        <span class="card-count">2 篇</span>
+      </div>
+      <div class="card-desc">AI Agent 产品研究 · 工具对比 · 实操案例</div>
+      <ul class="card-list">
+        <li>
+          <a href="./docs/ai-agents/ai-coding-tools-explained.html">
+            <span>AI 编程协作工具讲解 · 57 张内训 deck</span>
+            <span class="date">2026-05-19</span>
+          </a>
+        </li>
+        <li>
+          <a href="./docs/ai-agents/tencent-agents-comparison.html">
+            <span>五款 AI Agent 全景对比 v4</span>
+            <span class="date">2026-04-30</span>
+          </a>
+        </li>
+      </ul>
     </div>
-    <div class="card-sub">AI Agent 产品研究 / 对比 / 使用心得</div>
-    <ul>
-      <li>
-        <a href="./docs/ai-agents/ai-coding-tools-explained.html">AI 编程协作工具讲解（39 页 deck）</a>
-        <span class="date">· 2026-05-18</span>
-      </li>
-      <li>
-        <a href="./docs/ai-agents/tencent-agents-comparison.html">五款 AI Agent 全景对比 v4</a>
-        <span class="date">· 2026-04-30</span>
-      </li>
-    </ul>
-  </div>
 
-  <div class="card">
-    <div class="card-head">
-      <div class="card-title">💰 Finance</div>
-      <div class="card-count">1 篇</div>
+    <div class="card finance">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="icon">💰</span>
+          Finance
+        </div>
+        <span class="card-count">1 篇</span>
+      </div>
+      <div class="card-desc">港美股投资 · 理财工具 · 费用对比</div>
+      <ul class="card-list">
+        <li>
+          <a href="./docs/finance/hk-ipo-broker-comparison.html">
+            <span>港股打新主流券商费用对比 · 含计算器</span>
+            <span class="date">2026-05-07</span>
+          </a>
+        </li>
+      </ul>
     </div>
-    <div class="card-sub">理财 / 港美股投资 / 费用对比工具</div>
-    <ul>
-      <li>
-        <a href="./docs/finance/hk-ipo-broker-comparison.html">港股打新主流券商费用对比（含计算器）</a>
-        <span class="date">· 2026-05-07</span>
-      </li>
-    </ul>
-  </div>
 
-  <div class="card">
-    <div class="card-head">
-      <div class="card-title">💼 Sales Tips</div>
-      <div class="card-count">0 篇</div>
+    <div class="card sales coming">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="icon">💼</span>
+          Sales Tips
+        </div>
+        <span class="card-count">0 篇</span>
+      </div>
+      <div class="card-desc">腾讯广告 · 法律行业销售实战</div>
+      <div class="empty">敬请期待 · 内容沉淀中</div>
     </div>
-    <div class="card-sub">腾讯广告 / 法律行业销售实战笔记</div>
-    <div class="empty">待更新</div>
-  </div>
 
-  <div class="card">
-    <div class="card-head">
-      <div class="card-title">💻 Tech</div>
-      <div class="card-count">0 篇</div>
+    <div class="card tech coming">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="icon">💻</span>
+          Tech
+        </div>
+        <span class="card-count">0 篇</span>
+      </div>
+      <div class="card-desc">技术探索 · 工具链 · 开发流程</div>
+      <div class="empty">敬请期待 · 内容沉淀中</div>
     </div>
-    <div class="card-sub">技术探索 / 工具链 / 开发流程</div>
-    <div class="empty">待更新</div>
-  </div>
 
-  <div class="card">
-    <div class="card-head">
-      <div class="card-title">🌿 Life</div>
-      <div class="card-count">0 篇</div>
+    <div class="card life coming">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="icon">🌿</span>
+          Life
+        </div>
+        <span class="card-count">0 篇</span>
+      </div>
+      <div class="card-desc">生活记录 · 个人项目 · 碎碎念</div>
+      <div class="empty">敬请期待 · 内容沉淀中</div>
     </div>
-    <div class="card-sub">个人生活 / 家庭事务 / 碎碎念</div>
-    <div class="empty">待更新</div>
+
   </div>
+</section>
 
-</div>
+<section>
+  <h2>🗓️ 更新记录</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2026-05-19</div>
+      <div class="timeline-text">✨ 升级「AI 编程协作工具讲解」从 39 张到 <strong>57 张</strong> · 加 4 层全景表区分 AGENTS.md / CLAUDE.md / WB 三件套 · 加章节进度条 + 糯米鸡讲师备注</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026-05-18</div>
+      <div class="timeline-text">📑 首发「AI 编程协作工具讲解」内训 deck</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026-05-07</div>
+      <div class="timeline-text">💰 新增 Finance 分区 + 「港股打新主流券商费用对比 · 含计算器」</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026-04-30</div>
+      <div class="timeline-text">🚀 仓库初始化 + 首发「五款 AI Agent 全景对比 v4」</div>
+    </div>
+  </div>
+</section>
 
-<h2>🗓️ 更新记录</h2>
-<table>
-  <thead>
-    <tr><th style="width: 140px;">日期</th><th>变更</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>2026-05-18</td>
-      <td>✨ 新增「AI 编程协作工具讲解」39 页 Apple 风内训 deck</td>
-    </tr>
-    <tr>
-      <td>2026-05-07</td>
-      <td>💰 新增 Finance 分区 + 发布「港股打新主流券商费用对比（含计算器）」</td>
-    </tr>
-    <tr>
-      <td>2026-04-30</td>
-      <td>🚀 仓库初始化 + 首发文档「五款 AI Agent 全景对比 v4」</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2>🛠️ 技术栈</h2>
-<table>
-  <tbody>
-    <tr><td style="width: 140px; background: #f6f8fa;"><b>静态站点</b></td><td>GitHub Pages + Jekyll（minimal 主题）</td></tr>
-    <tr><td style="background: #f6f8fa;"><b>风格</b></td><td>GitHub 原生风格：白底 · <code>#d1d9e0</code> 细边框 · label 标签 · 无渐变阴影</td></tr>
-    <tr><td style="background: #f6f8fa;"><b>内容来源</b></td><td>本地生成 · 联网校准 · 附证可追溯</td></tr>
-    <tr><td style="background: #f6f8fa;"><b>仓库</b></td><td><a href="https://github.com/nic-wang/knowledge-base">github.com/nic-wang/knowledge-base</a></td></tr>
-  </tbody>
-</table>
+<section>
+  <h2>🛠️ 技术栈</h2>
+  <div class="tech-grid">
+    <div>静态站点</div><div>GitHub Pages + Jekyll · minimal 主题</div>
+    <div>视觉风格</div><div>Material 3 + Google Sans · Google Blue 主色 + 4 色点缀</div>
+    <div>内容来源</div><div>本地生成 · 联网校准 · 附证可追溯</div>
+    <div>仓库</div><div><a href="https://github.com/nic-wang/knowledge-base">github.com/nic-wang/knowledge-base</a></div>
+  </div>
+</section>
 
 <footer>
-  <div>Powered by 糯米鸡 🦜 · Elementary, my dear reader.</div>
-  <div style="margin-top: 4px;">
+  <div class="footer-line">Powered by 糯米鸡 🦜 · Elementary, my dear reader.</div>
+  <div>
     GitHub: <a href="https://github.com/nic-wang">@nic-wang</a> ·
-    Last updated: 2026-05-18
+    Last updated: 2026-05-19
   </div>
 </footer>
+
+</div>
 
 </body>
 </html>
