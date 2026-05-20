@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nic-wang.github.io/knowledge-base/sitemap.xml
