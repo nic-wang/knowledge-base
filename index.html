@@ -273,15 +273,39 @@
   }
   .timeline-date {
     font-family: 'Roboto Mono', monospace;
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--md-on-surface-var);
-    margin-bottom: 4px;
-    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 500;
   }
-  .timeline-text {
-    font-size: 14px;
+  .timeline-tag {
+    display: inline-block;
+    font-family: 'Google Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-right: 8px;
+    letter-spacing: 0.02em;
+    vertical-align: 2px;
+  }
+  .timeline-tag.upgrade { background: var(--md-primary-container); color: var(--md-on-primary-container); }
+  .timeline-tag.new { background: #d6f4dc; color: #0a3d18; }
+  .timeline-tag.launch { background: #fddcbe; color: #885200; }
+  .timeline-title {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 500;
     color: var(--md-on-surface);
+    line-height: 1.4;
+  }
+  .timeline-detail {
+    font-size: 13px;
+    color: var(--md-on-surface-var);
     line-height: 1.55;
+    margin-top: 4px;
   }
 
   /* Tech stack table */
@@ -351,7 +375,7 @@
 <div class="container">
 
 <header class="hero">
-  <div class="hero-eyebrow">🦜 By 糯米鸡 · 持续更新</div>
+  <div class="hero-eyebrow">BY nic · 持续更新</div>
   <h1>Knowledge Base · <span class="grad">by nic</span></h1>
   <p class="hero-sub">把研究、复盘、笔记沉淀成可反复调用的公开文档。<br>结论前置，证据后置 · 关键信息附来源 —— 可追溯，可复用。</p>
   <div class="hero-meta">
@@ -453,37 +477,50 @@
   <div class="timeline">
     <div class="timeline-item">
       <div class="timeline-date">2026-05-19</div>
-      <div class="timeline-text">✨ 升级「AI 编程协作工具讲解」从 39 张到 <strong>57 张</strong> · 加 4 层全景表区分 AGENTS.md / CLAUDE.md / WB 三件套 · 加章节进度条 + 糯米鸡讲师备注</div>
+      <div class="timeline-title">
+        <span class="timeline-tag upgrade">升级</span>AI 编程协作工具讲解 · v2 改版
+      </div>
+      <div class="timeline-detail">从 39 张扩到 <strong>57 张</strong>·加 4 层全景表区分 AGENTS.md / CLAUDE.md / WB 三件套·加章节进度条</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-date">2026-05-18</div>
-      <div class="timeline-text">📑 首发「AI 编程协作工具讲解」内训 deck</div>
+      <div class="timeline-title">
+        <span class="timeline-tag launch">首发</span>AI 编程协作工具讲解 · 内训 deck
+      </div>
+      <div class="timeline-detail">面向腾讯广告同事的 AI Coding 入门教学·覆盖 WorkBuddy / CodeBuddy / Claude Code 三家工具</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-date">2026-05-07</div>
-      <div class="timeline-text">💰 新增 Finance 分区 + 「港股打新主流券商费用对比 · 含计算器」</div>
+      <div class="timeline-title">
+        <span class="timeline-tag new">新增</span>Finance 分区 · 港股打新券商对比
+      </div>
+      <div class="timeline-detail">主流港美券商打新费用横评·含融资倍数计算器·脱敏化金额展示</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-date">2026-04-30</div>
-      <div class="timeline-text">🚀 仓库初始化 + 首发「五款 AI Agent 全景对比 v4」</div>
+      <div class="timeline-title">
+        <span class="timeline-tag launch">首发</span>仓库初始化 · 五款 AI Agent 全景对比 v4
+      </div>
+      <div class="timeline-detail">Knowledge Base 上线·首篇研究文档落地</div>
     </div>
   </div>
 </section>
 
 <section>
-  <h2>🛠️ 技术栈</h2>
+  <h2>📦 仓库信息</h2>
   <div class="tech-grid">
-    <div>静态站点</div><div>GitHub Pages + Jekyll · minimal 主题</div>
-    <div>视觉风格</div><div>Material 3 + Google Sans · Google Blue 主色 + 4 色点缀</div>
-    <div>内容来源</div><div>本地生成 · 联网校准 · 附证可追溯</div>
-    <div>仓库</div><div><a href="https://github.com/nic-wang/knowledge-base">github.com/nic-wang/knowledge-base</a></div>
+    <div>Repository</div><div><a href="https://github.com/nic-wang/knowledge-base">github.com/nic-wang/knowledge-base</a></div>
+    <div>Author</div><div><a href="https://github.com/nic-wang">@nic-wang</a> · 深圳 · GMT+8</div>
+    <div>Issues</div><div><a href="https://github.com/nic-wang/knowledge-base/issues">提需求 / 报错 / 提建议</a></div>
+    <div>License</div><div>内容保留所有权 · 引用请注明出处与原文链接</div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-line">Powered by 糯米鸡 🦜 · Elementary, my dear reader.</div>
+  <div class="footer-line">© 2026 Nic · Knowledge compounds when written down.</div>
   <div>
-    GitHub: <a href="https://github.com/nic-wang">@nic-wang</a> ·
+    <a href="https://github.com/nic-wang">GitHub</a> ·
+    <a href="https://github.com/nic-wang/knowledge-base">Source</a> ·
     Last updated: 2026-05-19
   </div>
 </footer>
